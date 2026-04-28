@@ -33,7 +33,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
 
       <button
         onClick={() => onNavigate('BULLETIN_BOARD')}
-        className="bg-[#f8ec24] text-black border-2 border-[#f8ec24] dark:border-[#f8ec24] w-[250px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
+        className="bg-[#ed1e25] text-black border-2 border-[#ed1e25] dark:border-[#f8ec24] w-[250px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
       >
         View Lost Items →
       </button>
