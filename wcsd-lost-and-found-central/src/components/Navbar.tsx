@@ -49,30 +49,30 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navBtnClass = (view: View) =>
     `flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${
-      currentView === view ? 'bg-[#ab1e2f] text-white border-[#ab1e2f]' : 'text-[#e9ecef] bg-transparent border-transparent hover:text-white'
+      currentView === view ? 'bg-[#ed1e25] text-white border-[#ed1e25]' : 'text-[#fff7d1] bg-transparent border-transparent hover:text-white'
     }`;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[60]" style={{ height: 'calc(1.4 * 64px)' }}>
-      <div className="flex justify-between items-center bg-[#142e53] w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300">
+      <div className="flex justify-between items-center bg-black w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-[#ed1e25]/30">
         <div onClick={() => onNavigate('HOME')} className="flex items-center gap-2 cursor-pointer px-4 py-2 hover:scale-105 transition-all">
-          <img src="/images/roundedlogo.png" alt="WCSD Lost and Found logo" className="w-12 h-12 rounded-lg object-cover shadow-sm" />
-          <span className="font-bold text-xl tracking-tight text-white">WCSDLost&Found</span>
+          <img src="/images/east.png" alt="Williamsville East High School logo" className="w-12 h-12 rounded-lg object-cover shadow-sm bg-white p-1" />
+          <span className="font-bold text-xl tracking-tight text-white">East Lost&amp;Found</span>
         </div>
         <div className="hidden lg:flex items-center gap-1">
           <button onClick={() => onNavigate('HOME')} className={navBtnClass('HOME')}><HomeIcon size={16} /><span className="text-sm font-bold">Home</span></button>
-          <button onClick={() => onNavigate('SCHOOL_SELECT')} className={navBtnClass('SCHOOL_SELECT')}><Users size={16} /><span className="text-sm font-bold">Schools</span></button>
+          <button onClick={() => onNavigate('BULLETIN_BOARD')} className={navBtnClass('BULLETIN_BOARD')}><Users size={16} /><span className="text-sm font-bold">Item Board</span></button>
           <div className="w-px h-6 bg-white/20 mx-2" />
           <div className="relative">
-            <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-[#e9ecef] hover:text-white"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
+            <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-[#fff7d1] hover:text-white"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
             {showInfoMenu && (
-              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-48 bg-[#142e53] border border-white/20 rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
+              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-48 bg-black border border-[#ed1e25]/30 rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
                 {[
                   { id: 'ABOUT' as View, label: 'About Project', icon: <Info size={16} /> },
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
                   { id: 'GUIDE' as View, label: 'Help Guide', icon: <BookOpen size={16} /> }
                 ].map(item => (
-                  <button key={item.id} onClick={() => { onNavigate(item.id); setShowInfoMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[#e9ecef] hover:text-white hover:bg-[#1f3a5a] text-sm font-bold">
+                  <button key={item.id} onClick={() => { onNavigate(item.id); setShowInfoMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[#fff7d1] hover:text-white hover:bg-[#ed1e25] text-sm font-bold">
                     {item.icon} {item.label}
                   </button>
                 ))}
@@ -86,18 +86,18 @@ export const Navbar: React.FC<NavbarProps> = ({
           {user && (
             <button
               onClick={() => onNavigate('ACCOUNT')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#ab1e2f] text-white border-[#ab1e2f]' : 'bg-transparent text-[#e9ecef] border-transparent hover:text-white'}`}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#ed1e25] text-white border-[#ed1e25]' : 'bg-transparent text-[#fff7d1] border-transparent hover:text-white'}`}
             >
               <UserIcon size={18} />
               <span className="hidden md:inline font-bold text-sm">{user.name.split(' ')[0]}</span>
             </button>
           )}
-          <button onClick={() => onNavigate('TOOLS')} className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#ab1e2f] text-white border-[#ab1e2f]' : 'bg-transparent text-[#e9ecef] border-transparent hover:text-white'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
+          <button onClick={() => onNavigate('TOOLS')} className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#ed1e25] text-white border-[#ed1e25]' : 'bg-transparent text-[#fff7d1] border-transparent hover:text-white'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
 
           <div className="relative" ref={settingsRef}>
-            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#1f3a5a] ${isAdmin ? 'text-yellow-400' : 'text-white'}`} title="Settings"><Settings size={20} /></button>
+            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#ed1e25] ${isAdmin ? 'text-[#f8ec24]' : 'text-white'}`} title="Settings"><Settings size={20} /></button>
             {showSettingsMenu && (
-              <div className="absolute top-full right-0 mt-2 w-64 bg-[#0d1b2e] border border-white/15 rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
+              <div className="absolute top-full right-0 mt-2 w-64 bg-[#151515] border border-[#ed1e25]/20 rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-3">Settings</p>
 
                 <div className="space-y-2 mb-4">
@@ -155,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <button onClick={() => { setIsAdmin(false); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 text-sm font-bold transition-colors"><LogOut size={15} /> Logout Admin</button>
                   </>
                 ) : (
-                  <button onClick={() => { onOpenAdminLogin(); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#e9ecef] hover:text-white hover:bg-[#1f3a5a] text-sm font-bold transition-colors"><Lock size={15} /> Admin Portal</button>
+                  <button onClick={() => { onOpenAdminLogin(); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#fff7d1] hover:text-white hover:bg-[#ed1e25] text-sm font-bold transition-colors"><Lock size={15} /> Admin Portal</button>
                 )}
               </div>
             )}

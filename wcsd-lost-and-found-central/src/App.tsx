@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Home } from './components/Home';
-import { SchoolSelect } from './components/SchoolSelect';
 import { BulletinBoard } from './components/BulletinBoard';
 import { ContactsPage } from './components/ContactsPage';
 import { MeetMakers } from './components/MeetMakers';
@@ -25,6 +24,7 @@ const pruneExpiredClaimLogs = (logs: ClaimedLog[]) => {
 };
 
 export default function App() {
+  const eastSchool = SCHOOL_THEMES.will_east;
   const [user, setUser] = useState<User | null>(() => {
     try {
       const saved = localStorage.getItem('wcsd_user');
@@ -49,7 +49,7 @@ export default function App() {
   });
   const [isLoggedIn, setIsLoggedIn] = useState(!!user);
   const [currentView, setCurrentView] = useState<View>('HOME');
-  const [selectedSchool, setSelectedSchool] = useState<SchoolTheme | null>(null);
+  const [selectedSchool, setSelectedSchool] = useState<SchoolTheme | null>(eastSchool);
   const [items, setItems] = useState<LostItem[]>(INITIAL_ITEMS);
   const [claimLogs, setClaimLogs] = useState<ClaimedLog[]>([]);
   const [claimIntent, setClaimIntent] = useState(false);
@@ -217,23 +217,19 @@ export default function App() {
 
   const navigate = (view: View) => {
     setClaimIntent(false);
-    setCurrentView(view);
-    if (view !== 'BULLETIN_BOARD') setSelectedSchool(null);
+    setCurrentView(view === 'SCHOOL_SELECT' ? 'BULLETIN_BOARD' : view);
+    if (view === 'BULLETIN_BOARD' || view === 'SCHOOL_SELECT') setSelectedSchool(eastSchool);
     if (view !== 'BULLETIN_BOARD' && view !== 'TOOLS' && view !== 'ACCOUNT') setIsAdmin(false);
   };
 
   const startClaimProcess = () => {
     setClaimIntent(true);
-    if (selectedSchool) {
-      setCurrentView('BULLETIN_BOARD');
-    } else {
-      setCurrentView('SCHOOL_SELECT');
-      setSelectedSchool(null);
-    }
+    setSelectedSchool(eastSchool);
+    setCurrentView('BULLETIN_BOARD');
   };
 
-  const handleSchoolSelect = (school: SchoolTheme) => {
-    setSelectedSchool(school);
+  const handleSchoolSelect = (_school: SchoolTheme) => {
+    setSelectedSchool(eastSchool);
     setCurrentView('BULLETIN_BOARD');
   };
 
@@ -243,11 +239,7 @@ export default function App() {
   };
 
   const handleOpenMatchedItem = (item: LostItem) => {
-    const targetSchool = SCHOOL_THEMES[item.schoolId];
-    if (!targetSchool) {
-      setCurrentView('SCHOOL_SELECT');
-      return;
-    }
+    const targetSchool = SCHOOL_THEMES[item.schoolId] || eastSchool;
     setSelectedSchool(targetSchool);
     setClaimIntent(false);
     setCurrentView('BULLETIN_BOARD');
@@ -319,7 +311,6 @@ export default function App() {
         <main className="relative pt-24 z-10">
           <div key={currentView} className="animate-fade-in-up w-full">
             {currentView === 'HOME' && <Home onNavigate={navigate} onStartClaim={startClaimProcess} />}
-            {currentView === 'SCHOOL_SELECT' && <SchoolSelect onSelect={handleSchoolSelect} />}
             {currentView === 'BULLETIN_BOARD' && selectedSchool && (
               <BulletinBoard
                 school={selectedSchool}
@@ -327,7 +318,7 @@ export default function App() {
                 claimLogs={claimLogs}
                 onApproveClaim={handleApproveClaim}
                 setItems={setItems}
-                goBack={() => navigate('SCHOOL_SELECT')}
+                goBack={() => navigate('HOME')}
                 initialTab={claimIntent ? 'SUBMIT' : 'BOARD'}
                 isAdmin={isAdmin}
                 setIsAdmin={setIsAdmin}

@@ -199,11 +199,11 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
   };
 
   const TOOL_APPS = [
-    { id: 'tracker', label: 'AI Scanner', icon: Camera, gradient: 'linear-gradient(135deg, #142e53 0%, #1f3a5a 100%)', action: () => onNavigate('LIVE_TRACKER') },
-    { id: 'chatbot', label: 'Hammy Bot', icon: Bot, gradient: 'linear-gradient(135deg, #ab1e2f 0%, #c9344a 100%)', action: () => window.dispatchEvent(new CustomEvent('open-hammy-bot', { detail: { source: 'tools-chatbot' } })) },
+    { id: 'tracker', label: 'AI Scanner', icon: Camera, gradient: 'linear-gradient(135deg, #ed1e25 0%, #7a0f13 100%)', action: () => onNavigate('LIVE_TRACKER') },
+    { id: 'chatbot', label: 'Hammy Bot', icon: Bot, gradient: 'linear-gradient(135deg, #f8ec24 0%, #c9b90e 100%)', action: () => window.dispatchEvent(new CustomEvent('open-hammy-bot', { detail: { source: 'tools-chatbot' } })) },
     { id: 'admin', label: isAdmin ? 'Admin Panel' : 'Staff Login', icon: isAdmin ? Shield : Lock, gradient: isAdmin ? 'linear-gradient(135deg, #b45309 0%, #d97706 100%)' : 'linear-gradient(135deg, #374151 0%, #4b5563 100%)', action: () => isAdmin ? onNavigate('BULLETIN_BOARD') : onOpenAdminLogin() },
-    { id: 'claim', label: 'File a Claim', icon: FileText, gradient: 'linear-gradient(135deg, #065f46 0%, #047857 100%)', action: () => onNavigate('SCHOOL_SELECT') },
-    { id: 'schools', label: 'Schools', icon: Users, gradient: 'linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%)', action: () => onNavigate('SCHOOL_SELECT') },
+    { id: 'claim', label: 'File a Claim', icon: FileText, gradient: 'linear-gradient(135deg, #111111 0%, #333333 100%)', action: () => onNavigate('BULLETIN_BOARD') },
+    { id: 'schools', label: 'East Board', icon: Users, gradient: 'linear-gradient(135deg, #ed1e25 0%, #f8ec24 100%)', action: () => onNavigate('BULLETIN_BOARD') },
     { id: 'contacts', label: 'Contacts', icon: Phone, gradient: 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)', action: () => onNavigate('CONTACTS') }
   ];
 
@@ -211,7 +211,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
     <div className="min-h-screen w-full transition-colors duration-300 pb-24">
       <div className="relative z-10 pt-10 pb-8 px-6 text-center">
         <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Your Toolkit</h1>
-        <p className="text-slate-500 dark:text-slate-400 text-base max-w-lg mx-auto">Everything you need to find, report, and track lost items.</p>
+        <p className="text-slate-500 dark:text-slate-400 text-base max-w-lg mx-auto">Everything Williamsville East needs to find, report, and track lost items.</p>
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto px-6 mb-12">
@@ -233,7 +233,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
         <div className="bg-white dark:bg-[#424242] rounded-[28px] shadow-xl border border-slate-100 dark:border-white/10 overflow-hidden">
           <div className="px-7 pt-7 pb-5 border-b border-slate-100 dark:border-white/10">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-[10px] bg-[#ab1e2f] flex items-center justify-center shadow-md"><ListChecks size={18} color="#fff" /></div>
+              <div className="w-9 h-9 rounded-[10px] bg-[#ed1e25] flex items-center justify-center shadow-md"><ListChecks size={18} color="#fff" /></div>
               <h2 className="text-lg font-black text-slate-900 dark:text-white">I'm looking for...</h2>
             </div>
           </div>
@@ -244,7 +244,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
                 {['Any', ...CATEGORIES].map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <button onClick={() => void addWish()} disabled={!wishInput.trim() || isSavingWish} className="w-full py-2.5 rounded-[12px] bg-[#142e53] text-white text-sm font-bold flex items-center justify-center gap-2 disabled:opacity-50">
+            <button onClick={() => void addWish()} disabled={!wishInput.trim() || isSavingWish} className="w-full py-2.5 rounded-[12px] bg-[#ed1e25] text-white text-sm font-bold flex items-center justify-center gap-2 disabled:opacity-50">
               <Plus size={16} /> {isSavingWish ? 'Adding...' : 'Add to List'}
             </button>
             {wishError && <p className="text-xs text-red-500 mt-2">{wishError}</p>}

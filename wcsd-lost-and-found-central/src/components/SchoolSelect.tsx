@@ -16,7 +16,7 @@ export const SchoolSelect: React.FC<SchoolSelectProps> = ({ onSelect }) => {
       <div className="max-w-[900px] mx-auto bg-white dark:bg-[#666666] backdrop-blur-md p-8 rounded-[18px] shadow-[0_4px_12px_rgba(0,0,0,0.1)] relative z-10">
         <div className="max-w-[900px] mx-auto p-8 relative z-10">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-black dark:text-white mb-4">Select a School</h1>
+            <h1 className="text-3xl font-bold text-black dark:text-white mb-4">Williamsville East High School</h1>
             <div className="relative w-[80%] max-w-[500px] mx-auto">
               <input
                 type="text"

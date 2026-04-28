@@ -13,18 +13,18 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
 
       <div className="mx-auto mt-5 mb-4 w-full sm:w-2/3 md:w-1/2 max-w-[1000px] p-2 bg-transparent rounded-lg animate-fade-in-up">
         <img
-          src="/images/WCSDlogo.png"
-          alt="WCSD Logo"
+          src="/images/east.png"
+          alt="Williamsville East High School Logo"
           className="w-full h-auto mx-auto transform scale-105 md:scale-115"
           onError={(e) => {
             e.currentTarget.src =
-              'https://ui-avatars.com/api/?name=WCSD&background=random&color=fff&size=200';
+              'https://ui-avatars.com/api/?name=Williamsville+East+High+School&background=ed1e25&color=fff&size=200';
           }}
         />
       </div>
 
       <h1 className="text-black dark:text-white text-3xl font-bold my-4 leading-tight">
-        Williamsville Central School District Lost &amp; Found
+        Williamsville East High School Lost &amp; Found
       </h1>
 
       <p className="text-black dark:text-white text-lg italic my-4 font-serif">
@@ -32,23 +32,23 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
       </p>
 
       <button
-        onClick={() => onNavigate('SCHOOL_SELECT')}
-        className="bg-[#ab1e2f] text-white border-2 border-[#ab1e2f] dark:border-[#ffffff] w-[200px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
+        onClick={() => onNavigate('BULLETIN_BOARD')}
+        className="bg-[#ed1e25] text-white border-2 border-[#ed1e25] dark:border-[#f8ec24] w-[250px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
       >
-        Select a School →
+        Continue to Lost Item Board →
       </button>
 
       <div className="flex justify-center gap-4 mt-6">
         <button
           onClick={onStartClaim}
-          className="flex items-center justify-center gap-2 bg-[#142e53] text-white border-2 border-[#142e53] dark:border-[#ffffff] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
+          className="flex items-center justify-center gap-2 bg-black text-white border-2 border-[#ed1e25] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
           <FileText size={16} /> File a Claim
         </button>
 
         <button
           onClick={() => onNavigate('LIVE_TRACKER')}
-          className="flex items-center justify-center gap-2 bg-[#142e53] text-white border-2 border-[#142e53] dark:border-[#ffffff] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
+          className="flex items-center justify-center gap-2 bg-[#f8ec24] text-black border-2 border-[#f8ec24] dark:border-[#ed1e25] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
           <Camera size={16} /> AI Scanner
         </button>
@@ -57,4 +57,3 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
     </div>
   </div>
 );
-

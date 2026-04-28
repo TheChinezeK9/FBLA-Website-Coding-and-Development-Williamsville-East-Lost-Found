@@ -274,10 +274,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           <div className="flex items-center justify-center gap-2 mb-4">
             <img
               src="/images/roundedlogo.png"
-              alt="WCSD Lost & Found logo"
+              alt="Williamsville East High School Lost & Found logo"
               className="w-10 h-10 rounded-xl object-cover"
             />
-            <span className="text-white font-extrabold text-sm tracking-tight">WCSDLost&Found</span>
+            <span className="text-white font-extrabold text-sm tracking-tight">EastLost&amp;Found</span>
           </div>
 
           <h1 className="text-white text-xl font-extrabold text-center tracking-tight mb-1">

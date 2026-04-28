@@ -24,8 +24,8 @@ export const ContactsPage: React.FC = () => {
         <h4 className="text-xl font-bold text-black dark:text-white">{name}</h4>
         <p className="font-bold uppercase text-xs tracking-wider mb-3 text-black dark:text-white">{role}</p>
         <div className="flex flex-col sm:flex-row gap-4">
-          {phone && <a href={`tel:${phone}`} className="flex items-center gap-2 text-sm font-bold text-black dark:text-white hover:text-[#ab1e2f] transition-colors bg-slate-100 dark:bg-[#666666] px-4 py-2 rounded-full"><Phone size={14} /> {phone}</a>}
-          {email && <a href={`mailto:${email}`} className="flex items-center gap-2 text-sm font-bold text-black dark:text-white hover:text-[#ab1e2f] transition-colors bg-slate-100 dark:bg-[#666666] px-4 py-2 rounded-full"><Mail size={14} /> {email}</a>}
+          {phone && <a href={`tel:${phone}`} className="flex items-center gap-2 text-sm font-bold text-black dark:text-white hover:text-[#ed1e25] transition-colors bg-slate-100 dark:bg-[#666666] px-4 py-2 rounded-full"><Phone size={14} /> {phone}</a>}
+          {email && <a href={`mailto:${email}`} className="flex items-center gap-2 text-sm font-bold text-black dark:text-white hover:text-[#ed1e25] transition-colors bg-slate-100 dark:bg-[#666666] px-4 py-2 rounded-full"><Mail size={14} /> {email}</a>}
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@ export const ContactsPage: React.FC = () => {
         {view === 'ROOT' && (
           <div className="grid md:grid-cols-2 gap-8">
             <CardButton title="Website Admins" description="Contact the student creators, maintainers, and platform support." icon={Code} colorClass="bg-blue-600" onClick={() => setView('ADMIN')} />
-            <CardButton title="Facilities & Services" description="Athletics, transportation (buses), and individual school offices." icon={Briefcase} colorClass="bg-orange-500" onClick={() => setView('FACILITIES_MENU')} />
+            <CardButton title="Facilities & Services" description="Athletics, transportation (buses), and Williamsville East offices." icon={Briefcase} colorClass="bg-orange-500" onClick={() => setView('FACILITIES_MENU')} />
           </div>
         )}
         
@@ -64,7 +64,7 @@ export const ContactsPage: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-6">
             <CardButton title="Athletics" description="Sports facilities & booking." icon={Trophy} colorClass="bg-emerald-500" onClick={() => setView('SPORTS')} />
             <CardButton title="Transportation" description="Buses & routing." icon={Bus} colorClass="bg-yellow-500" onClick={() => setView('BUS')} />
-            <CardButton title="Main Offices" description="School specific contacts." icon={SchoolIcon} colorClass="bg-indigo-500" onClick={() => setView('MAIN_OFFICE_SELECT')} />
+            <CardButton title="Main Office" description="Williamsville East contacts." icon={SchoolIcon} colorClass="bg-indigo-500" onClick={() => setView('MAIN_OFFICE_SELECT')} />
           </div>
         )}
         

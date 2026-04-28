@@ -12,7 +12,7 @@ export const MeetMakers: React.FC = () => {
     <div className="min-h-screen w-full neon-page-bg pt-24 px-6 transition-colors duration-300">
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <h1 className="text-4xl font-bold text-black dark:text-white mb-4">Meet the Makers</h1>
-        <p className="text-xl text-black dark:text-white mb-12">The creative minds behind the Williamsville Central School District Lost & Found.</p>
+        <p className="text-xl text-black dark:text-white mb-12">The creative minds behind the Williamsville East High School Lost &amp; Found.</p>
         <div className="grid md:grid-cols-3 gap-8">
           {team.map((member) => {
             const Icon = member.icon;

@@ -12,8 +12,8 @@ export const InfoPages: React.FC<InfoPagesProps> = ({ type }) => {
       subtitle: "Connecting lost items with their owners.", 
       icon: <Heart size={64} className="text-red-600" />, 
       sections: [
-        { title: "Our Mission", text: "At Williamsville Central School District, we believe that student resources should be managed with efficiency and care.", icon: <Cloud className="text-black dark:text-white" /> },
-        { title: "Intelligent Recovery", text: "By utilizing computer vision and a unified district database, we've created a system that identifies items automatically.", icon: <Star className="text-black dark:text-white" /> }
+        { title: "Our Mission", text: "At Williamsville East High School, we want lost items returned quickly, clearly, and responsibly.", icon: <Cloud className="text-black dark:text-white" /> },
+        { title: "Intelligent Recovery", text: "By focusing on one school board, we make item searches and claims simpler for East students and staff.", icon: <Star className="text-black dark:text-white" /> }
       ] 
     },
     RULES: { 

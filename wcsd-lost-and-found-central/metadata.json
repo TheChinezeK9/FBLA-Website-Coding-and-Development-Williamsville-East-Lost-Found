@@ -1,5 +1,5 @@
 {
-  "name": "WCSD Lost & Found Central",
-  "description": "A smart lost and found platform for Williamsville Central School District featuring AI vision tracking and a helpful hamster mascot.",
+  "name": "Williamsville East High School Lost & Found",
+  "description": "A lost and found platform for Williamsville East High School featuring AI vision tracking and a helpful hamster mascot.",
   "requestFramePermissions": ["camera"]
 }
