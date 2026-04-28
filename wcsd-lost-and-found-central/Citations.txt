@@ -1,0 +1,59 @@
+Images/Logos:
+
+1. Williamsville Central School District. “Williamsville East High School.” Williamsville CSD, [https://east.williamsvillek12.org/](https://east.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+2. Williamsville Central School District. “Williamsville North High School.” Williamsville CSD, [https://north.williamsvillek12.org/](https://north.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+3. Williamsville Central School District. “Williamsville South High School.” Williamsville CSD, [https://south.williamsvillek12.org/](https://south.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+4. Williamsville Central School District. “Transit Middle School.” Williamsville CSD, [https://transit.williamsvillek12.org/](https://transit.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+5. Williamsville Central School District. “Mill Middle School.” Williamsville CSD, [https://mill.williamsvillek12.org/](https://mill.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+6. Williamsville Central School District. “Heim Middle School.” Williamsville CSD, [https://heimmiddle.williamsvillek12.org/](https://heimmiddle.williamsvillek12.org/). Accessed 20 Feb. 2026. 
+
+7. Williamsville Central School District. “Casey Middle School.” Williamsville CSD, [https://casey.williamsvillek12.org/](https://casey.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+8. Williamsville Central School District. “Country Parkway Elementary School.” Williamsville CSD, [https://countryparkway.williamsvillek12.org/](https://countryparkway.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+9. Williamsville Central School District. “Dodge Elementary School.” Williamsville CSD, [https://dodge.williamsvillek12.org/](https://dodge.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+10. Williamsville Central School District. “Forest Elementary School.” Williamsville CSD, [https://forest.williamsvillek12.org/](https://forest.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+11. Williamsville Central School District. “Maple East Elementary School.” Williamsville CSD, [https://mapleeast.williamsvillek12.org/](https://mapleeast.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+12. Williamsville Central School District. “Maple West Elementary School.” Williamsville CSD, [https://maplewest.williamsvillek12.org/](https://maplewest.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+13. Williamsville Central School District. “Heim Elementary School.” Williamsville CSD, [https://heimelementary.williamsvillek12.org/](https://heimelementary.williamsvillek12.org/). Accessed 20 Feb. 2026.  
+
+14. Williamsville Central School District. “Home.” Williamsville CSD, [https://www.williamsvillek12.org/](https://www.williamsvillek12.org/). Accessed 20 Feb. 2026.
+
+15. Williamsville Central School District. "Brand Guidelines" Williamsville CSD, [https://resources.finalsite.net/images/v1758046221/williamsvillek12org/rakgsch7by0ot3ouwxfo/BrandGuidelines.pdf]. Accessed 8 Feb 2026
+
+Tools/Platforms Used:
+
+1. GitHub, Inc. “GitHub.” GitHub, https://github.com/.
+
+2. Render Services, Inc. “Render.” Render, https://render.com/. 
+
+3. Adobe Color. Adobe Color. Adobe Inc., color.adobe.com.
+
+4. Express.js. Express. OpenJS Foundation, expressjs.com.
+
+5. Gemini API. Gemini API. Google AI, ai.google.dev.
+
+6. GitHub. GitHub. GitHub, github.com.
+
+7. Lucide. Lucide Icons. Lucide Contributors, lucide.dev.
+
+8. Node.js. Node.js. OpenJS Foundation, nodejs.org.
+
+9. React. React. Meta Platforms, react.dev.
+
+10. Render. Render. Render Services Inc., render.com.
+
+11. SQLite. SQLite. sqlite.org.
+
+12. Tailwind CSS. Tailwind CSS. Tailwind Labs, tailwindcss.com.
+
+13. Vite. Vite. vitejs.dev.

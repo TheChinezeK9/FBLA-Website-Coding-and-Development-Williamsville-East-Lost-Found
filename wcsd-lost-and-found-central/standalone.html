@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WCSD Lost & Found Central</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'float-slow': 'float 10s ease-in-out infinite',
+              'float-delayed': 'float 8s ease-in-out infinite 4s',
+              'bounce-slow': 'bounce 3s infinite',
+              'spin-slow': 'spin 8s linear infinite',
+              'wiggle': 'wiggle 2s ease-in-out infinite',
+              'fade-in': 'fadeIn 0.5s ease-out forwards',
+              'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+              'scale-up': 'scaleUp 0.5s ease-out forwards',
+              'shake': 'shake 0.5s ease-in-out',
+            },
+            keyframes: {
+              float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+              wiggle: { '0%, 100%': { transform: 'rotate(-3deg)' }, '50%': { transform: 'rotate(3deg)' } },
+              fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+              fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+              scaleUp: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
+              shake: { '0%, 100%': { transform: 'translateX(0)' }, '20%': { transform: 'translateX(-10px)' }, '40%': { transform: 'translateX(10px)' }, '60%': { transform: 'translateX(-10px)' }, '80%': { transform: 'translateX(10px)' } }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.263.1?deps=react@18.2.0"
+      }
+    }
+    </script>
+    <style>
+      body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+      .dark body { background-color: transparent; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      .neon-card { transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease; }
+      .neon-card:hover { box-shadow: 0 0 22px rgba(0,0,0,0.1); }
+      .dark .neon-card:hover { box-shadow: 0 0 22px rgba(255,255,255,0.25) !important; }
+      @keyframes loginCardIn { from { opacity: 0; transform: translateY(24px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+      @keyframes warpRing { 0% { transform: scale(0.8); opacity: 0; } 50% { opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" data-presets="react,typescript">
+      import React, { useState, useEffect, useRef } from "react";
+      import { createRoot } from "react-dom/client";
+      import { 
+        Home as HomeIcon, Users, Info, Scale, BookOpen, Camera, X, Sparkles, User, Lock, ArrowRight, ArrowUp, 
+        Shield, Search, Calendar, Filter, Mail, Check, Trash2, Tag, Send, Loader2, Heart, Cloud, Star, 
+        CheckCircle, AlertTriangle, HelpCircle, ChevronRight, MapPin, FileText, Phone, Zap, Music, Smile, Sun,
+        Monitor, Code, Cog, School as SchoolIcon, Building2, Settings, LogOut, ArrowLeft, Bot, ListChecks, Plus, Wand2
+      } from "lucide-react";
+
+      const SCHOOL_THEMES = {
+        will_east: { id: 'will_east', name: 'Williamsville East High School', logo: 'east.png', palette: { primary: '#ed1e25', secondary: '#f8ec24', tertiary: '#000000' }, contactInfo: { address: '151 Paradise Rd, East Amherst, NY 14051', phone: '(716) 626-8400', email: 'eastoffice@williamsvillek12.org', principal: 'Mr. Brian Swatland' } },
+        will_north: { id: 'will_north', name: 'Williamsville North High School', logo: 'north.png', palette: { primary: '#295236', secondary: '#ebe537', tertiary: '#b3a168' }, contactInfo: { address: '1595 Hopkins Rd, Williamsville, NY 14221', phone: '(716) 626-8500', email: 'northoffice@williamsvillek12.org', principal: 'Mrs. Julie Barber' } },
+        will_south: { id: 'will_south', name: 'Williamsville South High School', logo: 'south.png', palette: { primary: '#20366c', secondary: '#fbf9d2', tertiary: '#eaa55e' }, contactInfo: { address: '5950 Main St, Williamsville, NY 14221', phone: '(716) 626-8200', email: 'southoffice@williamsvillek12.org', principal: 'Dr. Ryan M. Bialas' } },
+      };
+
+      const CATEGORIES = ['Clothing', 'Electronics', 'Books', 'Musical', 'Personal', 'Other'];
+      const ADMIN_PASSWORD = "8290";
+
+      const callGeminiProxy = async (body) => {
+        const response = await fetch('/api/gemini', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        if (!response.ok) throw new Error('Proxy error');
+        return await response.json();
+      };
+
+      const DoodleBackground = () => (
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-45 dark:opacity-60">
+          <div className="absolute top-[18%] left-[18%] text-pink-500 animate-bounce-slow"><Heart size={40} fill="currentColor" className="opacity-65" /></div>
+          <div className="absolute top-[28%] right-[25%] text-yellow-500 animate-spin-slow"><Sun size={56} className="opacity-65" /></div>
+          <div className="absolute bottom-[35%] left-[12%] text-indigo-500 animate-wiggle"><Music size={40} className="opacity-65" /></div>
+          <div className="absolute bottom-[15%] right-[20%] text-emerald-500 animate-float"><Smile size={52} className="opacity-65" /></div>
+        </div>
+      );
+
+      const Login = ({ onLogin }) => {
+        const [phase, setPhase] = useState('idle');
+        const [username, setUsername] = useState('');
+        const [password, setPassword] = useState('');
+        const [error, setError] = useState(false);
+        const canvasRef = useRef(null);
+
+        useEffect(() => {
+          const canvas = canvasRef.current;
+          if (!canvas) return;
+          const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+          renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+          camera.position.z = 3.5;
+          const geometry = new THREE.SphereGeometry(2, 32, 32);
+          const material = new THREE.MeshBasicMaterial({ color: 0x112244, wireframe: true });
+          const sphere = new THREE.Mesh(geometry, material);
+          scene.add(sphere);
+          const animate = () => {
+            requestAnimationFrame(animate);
+            sphere.rotation.y += 0.005;
+            renderer.render(scene, camera);
+          };
+          animate();
+        }, []);
+
+        const handleLogin = (e) => {
+          e.preventDefault();
+          if (username && password) onLogin();
+          else setError(true);
+        };
+
+        return (
+          <div className="fixed inset-0 bg-[#050508] flex items-center justify-center">
+            <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+            <div className="relative z-10 bg-white/5 backdrop-blur-xl p-8 rounded-3xl border border-white/10 w-full max-w-xs">
+              <h1 className="text-white text-2xl font-black text-center mb-6">WCSD Portal</h1>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <input className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white" placeholder="Email" value={username} onChange={e => setUsername(e.target.value)} />
+                <input className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white" type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                <button className="w-full bg-white text-black font-bold py-3 rounded-xl">Launch</button>
+              </form>
+            </div>
+          </div>
+        );
+      };
+
+      const App = () => {
+        const [isLoggedIn, setIsLoggedIn] = useState(false);
+        const [view, setView] = useState('HOME');
+
+        if (!isLoggedIn) return <Login onLogin={() => setIsLoggedIn(true)} />;
+
+        return (
+          <div className="min-h-screen bg-[#f4f6f8] dark:bg-[#424242]">
+            <DoodleBackground />
+            <nav className="fixed top-0 left-0 right-0 bg-[#142e53] p-4 text-white z-50 flex justify-between items-center">
+              <div className="font-black text-xl">WCSD Lost&Found</div>
+              <div className="flex gap-4">
+                <button onClick={() => setView('HOME')}>Home</button>
+                <button onClick={() => setView('SCHOOLS')}>Schools</button>
+              </div>
+            </nav>
+            <main className="pt-24 p-8">
+              {view === 'HOME' && (
+                <div className="text-center">
+                  <h1 className="text-4xl font-black mb-4">Welcome to Lost & Found</h1>
+                  <button onClick={() => setView('SCHOOLS')} className="bg-[#ab1e2f] text-white px-8 py-3 rounded-full font-bold">Get Started</button>
+                </div>
+              )}
+              {view === 'SCHOOLS' && (
+                <div className="grid gap-4 max-w-md mx-auto">
+                  {Object.values(SCHOOL_THEMES).map(s => (
+                    <button key={s.id} className="bg-white p-4 rounded-xl shadow-md font-bold text-left border-l-4" style={{ borderColor: s.palette.primary }}>{s.name}</button>
+                  ))}
+                </div>
+              )}
+            </main>
+          </div>
+        );
+      };
+
+      createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

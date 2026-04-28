@@ -1,0 +1,115 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap');
+@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 10s ease-in-out infinite;
+  --animate-float-delayed: float 8s ease-in-out infinite 4s;
+  --animate-bounce-slow: bounce 3s infinite;
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-wiggle: wiggle 2s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-fade-in-up: fadeInUp 0.6s ease-out forwards;
+  --animate-scale-up: scaleUp 0.5s ease-out forwards;
+  --animate-shake: shake 0.5s ease-in-out;
+
+  @keyframes float {0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+  @keyframes wiggle {0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
+  @keyframes fadeIn {0%{opacity:0;}100%{opacity:1;}}
+  @keyframes fadeInUp {0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
+  @keyframes scaleUp {0%{opacity:0;transform:scale(0.95);}100%{opacity:1;transform:scale(1);}}
+  @keyframes shake {0%,100%{transform:translateX(0);}20%{transform:translateX(-10px);}40%{transform:translateX(10px);}60%{transform:translateX(-10px);}80%{transform:translateX(10px);}}
+}
+
+:root {
+  --sat: env(safe-area-inset-top);
+  --sab: env(safe-area-inset-bottom);
+  --glass-container-opacity: 0.82;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #ffffff;
+  padding-top: var(--sat);
+  padding-bottom: var(--sab);
+  min-height: -webkit-fill-available;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+html.dark body {
+  background-color: #424242;
+}
+
+.glass-surface {
+  transition: background-color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.glass-surface,
+.neon-card {
+  opacity: 1;
+}
+
+html.glass-mode .glass-surface,
+html.glass-mode .neon-card,
+html.glass-mode .bg-white,
+html.glass-mode .bg-white\/90,
+html.glass-mode .bg-white\/70,
+html.glass-mode .dark\:bg-\[\#666666\],
+html.glass-mode .dark\:bg-\[\#555\],
+html.glass-mode .dark\:bg-\[\#666\],
+html.glass-mode .dark\:bg-\[\#555555\],
+html.glass-mode .dark\:bg-\[\#424242\],
+html.glass-mode .dark\:bg-black\/10,
+html.glass-mode .dark\:bg-slate-900,
+html.glass-mode .dark\:bg-slate-800 {
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  opacity: var(--glass-container-opacity);
+}
+
+html.dark.neon-mode .neon-accent,
+html.dark.neon-mode .neon-text,
+html.dark.neon-mode .text-white,
+html.dark.neon-mode .dark\:text-white,
+html.dark.neon-mode .text-white\/80,
+html.dark.neon-mode .text-white\/60,
+html.dark.neon-mode .text-white\/50,
+html.dark.neon-mode .text-white\/40,
+html.dark.neon-mode .text-\[\#e9ecef\] {
+  color: #ffffff;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.28);
+}
+
+html.dark.neon-mode .lucide,
+html.dark.neon-mode .neon-icon {
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
+}
+
+html.neon-mode .neon-border {
+  border-color: #ffffff !important;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.18);
+}
+
+html.dark.neon-mode .dark\:border-\[\#ffffff\],
+html.dark.neon-mode .dark\:border-white,
+html.dark.neon-mode .border-white\/10,
+html.dark.neon-mode .border-white\/15,
+html.dark.neon-mode .border-white\/20,
+html.dark.neon-mode .border-white\/30 {
+  border-color: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.16);
+}
+
+.no-scrollbar::-webkit-scrollbar { display:none; }
+.no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+
+@keyframes loginCardIn {from{opacity:0;transform:translateY(24px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes warpRing {0%{transform:scale(0.8);opacity:0;}50%{opacity:1;}100%{transform:scale(4);opacity:0;}}
