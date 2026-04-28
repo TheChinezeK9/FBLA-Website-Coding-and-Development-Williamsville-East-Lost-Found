@@ -307,11 +307,11 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
             <div className="flex flex-col md:flex-row gap-4 items-center bg-white dark:bg-[#2b2b2b] p-4 rounded-[25px] shadow-sm border border-slate-200 dark:border-[#202938]">
               <div className="relative flex-1 w-full md:w-auto">
                 <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 opacity-50" size={20} />
-                <input type="text" placeholder="Search items..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] py-3 pl-12 pr-6 rounded-[18px] outline-none font-medium text-slate-900 dark:text-white" />
+                <input type="text" placeholder="Search items..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#f3df9b] py-3 pl-12 pr-6 rounded-[18px] outline-none font-medium text-slate-900 dark:text-white" />
               </div>
               <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-1 no-scrollbar">
                 {['All', ...CATEGORIES].map(cat => (
-                  <button key={cat} onClick={() => setSelectedCategory(cat as Category | 'All')} className="px-5 py-2.5 rounded-[18px] font-bold whitespace-nowrap transition-all border text-slate-500 dark:text-slate-300 border-slate-200 dark:border-[#202938]" style={selectedCategory === cat ? { backgroundColor: school.palette.primary, color: 'white', borderColor: school.palette.primary } : {}}>
+                  <button key={cat} onClick={() => setSelectedCategory(cat as Category | 'All')} className="px-5 py-2.5 rounded-[18px] font-bold whitespace-nowrap transition-all border text-slate-500 dark:text-white border-slate-200 dark:border-[#e7a39b]" style={selectedCategory === cat ? { backgroundColor: school.palette.primary, color: 'white', borderColor: school.palette.primary } : {}}>
                     {cat}
                   </button>
                 ))}
@@ -345,9 +345,9 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                         <Calendar size={12} /> {item.date}
                       </div>
                     </div>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed mb-3 line-clamp-2">{item.description}</p>
-                    {item.foundLocation && <p className="text-xs text-slate-500 dark:text-slate-300 mb-1"><span className="font-bold">Location Found:</span> {item.foundLocation}</p>}
-                    {item.finderName && <p className="text-xs text-slate-500 dark:text-slate-300 mb-4"><span className="font-bold">Found By:</span> {item.finderName}</p>}
+                    <p className="text-slate-500 dark:text-white text-sm font-medium leading-relaxed mb-3 line-clamp-2">{item.description}</p>
+                    {item.foundLocation && <p className="text-xs text-slate-500 dark:text-white mb-1"><span className="font-bold">Location Found:</span> {item.foundLocation}</p>}
+                    {item.finderName && <p className="text-xs text-slate-500 dark:text-white mb-4"><span className="font-bold">Found By:</span> {item.finderName}</p>}
                     <div className="mt-auto">
                       {item.status === 'lost' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-amber-50 text-amber-600 border border-amber-100 text-sm uppercase tracking-widest">Pending Review</div>}
                       {item.status === 'found' && (
@@ -355,7 +355,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                           Claim Item
                         </button>
                       )}
-                      {item.status === 'pending_claim' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800 text-sm uppercase tracking-widest">Pending Approval</div>}
+                      {item.status === 'pending_claim' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-white border border-blue-100 dark:border-blue-800 text-sm uppercase tracking-widest">Pending Approval</div>}
                       {item.status === 'claimed' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-slate-100 dark:bg-[#1f1f1f] text-slate-400 border border-slate-200 dark:border-[#202938] text-sm uppercase tracking-widest">Claimed</div>}
                     </div>
                   </div>
@@ -373,7 +373,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                   <CheckCircle size={40} className="text-white" />
                 </div>
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Report Submitted!</h2>
-                <p className="text-slate-500 dark:text-slate-400 max-w-sm">Your item has been submitted for admin review.</p>
+                <p className="text-slate-500 dark:text-white max-w-sm">Your item has been submitted for admin review.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmitItem} className="bg-white dark:bg-[#2b2b2b] p-8 md:p-10 rounded-[25px] shadow-sm space-y-5" style={{ borderTop: `4px solid ${school.palette.primary}` }}>
@@ -435,12 +435,12 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
 
         {activeTab === 'ADMIN' && (
           <div className="space-y-10">
-            <div className="flex justify-between items-center bg-white dark:bg-[#666666] p-6 rounded-[25px] shadow-sm" style={{ borderLeft: `8px solid ${school.palette.primary}` }}>
+            <div className="flex justify-between items-center bg-white dark:bg-[#2b2b2b] p-6 rounded-[25px] shadow-sm border border-slate-200 dark:border-[#202938]" style={{ borderLeft: `8px solid ${school.palette.primary}` }}>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-slate-100 dark:bg-[#555] rounded-full flex items-center justify-center" style={{ color: school.palette.primary }}><Shield size={24} /></div>
+                <div className="w-12 h-12 bg-slate-100 dark:bg-[#1f1f1f] rounded-full flex items-center justify-center" style={{ color: school.palette.primary }}><Shield size={24} /></div>
                 <div>
                   <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Admin Dashboard</h2>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest">Restricted Access</p>
+                  <p className="text-slate-500 dark:text-white text-xs font-bold uppercase tracking-widest">Restricted Access</p>
                 </div>
               </div>
               <button onClick={() => { setIsAdmin(false); setActiveTab('BOARD'); }} className="px-6 py-2 bg-red-50 dark:bg-red-900/30 text-red-500 dark:text-red-400 hover:bg-red-100 rounded-full font-bold text-xs uppercase tracking-widest">Logout</button>
@@ -450,7 +450,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Pending Found Item Requests</h3>
               <div className="grid gap-4">
                 {items.filter(i => i.schoolId === school.id && i.status === 'lost').map(item => (
-                  <div key={item.id} className="bg-white dark:bg-[#666666] border border-slate-200 dark:border-[#1f2937] p-5 rounded-[18px] shadow-sm flex items-center gap-5">
+                  <div key={item.id} className="bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#202938] p-5 rounded-[18px] shadow-sm flex items-center gap-5">
                     <img
                       src={item.imageUrl}
                       className="w-20 h-20 rounded-[12px] object-cover cursor-zoom-in"
@@ -462,9 +462,9 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     />
                     <div className="flex-1">
                       <h4 className="font-bold text-slate-900 dark:text-white">{item.name}</h4>
-                      <p className="text-slate-600 dark:text-slate-200 text-sm">{item.description}</p>
-                      {item.foundLocation && <p className="text-xs text-slate-500 dark:text-slate-300 mt-1"><span className="font-bold">Location Found:</span> {item.foundLocation}</p>}
-                      {item.finderName && <p className="text-xs text-slate-500 dark:text-slate-300"><span className="font-bold">Found By:</span> {item.finderName}</p>}
+                      <p className="text-slate-600 dark:text-white text-sm">{item.description}</p>
+                      {item.foundLocation && <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Location Found:</span> {item.foundLocation}</p>}
+                      {item.finderName && <p className="text-xs text-slate-500 dark:text-white"><span className="font-bold">Found By:</span> {item.finderName}</p>}
                     </div>
                     <div className="flex gap-2">
                       <button onClick={() => approveLostItem(item.id)} className="px-5 py-2 bg-green-50 text-green-600 rounded-full font-bold text-sm flex items-center gap-1"><Check size={14} /> Approve</button>
@@ -473,7 +473,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                   </div>
                 ))}
                 {items.filter(i => i.schoolId === school.id && i.status === 'lost').length === 0 && (
-                  <div className="bg-white dark:bg-[#666666] border border-slate-200 dark:border-[#1f2937] rounded-[18px] p-6 text-sm text-slate-500 dark:text-slate-200">No pending found item requests.</div>
+                  <div className="bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#202938] rounded-[18px] p-6 text-sm text-slate-500 dark:text-white">No pending found item requests.</div>
                 )}
               </div>
             </div>
@@ -482,7 +482,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Pending Claim Requests</h3>
               <div className="grid gap-4">
                 {items.filter(i => i.schoolId === school.id && i.status === 'pending_claim').map(item => (
-                  <div key={item.id} className="bg-white dark:bg-[#666666] border border-slate-200 dark:border-[#1f2937] p-5 rounded-[18px] shadow-sm flex items-start gap-5">
+                  <div key={item.id} className="bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#202938] p-5 rounded-[18px] shadow-sm flex items-start gap-5">
                     <img
                       src={item.imageUrl}
                       className="w-20 h-20 rounded-[12px] object-cover cursor-zoom-in"
@@ -494,10 +494,10 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     />
                     <div className="flex-1">
                       <h4 className="font-bold text-slate-900 dark:text-white mb-1">{item.name}</h4>
-                      <p className="text-slate-600 dark:text-slate-200 text-sm mb-2">{item.description}</p>
-                      <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-200">Claimant: {item.claimantName || 'Unknown'} | {item.claimantEmail || 'No email'} | ID {item.claimantGrade || '-'}</p>
-                      {item.claimantLastSeen && <p className="text-xs text-slate-500 dark:text-slate-300 mt-1"><span className="font-bold">Last Seen:</span> {item.claimantLastSeen}</p>}
-                      {item.claimantProof && <p className="text-xs text-slate-500 dark:text-slate-300 mt-1"><span className="font-bold">Proof of Ownership:</span> {item.claimantProof}</p>}
+                      <p className="text-slate-600 dark:text-white text-sm mb-2">{item.description}</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-white">Claimant: {item.claimantName || 'Unknown'} | {item.claimantEmail || 'No email'} | ID {item.claimantGrade || '-'}</p>
+                      {item.claimantLastSeen && <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Last Seen:</span> {item.claimantLastSeen}</p>}
+                      {item.claimantProof && <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Proof of Ownership:</span> {item.claimantProof}</p>}
                     </div>
                     <div className="flex gap-2">
                       <button onClick={() => approveClaim(item.id)} className="px-5 py-2 bg-green-50 text-green-600 rounded-full font-bold text-sm flex items-center gap-1"><Check size={14} /> Accept</button>
@@ -506,7 +506,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                   </div>
                 ))}
                 {items.filter(i => i.schoolId === school.id && i.status === 'pending_claim').length === 0 && (
-                  <div className="bg-white dark:bg-[#666666] border border-slate-200 dark:border-[#1f2937] rounded-[18px] p-6 text-sm text-slate-500 dark:text-slate-200">No pending claim requests.</div>
+                  <div className="bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#202938] rounded-[18px] p-6 text-sm text-slate-500 dark:text-white">No pending claim requests.</div>
                 )}
               </div>
             </div>
@@ -515,17 +515,17 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Claimed Items Log (7 Days)</h3>
               <div className="grid gap-4">
                 {schoolClaimLogs.map(log => (
-                  <div key={log.id} className="bg-white dark:bg-[#666666] border border-slate-200 dark:border-[#1f2937] p-5 rounded-[18px] shadow-sm">
+                  <div key={log.id} className="bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#202938] p-5 rounded-[18px] shadow-sm">
                     <div className="flex flex-wrap gap-3 items-center justify-between">
                       <h4 className="font-bold text-slate-900 dark:text-white">{log.itemName}</h4>
-                      <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-200">Claimed {new Date(log.claimedAt).toLocaleString()}</span>
+                      <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-white">Claimed {new Date(log.claimedAt).toLocaleString()}</span>
                     </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-200 mt-2">By: {log.claimedBy} ({log.claimedEmail || 'no email'})</p>
-                    <p className="text-xs text-slate-400 dark:text-slate-300 mt-1">Expires: {new Date(log.expiresAt).toLocaleString()}</p>
+                    <p className="text-sm text-slate-600 dark:text-white mt-2">By: {log.claimedBy} ({log.claimedEmail || 'no email'})</p>
+                    <p className="text-xs text-slate-400 dark:text-white mt-1">Expires: {new Date(log.expiresAt).toLocaleString()}</p>
                   </div>
                 ))}
                 {schoolClaimLogs.length === 0 && (
-                  <div className="bg-white dark:bg-[#666666] border border-slate-200 dark:border-[#1f2937] rounded-[18px] p-6 text-sm text-slate-500 dark:text-slate-200">No claimed items logged in the last 7 days.</div>
+                  <div className="bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#202938] rounded-[18px] p-6 text-sm text-slate-500 dark:text-white">No claimed items logged in the last 7 days.</div>
                 )}
               </div>
             </div>
@@ -534,7 +534,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Manage All Items</h3>
               <div className="grid gap-4">
                 {items.filter(i => i.schoolId === school.id).map(item => (
-                  <div key={`manage-${item.id}`} className="bg-white dark:bg-[#666666] border border-slate-200 dark:border-[#1f2937] p-4 rounded-[18px] shadow-sm flex items-center gap-4">
+                  <div key={`manage-${item.id}`} className="bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#202938] p-4 rounded-[18px] shadow-sm flex items-center gap-4">
                     <img
                       src={item.imageUrl}
                       className="w-14 h-14 rounded-[10px] object-cover cursor-zoom-in"
@@ -546,7 +546,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     />
                     <div className="flex-1">
                       <p className="font-bold text-slate-900 dark:text-white">{item.name}</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-200 uppercase tracking-wider">{item.status.replace('_', ' ')}</p>
+                      <p className="text-xs text-slate-500 dark:text-white uppercase tracking-wider">{item.status.replace('_', ' ')}</p>
                     </div>
                     <button onClick={() => handleDelete(item.id)} className="px-4 py-2 bg-red-50 text-red-500 rounded-full font-bold text-xs uppercase tracking-widest">
                       Delete
@@ -554,7 +554,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                   </div>
                 ))}
                 {items.filter(i => i.schoolId === school.id).length === 0 && (
-                  <div className="bg-white dark:bg-[#666666] border border-slate-200 dark:border-[#1f2937] rounded-[18px] p-6 text-sm text-slate-500 dark:text-slate-200">No items available to manage.</div>
+                  <div className="bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#202938] rounded-[18px] p-6 text-sm text-slate-500 dark:text-white">No items available to manage.</div>
                 )}
               </div>
             </div>
@@ -564,18 +564,18 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
 
       {claimingItem && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-          <div className="bg-white dark:bg-[#555] rounded-[25px] p-8 w-full max-w-lg shadow-2xl relative">
-            <button onClick={() => setClaimingItem(null)} className="absolute top-5 right-5 text-slate-300"><X size={22} /></button>
-            <h3 className="text-2xl font-bold text-center mb-6">Claim Item</h3>
+          <div className="bg-white dark:bg-[#2b2b2b] rounded-[25px] p-8 w-full max-w-lg shadow-2xl relative border border-slate-200 dark:border-[#202938]">
+            <button onClick={() => setClaimingItem(null)} className="absolute top-5 right-5 text-slate-300 dark:text-white"><X size={22} /></button>
+            <h3 className="text-2xl font-bold text-center mb-6 text-slate-900 dark:text-white">Claim Item</h3>
             <form onSubmit={handleClaim} className="space-y-4">
-              <input required value={claimName} onChange={e => setClaimName(e.target.value)} className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#666] border rounded-[12px]" placeholder="Full Name" />
-              <input required value={claimGrade} onChange={e => setClaimGrade(e.target.value.replace(/\D/g, ''))} className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#666] border rounded-[12px]" placeholder="Grade / ID (numbers only)" />
-              <input required type="email" value={claimEmail} onChange={e => setClaimEmail(e.target.value)} className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#666] border rounded-[12px]" placeholder="School Email" />
+              <input required value={claimName} onChange={e => setClaimName(e.target.value)} className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] rounded-[12px] text-slate-900 dark:text-white" placeholder="Full Name" />
+              <input required value={claimGrade} onChange={e => setClaimGrade(e.target.value.replace(/\D/g, ''))} className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] rounded-[12px] text-slate-900 dark:text-white" placeholder="Grade / ID (numbers only)" />
+              <input required type="email" value={claimEmail} onChange={e => setClaimEmail(e.target.value)} className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] rounded-[12px] text-slate-900 dark:text-white" placeholder="School Email" />
               <input
                 required
                 value={claimLastSeen}
                 onChange={e => setClaimLastSeen(e.target.value)}
-                className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#666] border rounded-[12px]"
+                className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] rounded-[12px] text-slate-900 dark:text-white"
                 placeholder="Location and approximate time the item was lost"
               />
               <textarea
@@ -583,7 +583,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                 value={claimProof}
                 onChange={e => setClaimProof(e.target.value)}
                 rows={3}
-                className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#666] border rounded-[12px]"
+                className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] rounded-[12px] text-slate-900 dark:text-white"
                 placeholder="Proof of Ownership (i.e., information that can verify ownership, such as distinctive characteristics, contents, or identifying markings)"
               />
               <button type="submit" className="w-full text-white py-4 rounded-[14px] font-bold" style={{ backgroundColor: school.palette.primary }}>Submit Claim</button>
@@ -594,14 +594,14 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
 
       {rejectingClaimItem && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm">
-          <div className="bg-white dark:bg-[#555] rounded-[25px] p-8 w-full max-w-lg shadow-2xl relative">
-            <button onClick={() => setRejectingClaimItem(null)} className="absolute top-5 right-5 text-slate-300"><X size={22} /></button>
-            <h3 className="text-2xl font-bold text-center mb-2">Reject Claim</h3>
-            <p className="text-sm text-slate-500 text-center mb-6">Reason is required before rejecting this claim.</p>
-            <textarea value={rejectReason} onChange={e => { setRejectReason(e.target.value); if (rejectReasonError) setRejectReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#666] border rounded-[12px] ${rejectReasonError ? 'border-red-400' : 'border-slate-200 dark:border-slate-600'}`} placeholder="Enter rejection reason" />
+          <div className="bg-white dark:bg-[#2b2b2b] rounded-[25px] p-8 w-full max-w-lg shadow-2xl relative border border-slate-200 dark:border-[#202938]">
+            <button onClick={() => setRejectingClaimItem(null)} className="absolute top-5 right-5 text-slate-300 dark:text-white"><X size={22} /></button>
+            <h3 className="text-2xl font-bold text-center mb-2 text-slate-900 dark:text-white">Reject Claim</h3>
+            <p className="text-sm text-slate-500 dark:text-white text-center mb-6">Reason is required before rejecting this claim.</p>
+            <textarea value={rejectReason} onChange={e => { setRejectReason(e.target.value); if (rejectReasonError) setRejectReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border rounded-[12px] text-slate-900 dark:text-white ${rejectReasonError ? 'border-red-400' : 'border-slate-200 dark:border-[#202938]'}`} placeholder="Enter rejection reason" />
             {rejectReasonError && <p className="text-red-500 text-xs font-bold mt-2">Please enter a reason to reject this claim.</p>}
             <div className="flex gap-3 mt-5">
-              <button type="button" onClick={() => setRejectingClaimItem(null)} className="flex-1 py-3 rounded-[14px] font-bold text-slate-600 bg-slate-100 dark:bg-[#666]">Cancel</button>
+              <button type="button" onClick={() => setRejectingClaimItem(null)} className="flex-1 py-3 rounded-[14px] font-bold text-slate-600 dark:text-white bg-slate-100 dark:bg-[#1f1f1f]">Cancel</button>
               <button type="button" onClick={rejectClaim} className="flex-1 py-3 rounded-[14px] font-bold text-white bg-red-500">Reject Claim</button>
             </div>
           </div>
@@ -610,14 +610,14 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
 
       {rejectingFoundItem && (
         <div className="fixed inset-0 z-[115] flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm">
-          <div className="bg-white dark:bg-[#555] rounded-[25px] p-8 w-full max-w-lg shadow-2xl relative">
-            <button onClick={() => setRejectingFoundItem(null)} className="absolute top-5 right-5 text-slate-300"><X size={22} /></button>
-            <h3 className="text-2xl font-bold text-center mb-2">Reject Found Item Inquiry</h3>
-            <p className="text-sm text-slate-500 text-center mb-6">Reason is required before rejecting this inquiry.</p>
-            <textarea value={rejectFoundReason} onChange={e => { setRejectFoundReason(e.target.value); if (rejectFoundReasonError) setRejectFoundReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#666] border rounded-[12px] ${rejectFoundReasonError ? 'border-red-400' : 'border-slate-200 dark:border-slate-600'}`} placeholder="Enter rejection reason" />
+          <div className="bg-white dark:bg-[#2b2b2b] rounded-[25px] p-8 w-full max-w-lg shadow-2xl relative border border-slate-200 dark:border-[#202938]">
+            <button onClick={() => setRejectingFoundItem(null)} className="absolute top-5 right-5 text-slate-300 dark:text-white"><X size={22} /></button>
+            <h3 className="text-2xl font-bold text-center mb-2 text-slate-900 dark:text-white">Reject Found Item Inquiry</h3>
+            <p className="text-sm text-slate-500 dark:text-white text-center mb-6">Reason is required before rejecting this inquiry.</p>
+            <textarea value={rejectFoundReason} onChange={e => { setRejectFoundReason(e.target.value); if (rejectFoundReasonError) setRejectFoundReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border rounded-[12px] text-slate-900 dark:text-white ${rejectFoundReasonError ? 'border-red-400' : 'border-slate-200 dark:border-[#202938]'}`} placeholder="Enter rejection reason" />
             {rejectFoundReasonError && <p className="text-red-500 text-xs font-bold mt-2">Please enter a reason to reject this inquiry.</p>}
             <div className="flex gap-3 mt-5">
-              <button type="button" onClick={() => setRejectingFoundItem(null)} className="flex-1 py-3 rounded-[14px] font-bold text-slate-600 bg-slate-100 dark:bg-[#666]">Cancel</button>
+              <button type="button" onClick={() => setRejectingFoundItem(null)} className="flex-1 py-3 rounded-[14px] font-bold text-slate-600 dark:text-white bg-slate-100 dark:bg-[#1f1f1f]">Cancel</button>
               <button type="button" onClick={rejectFound} className="flex-1 py-3 rounded-[14px] font-bold text-white bg-red-500">Reject Inquiry</button>
             </div>
           </div>
