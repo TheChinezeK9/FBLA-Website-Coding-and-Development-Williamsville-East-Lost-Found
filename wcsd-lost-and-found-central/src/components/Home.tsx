@@ -18,7 +18,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
           className="w-full h-auto mx-auto transform scale-100 md:scale-105"
           onError={(e) => {
             e.currentTarget.src =
-              'https://ui-avatars.com/api/?name=Williamsville+East+High+School&background=ed1e25&color=fff&size=200';
+              'https://ui-avatars.com/api/?name=Williamsville+East+High+School&background=e7a39b&color=000&size=200';
           }}
         />
       </div>
@@ -33,7 +33,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
 
       <button
         onClick={() => onNavigate('BULLETIN_BOARD')}
-        className="bg-[#ed1e25] text-black border-2 border-[#ed1e25] dark:border-[#f8ec24] w-[250px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
+        className="bg-[#e7a39b] text-black border-2 border-[#e7a39b] dark:border-[#f3df9b] w-[250px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
       >
         View Lost Items →
       </button>
@@ -41,14 +41,14 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
       <div className="flex justify-center gap-4 mt-6">
         <button
           onClick={onStartClaim}
-          className="flex items-center justify-center gap-2 bg-[#f8ec24] text-black border-2 border-[#f8ec24] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
+          className="flex items-center justify-center gap-2 bg-[#f3df9b] text-black border-2 border-[#f3df9b] dark:border-[#f3df9b] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
           <FileText size={16} /> File a Claim
         </button>
 
         <button
           onClick={() => onNavigate('LIVE_TRACKER')}
-          className="flex items-center justify-center gap-2 bg-[#f8ec24] text-black border-2 border-[#f8ec24] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
+          className="flex items-center justify-center gap-2 bg-[#f3df9b] text-black border-2 border-[#f3df9b] dark:border-[#f3df9b] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
           <Camera size={16} /> AI Scanner
         </button>

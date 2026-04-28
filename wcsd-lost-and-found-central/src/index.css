@@ -37,7 +37,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  background-color: #ffffff;
+  background-color: #fffaf4;
   padding-top: var(--sat);
   padding-bottom: var(--sab);
   min-height: -webkit-fill-available;
@@ -45,7 +45,7 @@ body {
 }
 
 html.dark body {
-  background-color: #424242;
+  background-color: #4a403a;
 }
 
 .glass-surface {
