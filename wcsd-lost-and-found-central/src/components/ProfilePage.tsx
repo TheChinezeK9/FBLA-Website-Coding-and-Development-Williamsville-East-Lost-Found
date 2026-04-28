@@ -160,7 +160,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         </div>
       )}
       <div className="max-w-4xl mx-auto space-y-8">
-        <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#202938] flex flex-col md:flex-row items-center gap-8">
+        <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563] flex flex-col md:flex-row items-center gap-8">
           <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#ab1e2f] to-[#142e53] flex items-center justify-center text-white text-5xl font-black shadow-lg">
             {profileUser.name.charAt(0)}
           </div>
@@ -179,8 +179,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] shadow-xl border border-slate-100 dark:border-[#202938] overflow-hidden">
-            <div className="p-6 border-b border-slate-100 dark:border-[#202938] flex items-center justify-between">
+          <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] shadow-xl border border-slate-100 dark:border-[#4b5563] overflow-hidden">
+            <div className="p-6 border-b border-slate-100 dark:border-[#4b5563] flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                   <Bell size={20} />
@@ -194,7 +194,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
             <div className="p-6 space-y-4 max-h-[420px] overflow-y-auto">
               {profileUser.notifications.length > 0 ? (
                 profileUser.notifications.map(notif => (
-                  <div key={notif.id} className={`p-4 rounded-2xl border ${notif.read ? 'bg-slate-50 dark:bg-[#1f1f1f] border-slate-100 dark:border-[#202938]' : 'bg-blue-50/30 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30'} transition-colors`}>
+                  <div key={notif.id} className={`p-4 rounded-2xl border ${notif.read ? 'bg-slate-50 dark:bg-[#1f1f1f] border-slate-100 dark:border-[#4b5563]' : 'bg-blue-50/30 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30'} transition-colors`}>
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="text-sm font-semibold text-slate-800 dark:text-white mb-1">{notif.text}</p>
@@ -214,8 +214,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] shadow-xl border border-slate-100 dark:border-[#202938] overflow-hidden">
-            <div className="p-6 border-b border-slate-100 dark:border-[#202938] flex items-center justify-between">
+          <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] shadow-xl border border-slate-100 dark:border-[#4b5563] overflow-hidden">
+            <div className="p-6 border-b border-slate-100 dark:border-[#4b5563] flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 flex items-center justify-center">
                   <Heart size={20} />
@@ -226,7 +226,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
             <div className="p-6 space-y-3 max-h-[420px] overflow-y-auto">
               {wishlist.length > 0 ? (
                 wishlist.map(wish => (
-                  <div key={wish.id} className="relative p-4 pr-28 min-h-[104px] bg-slate-50 dark:bg-[#1f1f1f] rounded-2xl border border-slate-100 dark:border-[#202938]">
+                  <div key={wish.id} className="relative p-4 pr-28 min-h-[104px] bg-slate-50 dark:bg-[#1f1f1f] rounded-2xl border border-slate-100 dark:border-[#4b5563]">
                     <button
                       type="button"
                       onClick={() => void removeWish(wish.id)}
@@ -256,7 +256,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#202938]">
+        <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563]">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#1f1f1f] text-slate-600 dark:text-white flex items-center justify-center">
               <Settings size={20} />
@@ -265,7 +265,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <form onSubmit={handleChangePassword} className="p-5 rounded-2xl border border-slate-200 dark:border-[#202938] bg-slate-50/70 dark:bg-[#1f1f1f] space-y-3">
+            <form onSubmit={handleChangePassword} className="p-5 rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-slate-50/70 dark:bg-[#1f1f1f] space-y-3">
               <div className="flex items-center gap-2 text-slate-900 dark:text-white">
                 <Shield size={18} />
                 <p className="text-sm font-bold">Change Password</p>
@@ -277,21 +277,21 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
                 value={currentPassword}
                 onChange={e => setCurrentPassword(e.target.value)}
                 placeholder="Current password"
-                className="w-full rounded-xl border border-slate-200 dark:border-[#202938] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-white"
+                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-white"
               />
               <input
                 type="password"
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
                 placeholder="New password"
-                className="w-full rounded-xl border border-slate-200 dark:border-[#202938] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-white"
+                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-white"
               />
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
                 placeholder="Confirm new password"
-                className="w-full rounded-xl border border-slate-200 dark:border-[#202938] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-white"
+                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-white"
               />
 
               {passwordError && <p className="text-xs font-semibold text-red-500">{passwordError}</p>}
@@ -306,7 +306,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               </button>
             </form>
 
-            <div className="p-5 rounded-2xl border border-slate-200 dark:border-[#202938] hover:bg-slate-50 dark:hover:bg-[#1f1f1f] transition-colors space-y-4">
+            <div className="p-5 rounded-2xl border border-slate-200 dark:border-[#4b5563] hover:bg-slate-50 dark:hover:bg-[#1f1f1f] transition-colors space-y-4">
               <div className="flex items-center gap-2 text-slate-900 dark:text-white">
                 <ExternalLink size={18} />
                 <p className="text-sm font-bold">Policies & Accessibility</p>
@@ -316,7 +316,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               <div className="space-y-3">
                 <a
                   href="/privacypolicy.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#202938] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#1f1f1f] transition-colors"
                 >
                   <span>Privacy Policy</span>
                   <ExternalLink size={16} />
@@ -324,7 +324,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
                 <a
                   href="/termsofservice.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#202938] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#1f1f1f] transition-colors"
                 >
                   <span>Terms of Use</span>
                   <ExternalLink size={16} />
@@ -332,7 +332,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
                 <a
                   href="/accessibility.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#202938] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#1f1f1f] transition-colors"
                 >
                   <span>Accessibility</span>
                   <ExternalLink size={16} />

@@ -349,7 +349,7 @@ export default function App() {
 
       {showAdminModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-[#2b2b2b] rounded-[25px] p-8 w-full max-w-sm shadow-2xl relative border border-slate-200 dark:border-[#202938]">
+          <div className="bg-white dark:bg-[#2b2b2b] rounded-[25px] p-8 w-full max-w-sm shadow-2xl relative border border-slate-200 dark:border-[#4b5563]">
             <button onClick={() => setShowAdminModal(false)} className="absolute top-5 right-5 text-slate-500 dark:text-white hover:text-slate-900 dark:hover:text-white transition-colors">
               <X size={22} />
             </button>
@@ -366,7 +366,7 @@ export default function App() {
                 type="password"
                 value={adminPassword}
                 onChange={e => setAdminPassword(e.target.value)}
-                className={`w-full p-4 border rounded-[14px] outline-none font-bold text-center text-2xl tracking-[0.6em] text-slate-900 dark:text-white dark:bg-[#1f1f1f] transition-all ${adminError ? 'border-red-400 bg-red-50 dark:bg-red-900/20 animate-shake' : 'border-slate-200 bg-slate-50 dark:border-[#202938]'}`}
+                className={`w-full p-4 border rounded-[14px] outline-none font-bold text-center text-2xl tracking-[0.6em] text-slate-900 dark:text-white dark:bg-[#1f1f1f] transition-all ${adminError ? 'border-red-400 bg-red-50 dark:bg-red-900/20 animate-shake' : 'border-slate-200 bg-slate-50 dark:border-[#4b5563]'}`}
                 placeholder="••••"
               />
               {adminError && <p className="text-red-500 text-center font-bold text-xs uppercase tracking-widest">Incorrect access code</p>}

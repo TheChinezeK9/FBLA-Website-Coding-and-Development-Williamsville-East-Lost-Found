@@ -207,23 +207,23 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                      <div className="flex-1 bg-gray-50 dark:bg-[#1f1f1f] p-4 rounded-2xl border border-gray-200 dark:border-[#202938]">
+                      <div className="flex-1 bg-gray-50 dark:bg-[#1f1f1f] p-4 rounded-2xl border border-gray-200 dark:border-[#4b5563]">
                         <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-white mb-1">Confidence</p>
                         <p className="text-lg sm:text-xl font-bold">98.4%</p>
                       </div>
-                      <div className="flex-1 bg-gray-50 dark:bg-[#1f1f1f] p-4 rounded-2xl border border-gray-200 dark:border-[#202938]">
+                      <div className="flex-1 bg-gray-50 dark:bg-[#1f1f1f] p-4 rounded-2xl border border-gray-200 dark:border-[#4b5563]">
                         <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-white mb-1">Category</p>
                         <p className="text-lg sm:text-xl font-bold">{analysisResult?.category}</p>
                       </div>
                     </div>
 
-                    <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-[#202938]">
+                    <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-[#4b5563]">
                       <label className="block text-sm font-bold text-gray-400 dark:text-white mb-3 uppercase tracking-wider">Select School Board *</label>
                       <select
                         required
                         value={selectedSchool}
                         onChange={(e) => setSelectedSchool(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-white dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#202938] rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
+                        className="w-full p-3 sm:p-4 bg-white dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#4b5563] rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
                       >
                         <option value="">-- Choose School --</option>
                         {Object.values(SCHOOL_THEMES).map(school => (
@@ -241,7 +241,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                         required
                         value={foundLocation}
                         onChange={(e) => setFoundLocation(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-white dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#202938] rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
+                        className="w-full p-3 sm:p-4 bg-white dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#4b5563] rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
                         placeholder="Where was the item found?"
                       />
                     </div>
@@ -255,7 +255,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                         required
                         value={finderName}
                         onChange={(e) => setFinderName(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-white dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#202938] rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
+                        className="w-full p-3 sm:p-4 bg-white dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#4b5563] rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
                         placeholder="Who found this item?"
                       />
                     </div>

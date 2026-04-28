@@ -18,13 +18,13 @@ export const MeetMakers: React.FC = () => {
             const Icon = member.icon;
 
             return (
-              <div key={member.name} className="bg-white dark:bg-[#2b2b2b] p-8 rounded-[18px] shadow-xl transition-transform hover:scale-[1.02] border border-transparent dark:border-[#202938]">
-                <div className="w-24 h-24 mx-auto bg-gray-200 dark:bg-[#1f1f1f] rounded-full mb-6 overflow-hidden flex items-center justify-center border border-black dark:border-[#202938]">
+              <div key={member.name} className="bg-white dark:bg-[#2b2b2b] p-8 rounded-[18px] shadow-xl transition-transform hover:scale-[1.02] border border-transparent dark:border-[#4b5563]">
+                <div className="w-24 h-24 mx-auto bg-gray-200 dark:bg-[#1f1f1f] rounded-full mb-6 overflow-hidden flex items-center justify-center border border-black dark:border-[#4b5563]">
                   <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
                 </div>
                 <h3 className="text-xl font-bold text-black dark:text-white mb-1">{member.name}</h3>
                 <p className="text-slate-500 dark:text-white text-sm font-bold uppercase tracking-widest mb-4">{member.role}</p>
-                <div className="w-fit mx-auto flex items-center gap-2 px-3 py-1 rounded-full border border-black/20 dark:border-[#202938] text-slate-600 dark:text-white">
+                <div className="w-fit mx-auto flex items-center gap-2 px-3 py-1 rounded-full border border-black/20 dark:border-[#4b5563] text-slate-600 dark:text-white">
                   <Icon size={16} />
                   <span className="text-xs font-bold">{member.role}</span>
                 </div>
