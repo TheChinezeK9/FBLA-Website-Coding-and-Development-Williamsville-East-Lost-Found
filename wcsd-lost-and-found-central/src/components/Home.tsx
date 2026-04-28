@@ -33,7 +33,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
 
       <button
         onClick={() => onNavigate('BULLETIN_BOARD')}
-        className="bg-[#ed1e25] text-white border-2 border-[#ed1e25] dark:border-[#f8ec24] w-[250px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
+        className="bg-[#f8ec24] text-black border-2 border-[#f8ec24] dark:border-[#f8ec24] w-[250px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
       >
         View Lost Items →
       </button>
@@ -41,14 +41,14 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
       <div className="flex justify-center gap-4 mt-6">
         <button
           onClick={onStartClaim}
-          className="flex items-center justify-center gap-2 bg-[#ed1e25] text-white border-2 border-[#ed1e25] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
+          className="flex items-center justify-center gap-2 bg-[#f8ec24] text-black border-2 border-[#f8ec24] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
           <FileText size={16} /> File a Claim
         </button>
 
         <button
           onClick={() => onNavigate('LIVE_TRACKER')}
-          className="flex items-center justify-center gap-2 bg-[#ed1e25] text-white border-2 border-[#ed1e25] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
+          className="flex items-center justify-center gap-2 bg-[#f8ec24] text-black border-2 border-[#f8ec24] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
           <Camera size={16} /> AI Scanner
         </button>

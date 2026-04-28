@@ -199,7 +199,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
   };
 
   const TOOL_APPS = [
-    { id: 'tracker', label: 'AI Scanner', icon: Camera, gradient: 'linear-gradient(135deg, #ed1e25 0%, #7a0f13 100%)', action: () => onNavigate('LIVE_TRACKER') },
+    { id: 'tracker', label: 'AI Scanner', icon: Camera, gradient: 'linear-gradient(135deg, #f8ec24 0%, #e5d61f 100%)', action: () => onNavigate('LIVE_TRACKER') },
     { id: 'chatbot', label: 'Hammy Bot', icon: Bot, gradient: 'linear-gradient(135deg, #f8ec24 0%, #c9b90e 100%)', action: () => window.dispatchEvent(new CustomEvent('open-hammy-bot', { detail: { source: 'tools-chatbot' } })) },
     { id: 'admin', label: isAdmin ? 'Admin Panel' : 'Staff Login', icon: isAdmin ? Shield : Lock, gradient: isAdmin ? 'linear-gradient(135deg, #b45309 0%, #d97706 100%)' : 'linear-gradient(135deg, #374151 0%, #4b5563 100%)', action: () => isAdmin ? onNavigate('BULLETIN_BOARD') : onOpenAdminLogin() },
     { id: 'claim', label: 'File a Claim', icon: FileText, gradient: 'linear-gradient(135deg, #ed1e25 0%, #f8ec24 100%)', action: () => onNavigate('BULLETIN_BOARD') },
@@ -233,7 +233,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
         <div className="bg-white dark:bg-[#424242] rounded-[28px] shadow-xl border border-slate-100 dark:border-white/10 overflow-hidden">
           <div className="px-7 pt-7 pb-5 border-b border-slate-100 dark:border-white/10">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-[10px] bg-[#ed1e25] flex items-center justify-center shadow-md"><ListChecks size={18} color="#fff" /></div>
+              <div className="w-9 h-9 rounded-[10px] bg-[#f8ec24] flex items-center justify-center shadow-md"><ListChecks size={18} color="#000" /></div>
               <h2 className="text-lg font-black text-slate-900 dark:text-white">I'm looking for...</h2>
             </div>
           </div>
@@ -244,7 +244,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
                 {['Any', ...CATEGORIES].map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <button onClick={() => void addWish()} disabled={!wishInput.trim() || isSavingWish} className="w-full py-2.5 rounded-[12px] bg-[#ed1e25] text-white text-sm font-bold flex items-center justify-center gap-2 disabled:opacity-50">
+            <button onClick={() => void addWish()} disabled={!wishInput.trim() || isSavingWish} className="w-full py-2.5 rounded-[12px] bg-[#f8ec24] text-black text-sm font-bold flex items-center justify-center gap-2 disabled:opacity-50">
               <Plus size={16} /> {isSavingWish ? 'Adding...' : 'Add to List'}
             </button>
             {wishError && <p className="text-xs text-red-500 mt-2">{wishError}</p>}

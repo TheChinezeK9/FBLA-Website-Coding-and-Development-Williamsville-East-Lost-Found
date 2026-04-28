@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navBtnClass = (view: View) =>
     `flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${
-      currentView === view ? 'bg-[#ed1e25] text-white border-[#ed1e25]' : 'text-[#fff7d1] bg-transparent border-transparent hover:text-white'
+      currentView === view ? 'bg-[#f8ec24] text-black border-[#f8ec24]' : 'text-black bg-transparent border-transparent hover:text-[#f8ec24]'
     }`;
 
   return (
@@ -57,22 +57,22 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="flex justify-between items-center bg-[#ed1e25] w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-[#f8ec24]">
         <div onClick={() => onNavigate('HOME')} className="flex items-center gap-2 cursor-pointer px-4 py-2 hover:scale-105 transition-all">
           <img src="/images/east.png" alt="Williamsville East High School logo" className="w-12 h-12 rounded-lg object-cover shadow-sm bg-white p-1" />
-          <span className="font-bold text-xl tracking-tight text-white">East Lost&amp;Found</span>
+          <span className="font-bold text-xl tracking-tight text-black">East Lost&amp;Found</span>
         </div>
         <div className="hidden lg:flex items-center gap-1">
           <button onClick={() => onNavigate('HOME')} className={navBtnClass('HOME')}><HomeIcon size={16} /><span className="text-sm font-bold">Home</span></button>
           <button onClick={() => onNavigate('BULLETIN_BOARD')} className={navBtnClass('BULLETIN_BOARD')}><Users size={16} /><span className="text-sm font-bold">Item Board</span></button>
           <div className="w-px h-6 bg-white/20 mx-2" />
           <div className="relative">
-            <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-[#fff7d1] hover:text-white"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
+            <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:text-[#f8ec24]"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
             {showInfoMenu && (
-              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-48 bg-[#ed1e25] border border-[#f8ec24] rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
+              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-48 bg-[#f8ec24] border border-[#ed1e25] rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
                 {[
                   { id: 'ABOUT' as View, label: 'About Project', icon: <Info size={16} /> },
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
                   { id: 'GUIDE' as View, label: 'Help Guide', icon: <BookOpen size={16} /> }
                 ].map(item => (
-                  <button key={item.id} onClick={() => { onNavigate(item.id); setShowInfoMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[#fff7d1] hover:text-white hover:bg-[#ed1e25] text-sm font-bold">
+                  <button key={item.id} onClick={() => { onNavigate(item.id); setShowInfoMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black hover:bg-[#ed1e25] hover:text-black text-sm font-bold">
                     {item.icon} {item.label}
                   </button>
                 ))}
@@ -86,25 +86,25 @@ export const Navbar: React.FC<NavbarProps> = ({
           {user && (
             <button
               onClick={() => onNavigate('ACCOUNT')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#ed1e25] text-white border-[#ed1e25]' : 'bg-transparent text-[#fff7d1] border-transparent hover:text-white'}`}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#f8ec24] text-black border-[#f8ec24]' : 'bg-transparent text-black border-transparent hover:text-[#f8ec24]'}`}
             >
               <UserIcon size={18} />
               <span className="hidden md:inline font-bold text-sm">{user.name.split(' ')[0]}</span>
             </button>
           )}
-          <button onClick={() => onNavigate('TOOLS')} className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#ed1e25] text-white border-[#ed1e25]' : 'bg-transparent text-[#fff7d1] border-transparent hover:text-white'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
+          <button onClick={() => onNavigate('TOOLS')} className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f8ec24] text-black border-[#f8ec24]' : 'bg-transparent text-black border-transparent hover:text-[#f8ec24]'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
 
           <div className="relative" ref={settingsRef}>
-            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#ed1e25] ${isAdmin ? 'text-[#f8ec24]' : 'text-white'}`} title="Settings"><Settings size={20} /></button>
+            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#f8ec24] ${isAdmin ? 'text-[#f8ec24]' : 'text-black'}`} title="Settings"><Settings size={20} /></button>
             {showSettingsMenu && (
-              <div className="absolute top-full right-0 mt-2 w-64 bg-[#ed1e25] border border-[#f8ec24] rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-3">Settings</p>
+              <div className="absolute top-full right-0 mt-2 w-64 bg-[#f8ec24] border border-[#ed1e25] rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mb-3">Settings</p>
 
                 <div className="space-y-2 mb-4">
                   <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors group">
                     <div className="flex items-center gap-3">
                       <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-indigo-500/20 text-indigo-400' : 'bg-yellow-500/20 text-yellow-500'}`}>{isDarkMode ? <Moon size={16} /> : <Sun size={16} />}</div>
-                      <span className="text-sm font-bold text-white/80 group-hover:text-white">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
+                      <span className="text-sm font-bold text-black/80 group-hover:text-black">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
                     </div>
                     <div className={`w-8 h-4 rounded-full relative transition-colors ${isDarkMode ? 'bg-indigo-500' : 'bg-slate-600'}`}>
                       <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${isDarkMode ? 'left-5' : 'left-1'}`} />
@@ -114,7 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button onClick={() => setShowDoodles(!showDoodles)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors group">
                     <div className="flex items-center gap-3">
                       <div className={`p-1.5 rounded-lg ${showDoodles ? 'bg-pink-500/20 text-pink-400' : 'bg-slate-500/20 text-slate-400'}`}><Palette size={16} /></div>
-                      <span className="text-sm font-bold text-white/80 group-hover:text-white">Doodle Background</span>
+                      <span className="text-sm font-bold text-black/80 group-hover:text-black">Doodle Background</span>
                     </div>
                     <div className={`w-8 h-4 rounded-full relative transition-colors ${showDoodles ? 'bg-pink-500' : 'bg-slate-600'}`}>
                       <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${showDoodles ? 'left-5' : 'left-1'}`} />
@@ -125,7 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <button onClick={() => setNeonMode(!neonMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors group">
                       <div className="flex items-center gap-3">
                         <div className={`p-1.5 rounded-lg ${neonMode ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-500/20 text-slate-400'}`}><Sparkles size={16} /></div>
-                        <span className="text-sm font-bold text-white/80 group-hover:text-white">Neon Accents</span>
+                        <span className="text-sm font-bold text-black/80 group-hover:text-black">Neon Accents</span>
                       </div>
                       <div className={`w-8 h-4 rounded-full relative transition-colors ${neonMode ? 'bg-emerald-500' : 'bg-slate-600'}`}>
                         <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${neonMode ? 'left-5' : 'left-1'}`} />
@@ -136,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button onClick={() => setGlassMode(!glassMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors group">
                     <div className="flex items-center gap-3">
                       <div className={`p-1.5 rounded-lg ${glassMode ? 'bg-sky-500/20 text-sky-400' : 'bg-slate-500/20 text-slate-400'}`}><div className="w-4 h-4 rounded-full border-2 border-current opacity-50" /></div>
-                      <span className="text-sm font-bold text-white/80 group-hover:text-white">Glassmorphism</span>
+                      <span className="text-sm font-bold text-black/80 group-hover:text-black">Glassmorphism</span>
                     </div>
                     <div className={`w-8 h-4 rounded-full relative transition-colors ${glassMode ? 'bg-sky-500' : 'bg-slate-600'}`}>
                       <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${glassMode ? 'left-5' : 'left-1'}`} />
@@ -155,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <button onClick={() => { setIsAdmin(false); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 text-sm font-bold transition-colors"><LogOut size={15} /> Logout Admin</button>
                   </>
                 ) : (
-                  <button onClick={() => { onOpenAdminLogin(); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#fff7d1] hover:text-white hover:bg-[#ed1e25] text-sm font-bold transition-colors"><Lock size={15} /> Admin Portal</button>
+                  <button onClick={() => { onOpenAdminLogin(); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-black hover:bg-[#ed1e25] hover:text-black text-sm font-bold transition-colors"><Lock size={15} /> Admin Portal</button>
                 )}
               </div>
             )}
