@@ -69,7 +69,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
           model: "gemini-3-flash-preview",
           contents: [{
             parts: [
-              { text: "Analyze this image of a lost item. Provide a JSON response with 'name', 'category' (choose one: Clothing, Electronics, Books, Musical, Personal, Other), and a short 10-word 'description'." },
+              { text: "Analyze this image of a lost item. Provide a JSON response with 'name', 'category' (choose one: Clothing, Electronics, Books, Music, Personal, Other), and a short 10-word 'description'." },
               { inlineData: { data: base64Data, mimeType: "image/jpeg" } }
             ]
           }],
@@ -79,7 +79,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
               type: "OBJECT",
               properties: {
                 name: { type: "STRING" },
-                category: { type: "STRING", enum: ['Clothing', 'Electronics', 'Books', 'Musical', 'Personal', 'Other'] },
+                category: { type: "STRING", enum: ['Clothing', 'Electronics', 'Books', 'Music', 'Personal', 'Other'] },
                 description: { type: "STRING" }
               },
               required: ['name', 'category', 'description']

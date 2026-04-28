@@ -1,4 +1,4 @@
-export type Category = 'Clothing' | 'Electronics' | 'Books' | 'Musical' | 'Personal' | 'Other';
+export type Category = 'Clothing' | 'Electronics' | 'Books' | 'Music' | 'Personal' | 'Other';
 
 export interface SchoolTheme {
   id: string;

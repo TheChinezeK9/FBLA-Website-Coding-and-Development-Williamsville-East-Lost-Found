@@ -304,14 +304,14 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
       <div className="max-w-7xl mx-auto px-6">
         {activeTab === 'BOARD' && (
           <div className="space-y-8">
-            <div className="flex flex-col md:flex-row gap-4 items-center bg-white dark:bg-[#666666] p-4 rounded-[25px] shadow-sm border border-slate-200 dark:border-[#1f2937]">
+            <div className="flex flex-col md:flex-row gap-4 items-center bg-white dark:bg-[#2b2b2b] p-4 rounded-[25px] shadow-sm border border-slate-200 dark:border-[#202938]">
               <div className="relative flex-1 w-full md:w-auto">
                 <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 opacity-50" size={20} />
-                <input type="text" placeholder="Search items..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#555] border border-slate-200 dark:border-[#1f2937] py-3 pl-12 pr-6 rounded-[18px] outline-none font-medium text-slate-900 dark:text-white" />
+                <input type="text" placeholder="Search items..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] py-3 pl-12 pr-6 rounded-[18px] outline-none font-medium text-slate-900 dark:text-white" />
               </div>
               <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-1 no-scrollbar">
                 {['All', ...CATEGORIES].map(cat => (
-                  <button key={cat} onClick={() => setSelectedCategory(cat as Category | 'All')} className="px-5 py-2.5 rounded-[18px] font-bold whitespace-nowrap transition-all border text-slate-500 dark:text-slate-300 border-slate-200 dark:border-[#1f2937]" style={selectedCategory === cat ? { backgroundColor: school.palette.primary, color: 'white', borderColor: school.palette.primary } : {}}>
+                  <button key={cat} onClick={() => setSelectedCategory(cat as Category | 'All')} className="px-5 py-2.5 rounded-[18px] font-bold whitespace-nowrap transition-all border text-slate-500 dark:text-slate-300 border-slate-200 dark:border-[#202938]" style={selectedCategory === cat ? { backgroundColor: school.palette.primary, color: 'white', borderColor: school.palette.primary } : {}}>
                     {cat}
                   </button>
                 ))}
@@ -320,8 +320,8 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredItems.map(item => (
-                <div key={item.id} className="group neon-card bg-white dark:bg-[#666666] rounded-[18px] border border-slate-200 dark:border-[#1f2937] shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col hover:-translate-y-1">
-                  <div className="h-56 relative overflow-hidden bg-slate-100 dark:bg-[#555]">
+                <div key={item.id} className="group neon-card bg-white dark:bg-[#2b2b2b] rounded-[18px] border border-slate-200 dark:border-[#202938] shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col hover:-translate-y-1">
+                  <div className="h-56 relative overflow-hidden bg-slate-100 dark:bg-[#1f1f1f]">
                     <img
                       src={item.imageUrl}
                       alt={item.name}
@@ -349,14 +349,14 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     {item.foundLocation && <p className="text-xs text-slate-500 dark:text-slate-300 mb-1"><span className="font-bold">Location Found:</span> {item.foundLocation}</p>}
                     {item.finderName && <p className="text-xs text-slate-500 dark:text-slate-300 mb-4"><span className="font-bold">Found By:</span> {item.finderName}</p>}
                     <div className="mt-auto">
-                      {item.status === 'lost' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-amber-800 text-sm uppercase tracking-widest">Pending Review</div>}
+                      {item.status === 'lost' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-amber-50 text-amber-600 border border-amber-100 text-sm uppercase tracking-widest">Pending Review</div>}
                       {item.status === 'found' && (
-                        <button onClick={() => setClaimingItem(item)} className="w-full py-3 rounded-[12px] font-bold text-sm uppercase tracking-widest border-2 bg-white dark:bg-[#666666] hover:opacity-80 transition-all" style={{ borderColor: school.palette.primary, color: school.palette.primary }}>
+                        <button onClick={() => setClaimingItem(item)} className="w-full py-3 rounded-[12px] font-bold text-sm uppercase tracking-widest border-2 bg-white dark:bg-[#2b2b2b] hover:opacity-80 transition-all" style={{ borderColor: school.palette.primary, color: school.palette.primary }}>
                           Claim Item
                         </button>
                       )}
                       {item.status === 'pending_claim' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800 text-sm uppercase tracking-widest">Pending Approval</div>}
-                      {item.status === 'claimed' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-slate-100 dark:bg-[#555] text-slate-400 border border-slate-200 dark:border-[#1f2937] text-sm uppercase tracking-widest">Claimed</div>}
+                      {item.status === 'claimed' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-slate-100 dark:bg-[#1f1f1f] text-slate-400 border border-slate-200 dark:border-[#202938] text-sm uppercase tracking-widest">Claimed</div>}
                     </div>
                   </div>
                 </div>
@@ -376,14 +376,14 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                 <p className="text-slate-500 dark:text-slate-400 max-w-sm">Your item has been submitted for admin review.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmitItem} className="bg-white dark:bg-[#666666] p-8 md:p-10 rounded-[25px] shadow-sm space-y-5" style={{ borderTop: `4px solid ${school.palette.primary}` }}>
+              <form onSubmit={handleSubmitItem} className="bg-white dark:bg-[#2b2b2b] p-8 md:p-10 rounded-[25px] shadow-sm space-y-5" style={{ borderTop: `4px solid ${school.palette.primary}` }}>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 ml-1">Item Name *</label>
-                  <input required value={newItemName} onChange={e => setNewItemName(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#555] border border-slate-200 dark:border-[#1f2937] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white" />
+                  <input required value={newItemName} onChange={e => setNewItemName(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 ml-1">Category *</label>
-                  <select required value={newItemCat} onChange={e => setNewItemCat(e.target.value as Category)} className="w-full bg-[#f4f6f8] dark:bg-[#555] border border-slate-200 dark:border-[#1f2937] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white">
+                  <select required value={newItemCat} onChange={e => setNewItemCat(e.target.value as Category)} className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white">
                     {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
@@ -396,7 +396,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                       <button type="button" onClick={() => setNewItemImage(null)} className="absolute top-2 right-2 bg-black/60 text-white p-1 rounded-full"><X size={14} /></button>
                     </div>
                   ) : (
-                    <button type="button" onClick={() => photoInputRef.current?.click()} className="w-full h-32 border-2 border-dashed border-slate-300 dark:border-slate-500 rounded-[14px] flex flex-col items-center justify-center text-slate-400">
+                    <button type="button" onClick={() => photoInputRef.current?.click()} className="w-full h-32 border-2 border-dashed border-slate-300 dark:border-[#3a4558] rounded-[14px] flex flex-col items-center justify-center text-slate-400">
                       <Camera size={28} />
                       <span className="text-sm font-bold">Add Photo</span>
                     </button>
@@ -408,7 +408,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     required
                     value={foundLocation}
                     onChange={e => setFoundLocation(e.target.value)}
-                    className="w-full bg-[#f4f6f8] dark:bg-[#555] border border-slate-200 dark:border-[#1f2937] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white"
+                    className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white"
                   />
                 </div>
                 <div>
@@ -417,15 +417,15 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     required
                     value={finderName}
                     onChange={e => setFinderName(e.target.value)}
-                    className="w-full bg-[#f4f6f8] dark:bg-[#555] border border-slate-200 dark:border-[#1f2937] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white"
+                    className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 ml-1">Description *</label>
-                  <textarea required rows={4} value={newItemDesc} onChange={e => setNewItemDesc(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#555] border border-slate-200 dark:border-[#1f2937] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white" />
+                  <textarea required rows={4} value={newItemDesc} onChange={e => setNewItemDesc(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] p-4 rounded-[14px] outline-none text-slate-900 dark:text-white" />
                 </div>
                 <div className="flex gap-4 pt-2">
-                  <button type="button" onClick={() => setActiveTab('BOARD')} className="flex-1 py-4 rounded-[14px] font-bold text-slate-500 bg-slate-100 dark:bg-[#555]">Cancel</button>
+                  <button type="button" onClick={() => setActiveTab('BOARD')} className="flex-1 py-4 rounded-[14px] font-bold text-slate-500 bg-slate-100 dark:bg-[#1f1f1f]">Cancel</button>
                   <button type="submit" className="flex-1 py-4 rounded-[14px] font-bold text-white shadow-lg" style={{ backgroundColor: school.palette.primary }}>Submit Report</button>
                 </div>
               </form>
