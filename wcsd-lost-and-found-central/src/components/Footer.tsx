@@ -8,11 +8,11 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="relative z-10 bg-[#f3df9b] border-t border-[#e7a39b] mt-0">
+    <footer className="relative z-10 bg-[#e7a39b] border-t border-[#f3df9b] mt-0">
       <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-2.5 mb-4">
-            <div className="w-8 h-8 bg-[#e7a39b] rounded-lg flex items-center justify-center text-black font-black text-lg">E</div>
+            <div className="w-8 h-8 bg-[#f3df9b] rounded-lg flex items-center justify-center text-black font-black text-lg">E</div>
             <span className="text-black font-extrabold text-sm tracking-tight">East High School Lost&amp;Found</span>
           </div>
           <p className="text-black/70 text-xs leading-relaxed mb-1">151 Paradise Rd<br/>East Amherst, NY 14051</p>
@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <h4 className="text-black text-[11px] font-black tracking-[0.2em] uppercase mb-4">Search Items</h4>
           <div className="flex rounded-lg overflow-hidden border border-black/15">
             <input placeholder="Search..." className="flex-1 bg-black/5 border-none px-3 py-2 text-black text-xs outline-none focus:bg-black/10" />
-            <button onClick={() => onNavigate('BULLETIN_BOARD')} className="bg-[#e7a39b] px-3 py-2 text-black font-bold text-[11px] tracking-wider hover:bg-[#ebb2ab]">Search</button>
+            <button onClick={() => onNavigate('BULLETIN_BOARD')} className="bg-[#f3df9b] px-3 py-2 text-black font-bold text-[11px] tracking-wider hover:bg-[#f6e9b8]">Search</button>
           </div>
         </div>
       </div>
