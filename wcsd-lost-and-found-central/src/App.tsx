@@ -349,8 +349,8 @@ export default function App() {
 
       {showAdminModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-[#424242] rounded-[25px] p-8 w-full max-w-sm shadow-2xl relative border border-white/10">
-            <button onClick={() => setShowAdminModal(false)} className="absolute top-5 right-5 text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+          <div className="bg-white dark:bg-[#2b2b2b] rounded-[25px] p-8 w-full max-w-sm shadow-2xl relative border border-slate-200 dark:border-[#202938]">
+            <button onClick={() => setShowAdminModal(false)} className="absolute top-5 right-5 text-slate-500 dark:text-white hover:text-slate-900 dark:hover:text-white transition-colors">
               <X size={22} />
             </button>
             <div className="text-center mb-7">
@@ -358,7 +358,7 @@ export default function App() {
                 <Lock size={22} />
               </div>
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Admin Portal</h3>
-              <p className="text-slate-500 dark:text-slate-200 text-sm mt-1">Enter your staff access code</p>
+              <p className="text-slate-500 dark:text-white text-sm mt-1">Enter your staff access code</p>
             </div>
             <form onSubmit={handleAdminSubmit} className="space-y-4">
               <input
@@ -366,7 +366,7 @@ export default function App() {
                 type="password"
                 value={adminPassword}
                 onChange={e => setAdminPassword(e.target.value)}
-                className={`w-full p-4 border rounded-[14px] outline-none font-bold text-center text-2xl tracking-[0.6em] text-slate-900 dark:text-white dark:bg-[#4a4a4a] transition-all ${adminError ? 'border-red-400 bg-red-50 dark:bg-red-900/20 animate-shake' : 'border-slate-200 bg-slate-50 dark:border-slate-500'}`}
+                className={`w-full p-4 border rounded-[14px] outline-none font-bold text-center text-2xl tracking-[0.6em] text-slate-900 dark:text-white dark:bg-[#1f1f1f] transition-all ${adminError ? 'border-red-400 bg-red-50 dark:bg-red-900/20 animate-shake' : 'border-slate-200 bg-slate-50 dark:border-[#202938]'}`}
                 placeholder="••••"
               />
               {adminError && <p className="text-red-500 text-center font-bold text-xs uppercase tracking-widest">Incorrect access code</p>}

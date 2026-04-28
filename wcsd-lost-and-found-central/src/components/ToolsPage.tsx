@@ -211,11 +211,11 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
     <div className="min-h-screen w-full transition-colors duration-300 pb-24">
       <div className="relative z-10 pt-10 pb-8 px-6 text-center">
         <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Your Toolkit</h1>
-        <p className="text-slate-500 dark:text-slate-400 text-base max-w-lg mx-auto">Everything Williamsville East needs to find, report, and track lost items.</p>
+        <p className="text-slate-500 dark:text-white text-base max-w-lg mx-auto">Everything Williamsville East needs to find, report, and track lost items.</p>
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto px-6 mb-12">
-        <div className="bg-white/70 dark:bg-black/20 backdrop-blur-xl rounded-[32px] p-6 border border-white/60 dark:border-white/10 shadow-xl">
+        <div className="bg-white/70 dark:bg-[#2b2b2b] backdrop-blur-xl rounded-[32px] p-6 border border-white/60 dark:border-[#202938] shadow-xl">
           <div className="grid grid-cols-3 gap-4">
             {TOOL_APPS.map((app) => (
               <button key={app.id} onClick={app.action} className="flex flex-col items-center gap-2 group">
@@ -230,17 +230,17 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto px-6">
-        <div className="bg-white dark:bg-[#424242] rounded-[28px] shadow-xl border border-slate-100 dark:border-white/10 overflow-hidden">
-          <div className="px-7 pt-7 pb-5 border-b border-slate-100 dark:border-white/10">
+        <div className="bg-white dark:bg-[#2b2b2b] rounded-[28px] shadow-xl border border-slate-100 dark:border-[#202938] overflow-hidden">
+          <div className="px-7 pt-7 pb-5 border-b border-slate-100 dark:border-[#202938]">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-[10px] bg-[#f3df9b] flex items-center justify-center shadow-md"><ListChecks size={18} color="#000" /></div>
               <h2 className="text-lg font-black text-slate-900 dark:text-white">I'm looking for...</h2>
             </div>
           </div>
-          <div className="px-7 py-5 bg-slate-50/50 dark:bg-black/10">
+          <div className="px-7 py-5 bg-slate-50/50 dark:bg-[#1f1f1f]">
             <div className="flex gap-2 mb-3">
-              <input value={wishInput} onChange={e => setWishInput(e.target.value)} placeholder="What did you lose?" className="flex-1 bg-white dark:bg-[#555] border rounded-[12px] px-4 py-2.5 text-sm" />
-              <select value={wishCat} onChange={e => setWishCat(e.target.value)} className="bg-white dark:bg-[#555] border rounded-[12px] px-3 py-2.5 text-sm">
+              <input value={wishInput} onChange={e => setWishInput(e.target.value)} placeholder="What did you lose?" className="flex-1 bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] rounded-[12px] px-4 py-2.5 text-sm text-slate-900 dark:text-white" />
+              <select value={wishCat} onChange={e => setWishCat(e.target.value)} className="bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#202938] rounded-[12px] px-3 py-2.5 text-sm text-slate-900 dark:text-white">
                 {['Any', ...CATEGORIES].map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
@@ -251,14 +251,14 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
           </div>
           <div className="px-7 py-4 max-h-64 overflow-y-auto">
             {wishlist.map(wish => (
-              <div key={wish.id} className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-[#555] rounded-[12px] mb-2 group">
+              <div key={wish.id} className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-[#1f1f1f] rounded-[12px] mb-2 group">
                 <div className="flex-1 text-sm font-semibold text-slate-800 dark:text-white truncate">{wish.text}</div>
                 <button onClick={() => void removeWish(wish.id)} className="opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-500"><X size={13} /></button>
               </div>
             ))}
           </div>
           {wishlist.length > 0 && (
-            <div className="px-7 pb-7 border-t border-slate-100 dark:border-white/10 pt-5">
+            <div className="px-7 pb-7 border-t border-slate-100 dark:border-[#202938] pt-5">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2"><Sparkles size={15} className="text-[#ab1e2f]" /><span className="text-sm font-black">AI Matches</span></div>
                 <button onClick={() => void runAiMatch(wishlist)} disabled={isMatching} className="text-[#ab1e2f] text-xs font-bold flex items-center gap-1">
@@ -266,16 +266,16 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
                 </button>
               </div>
               {matches.map((m, idx) => (
-                <button key={idx} type="button" onClick={() => m.item && onOpenMatchedItem(m.item)} className="w-full text-left flex items-center gap-3 p-4 bg-slate-50 dark:bg-[#555] rounded-[16px] mb-3 border border-[#ab1e2f]/20 hover:border-[#ab1e2f] transition-colors">
+                <button key={idx} type="button" onClick={() => m.item && onOpenMatchedItem(m.item)} className="w-full text-left flex items-center gap-3 p-4 bg-slate-50 dark:bg-[#1f1f1f] rounded-[16px] mb-3 border border-[#ab1e2f]/20 hover:border-[#ab1e2f] transition-colors">
                   <img src={m.item?.imageUrl} className="w-14 h-14 rounded-[10px] object-cover" alt={m.itemName} />
                   <div className="flex-1">
-                    <div className="flex items-center gap-2"><span className="text-sm font-black">{m.itemName}</span><span className="text-[10px] font-bold uppercase text-[#ab1e2f]">{m.confidence} match</span></div>
-                    <p className="text-[11px] text-slate-500">{m.reason}</p>
+                    <div className="flex items-center gap-2"><span className="text-sm font-black text-slate-900 dark:text-white">{m.itemName}</span><span className="text-[10px] font-bold uppercase text-[#ab1e2f]">{m.confidence} match</span></div>
+                    <p className="text-[11px] text-slate-500 dark:text-white">{m.reason}</p>
                     <p className="text-[10px] text-[#ab1e2f] font-bold uppercase tracking-wider mt-1">Open in bulletin board</p>
                   </div>
                 </button>
               ))}
-              {matchRan && !isMatching && matches.length === 0 && <p className="text-xs text-slate-500">No matches found right now.</p>}
+              {matchRan && !isMatching && matches.length === 0 && <p className="text-xs text-slate-500 dark:text-white">No matches found right now.</p>}
             </div>
           )}
         </div>

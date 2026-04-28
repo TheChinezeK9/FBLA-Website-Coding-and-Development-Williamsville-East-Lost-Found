@@ -193,7 +193,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                     <Loader2 size={64} className="text-[#ab1e2f] animate-spin hidden sm:block" />
                     <div className="text-center">
                       <h4 className="text-xl sm:text-2xl font-bold mb-2">Analyzing Object...</h4>
-                      <p className="text-gray-500 dark:text-gray-400 font-medium">Querying neural network for identification</p>
+                      <p className="text-gray-500 dark:text-white font-medium">Querying neural network for identification</p>
                     </div>
                   </div>
                 ) : (
@@ -203,27 +203,27 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                         Scan Result Verified
                       </span>
                       <h4 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight mb-2">{analysisResult?.name}</h4>
-                      <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg font-medium">{analysisResult?.description}</p>
+                      <p className="text-gray-600 dark:text-white text-base sm:text-lg font-medium">{analysisResult?.description}</p>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                      <div className="flex-1 bg-gray-50 dark:bg-slate-800 p-4 rounded-2xl border border-gray-200 dark:border-slate-700">
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1">Confidence</p>
+                      <div className="flex-1 bg-gray-50 dark:bg-[#1f1f1f] p-4 rounded-2xl border border-gray-200 dark:border-[#202938]">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-white mb-1">Confidence</p>
                         <p className="text-lg sm:text-xl font-bold">98.4%</p>
                       </div>
-                      <div className="flex-1 bg-gray-50 dark:bg-slate-800 p-4 rounded-2xl border border-gray-200 dark:border-slate-700">
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1">Category</p>
+                      <div className="flex-1 bg-gray-50 dark:bg-[#1f1f1f] p-4 rounded-2xl border border-gray-200 dark:border-[#202938]">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-white mb-1">Category</p>
                         <p className="text-lg sm:text-xl font-bold">{analysisResult?.category}</p>
                       </div>
                     </div>
 
-                    <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-slate-800">
-                      <label className="block text-sm font-bold text-gray-400 dark:text-gray-500 mb-3 uppercase tracking-wider">Select School Board *</label>
+                    <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-[#202938]">
+                      <label className="block text-sm font-bold text-gray-400 dark:text-white mb-3 uppercase tracking-wider">Select School Board *</label>
                       <select
                         required
                         value={selectedSchool}
                         onChange={(e) => setSelectedSchool(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-700 rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
+                        className="w-full p-3 sm:p-4 bg-white dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#202938] rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
                       >
                         <option value="">-- Choose School --</option>
                         {Object.values(SCHOOL_THEMES).map(school => (
@@ -233,7 +233,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                     </div>
 
                     <div className="space-y-3">
-                      <label className="block text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                      <label className="block text-sm font-bold text-gray-400 dark:text-white uppercase tracking-wider">
                         Place Found *
                       </label>
                       <input
@@ -241,13 +241,13 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                         required
                         value={foundLocation}
                         onChange={(e) => setFoundLocation(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-700 rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
+                        className="w-full p-3 sm:p-4 bg-white dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#202938] rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
                         placeholder="Where was the item found?"
                       />
                     </div>
 
                     <div className="space-y-3">
-                      <label className="block text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                      <label className="block text-sm font-bold text-gray-400 dark:text-white uppercase tracking-wider">
                         Finder Name *
                       </label>
                       <input
@@ -255,7 +255,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                         required
                         value={finderName}
                         onChange={(e) => setFinderName(e.target.value)}
-                        className="w-full p-3 sm:p-4 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-700 rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
+                        className="w-full p-3 sm:p-4 bg-white dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#202938] rounded-xl text-black dark:text-white outline-none focus:border-black dark:focus:border-white transition-colors"
                         placeholder="Who found this item?"
                       />
                     </div>
@@ -266,7 +266,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                       className={`w-full py-3 sm:py-4 rounded-[25px] font-bold text-base sm:text-lg shadow-xl flex items-center justify-center gap-2 transition-all ${
                         selectedSchool && foundLocation.trim() && finderName.trim()
                           ? 'bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200'
-                          : 'bg-gray-200 dark:bg-slate-700 text-gray-400 dark:text-slate-500 cursor-not-allowed'
+                          : 'bg-gray-200 dark:bg-[#1f1f1f] text-gray-400 dark:text-white/50 cursor-not-allowed'
                       }`}
                     >
                       Post to Bulletin <ArrowRight size={20} />

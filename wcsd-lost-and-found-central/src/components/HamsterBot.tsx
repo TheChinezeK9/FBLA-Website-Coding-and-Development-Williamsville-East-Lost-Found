@@ -201,7 +201,7 @@ export const HamsterBot: React.FC = () => {
     <>
       {initialized && isOpen && (
         <div
-          className="fixed z-[50] rounded-[18px] shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden transition-all duration-200 bg-white dark:bg-[#424242]"
+          className="fixed z-[50] rounded-[18px] shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden transition-all duration-200 bg-white dark:bg-[#2b2b2b] border border-transparent dark:border-[#202938]"
           style={{ left: panelPos.x, top: panelPos.y, width: panelSize.w, height: panelSize.h }}
         >
           <div onMouseDown={startDrag} className={`bg-[#ab1e2f] p-4 flex justify-between items-center select-none ${isFullscreen ? 'cursor-default' : 'cursor-move'}`}>
@@ -224,17 +224,17 @@ export const HamsterBot: React.FC = () => {
           </div>
 
           <div className="flex flex-col h-[calc(100%-72px)]">
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-[#424242] no-scrollbar">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-[#2b2b2b] no-scrollbar">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] p-3 rounded-2xl font-medium text-sm shadow-sm ${msg.role === 'user' ? 'bg-[#ab1e2f] text-white rounded-tr-none' : 'bg-white dark:bg-[#555555] text-black dark:text-white rounded-tl-none border border-gray-200 dark:border-white/10'}`}>
+                  <div className={`max-w-[85%] p-3 rounded-2xl font-medium text-sm shadow-sm ${msg.role === 'user' ? 'bg-[#ab1e2f] text-white rounded-tr-none' : 'bg-white dark:bg-[#1f1f1f] text-black dark:text-white rounded-tl-none border border-gray-200 dark:border-[#202938]'}`}>
                     {msg.text}
                   </div>
                 </div>
               ))}
               {isThinking && (
                 <div className="flex justify-start">
-                  <div className="p-3 rounded-2xl shadow-sm flex gap-2 border border-gray-200 dark:border-white/10 bg-white dark:bg-[#555555]">
+                  <div className="p-3 rounded-2xl shadow-sm flex gap-2 border border-gray-200 dark:border-[#202938] bg-white dark:bg-[#1f1f1f]">
                     <div className="w-2 h-2 bg-gray-400 dark:bg-white rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-gray-400 dark:bg-white rounded-full animate-bounce" style={{ animationDelay: '200ms' }}></div>
                     <div className="w-2 h-2 bg-gray-400 dark:bg-white rounded-full animate-bounce" style={{ animationDelay: '400ms' }}></div>
@@ -244,13 +244,13 @@ export const HamsterBot: React.FC = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={handleSend} className="p-3 flex gap-2 bg-white dark:bg-[#424242] border-t border-gray-200 dark:border-white/10">
+            <form onSubmit={handleSend} className="p-3 flex gap-2 bg-white dark:bg-[#2b2b2b] border-t border-gray-200 dark:border-[#202938]">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask Hammy anything..."
-                className="flex-1 rounded-[12px] px-3 py-2 outline-none text-black dark:text-white bg-white dark:bg-[#666666] border-2 border-black dark:border-white/20 focus:ring-2 focus:ring-[#ab1e2f]"
+                className="flex-1 rounded-[12px] px-3 py-2 outline-none text-black dark:text-white bg-white dark:bg-[#1f1f1f] border-2 border-black dark:border-[#202938] focus:ring-2 focus:ring-[#ab1e2f]"
               />
               <button
                 type="submit"
