@@ -13,11 +13,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div>
           <div className="flex items-center gap-2.5 mb-4">
             <div className="w-8 h-8 bg-[#e7a39b] rounded-lg flex items-center justify-center text-black font-black text-lg">E</div>
-            <span className="text-black font-extrabold text-sm tracking-tight">East Lost&amp;Found</span>
+            <span className="text-black font-extrabold text-sm tracking-tight">East High School Lost&amp;Found</span>
           </div>
           <p className="text-black/70 text-xs leading-relaxed mb-1">151 Paradise Rd<br/>East Amherst, NY 14051</p>
           <p className="text-black/70 text-xs mb-1">(716) 626-8400</p>
-          <p className="text-[#4a403a] text-[11px] mt-4 italic">Williamsville East High School</p>
+          <p className="text-[#4a403a] text-[11px] mt-4 italic">East High School</p>
         </div>
 
         <div>

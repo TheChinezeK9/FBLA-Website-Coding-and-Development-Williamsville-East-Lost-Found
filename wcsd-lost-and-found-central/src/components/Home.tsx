@@ -11,7 +11,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
   <div className="neon-page-bg min-h-screen font-sans pb-20 transition-colors duration-300 relative overflow-hidden">
     <div className="text-center px-4 max-w-4xl mx-auto relative z-10 mt-20">
 
-      <div className="mx-auto mt-5 mb-4 w-full sm:w-2/3 md:w-1/2 max-w-[1000px] p-2 bg-transparent rounded-lg animate-fade-in-up">
+      <div className="mx-auto mt-5 mb-6 w-full sm:w-2/3 md:w-1/2 max-w-[1000px] p-2 bg-transparent rounded-lg animate-fade-in-up">
         <img
           src="/images/east.png"
           alt="Williamsville East High School Logo"
