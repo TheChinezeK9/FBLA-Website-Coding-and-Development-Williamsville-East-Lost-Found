@@ -202,7 +202,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
     { id: 'tracker', label: 'AI Scanner', icon: Camera, gradient: 'linear-gradient(135deg, #ed1e25 0%, #7a0f13 100%)', action: () => onNavigate('LIVE_TRACKER') },
     { id: 'chatbot', label: 'Hammy Bot', icon: Bot, gradient: 'linear-gradient(135deg, #f8ec24 0%, #c9b90e 100%)', action: () => window.dispatchEvent(new CustomEvent('open-hammy-bot', { detail: { source: 'tools-chatbot' } })) },
     { id: 'admin', label: isAdmin ? 'Admin Panel' : 'Staff Login', icon: isAdmin ? Shield : Lock, gradient: isAdmin ? 'linear-gradient(135deg, #b45309 0%, #d97706 100%)' : 'linear-gradient(135deg, #374151 0%, #4b5563 100%)', action: () => isAdmin ? onNavigate('BULLETIN_BOARD') : onOpenAdminLogin() },
-    { id: 'claim', label: 'File a Claim', icon: FileText, gradient: 'linear-gradient(135deg, #111111 0%, #333333 100%)', action: () => onNavigate('BULLETIN_BOARD') },
+    { id: 'claim', label: 'File a Claim', icon: FileText, gradient: 'linear-gradient(135deg, #ed1e25 0%, #f8ec24 100%)', action: () => onNavigate('BULLETIN_BOARD') },
     { id: 'schools', label: 'East Board', icon: Users, gradient: 'linear-gradient(135deg, #ed1e25 0%, #f8ec24 100%)', action: () => onNavigate('BULLETIN_BOARD') },
     { id: 'contacts', label: 'Contacts', icon: Phone, gradient: 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)', action: () => onNavigate('CONTACTS') }
   ];

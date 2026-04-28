@@ -15,7 +15,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
         <img
           src="/images/east.png"
           alt="Williamsville East High School Logo"
-          className="w-full h-auto mx-auto transform scale-105 md:scale-115"
+          className="w-full h-auto mx-auto transform scale-100 md:scale-105"
           onError={(e) => {
             e.currentTarget.src =
               'https://ui-avatars.com/api/?name=Williamsville+East+High+School&background=ed1e25&color=fff&size=200';
@@ -35,20 +35,20 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
         onClick={() => onNavigate('BULLETIN_BOARD')}
         className="bg-[#ed1e25] text-white border-2 border-[#ed1e25] dark:border-[#f8ec24] w-[250px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
       >
-        Continue to Lost Item Board →
+        View Lost Items →
       </button>
 
       <div className="flex justify-center gap-4 mt-6">
         <button
           onClick={onStartClaim}
-          className="flex items-center justify-center gap-2 bg-black text-white border-2 border-[#ed1e25] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
+          className="flex items-center justify-center gap-2 bg-[#ed1e25] text-white border-2 border-[#ed1e25] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
           <FileText size={16} /> File a Claim
         </button>
 
         <button
           onClick={() => onNavigate('LIVE_TRACKER')}
-          className="flex items-center justify-center gap-2 bg-[#f8ec24] text-black border-2 border-[#f8ec24] dark:border-[#ed1e25] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
+          className="flex items-center justify-center gap-2 bg-[#ed1e25] text-white border-2 border-[#ed1e25] dark:border-[#f8ec24] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
           <Camera size={16} /> AI Scanner
         </button>

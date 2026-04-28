@@ -8,15 +8,15 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="relative z-10 bg-black border-t border-[#ed1e25]/30 mt-0">
+    <footer className="relative z-10 bg-[#ed1e25] border-t border-[#f8ec24] mt-0">
       <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-2.5 mb-4">
             <div className="w-8 h-8 bg-[#ed1e25] rounded-lg flex items-center justify-center text-white font-black text-lg">E</div>
             <span className="text-white font-extrabold text-sm tracking-tight">East Lost&amp;Found</span>
           </div>
-          <p className="text-white/45 text-xs leading-relaxed mb-1">151 Paradise Rd<br/>East Amherst, NY 14051</p>
-          <p className="text-white/45 text-xs mb-1">(716) 626-8400</p>
+          <p className="text-white/70 text-xs leading-relaxed mb-1">151 Paradise Rd<br/>East Amherst, NY 14051</p>
+          <p className="text-white/70 text-xs mb-1">(716) 626-8400</p>
           <p className="text-[#f8ec24] text-[11px] mt-4 italic">Williamsville East High School</p>
         </div>
 
@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <h4 className="text-white text-[11px] font-black tracking-[0.2em] uppercase mb-4">Search Items</h4>
           <div className="flex rounded-lg overflow-hidden border border-white/15">
             <input placeholder="Search..." className="flex-1 bg-white/5 border-none px-3 py-2 text-white text-xs outline-none focus:bg-white/10" />
-            <button onClick={() => onNavigate('BULLETIN_BOARD')} className="bg-[#ed1e25] px-3 py-2 text-white font-bold text-[11px] tracking-wider hover:bg-[#c4171d]">Search</button>
+            <button onClick={() => onNavigate('BULLETIN_BOARD')} className="bg-[#f8ec24] px-3 py-2 text-[#ed1e25] font-bold text-[11px] tracking-wider hover:bg-[#fff27a]">Search</button>
           </div>
         </div>
       </div>

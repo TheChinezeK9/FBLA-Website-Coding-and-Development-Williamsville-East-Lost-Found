@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[60]" style={{ height: 'calc(1.4 * 64px)' }}>
-      <div className="flex justify-between items-center bg-black w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-[#ed1e25]/30">
+      <div className="flex justify-between items-center bg-[#ed1e25] w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-[#f8ec24]">
         <div onClick={() => onNavigate('HOME')} className="flex items-center gap-2 cursor-pointer px-4 py-2 hover:scale-105 transition-all">
           <img src="/images/east.png" alt="Williamsville East High School logo" className="w-12 h-12 rounded-lg object-cover shadow-sm bg-white p-1" />
           <span className="font-bold text-xl tracking-tight text-white">East Lost&amp;Found</span>
@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="relative">
             <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-[#fff7d1] hover:text-white"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
             {showInfoMenu && (
-              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-48 bg-black border border-[#ed1e25]/30 rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
+              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-48 bg-[#ed1e25] border border-[#f8ec24] rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
                 {[
                   { id: 'ABOUT' as View, label: 'About Project', icon: <Info size={16} /> },
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="relative" ref={settingsRef}>
             <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#ed1e25] ${isAdmin ? 'text-[#f8ec24]' : 'text-white'}`} title="Settings"><Settings size={20} /></button>
             {showSettingsMenu && (
-              <div className="absolute top-full right-0 mt-2 w-64 bg-[#151515] border border-[#ed1e25]/20 rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
+              <div className="absolute top-full right-0 mt-2 w-64 bg-[#ed1e25] border border-[#f8ec24] rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-white/30 mb-3">Settings</p>
 
                 <div className="space-y-2 mb-4">

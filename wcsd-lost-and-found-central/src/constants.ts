@@ -4,7 +4,7 @@ export const CATEGORIES: Category[] = ['Clothing', 'Electronics', 'Books', 'Musi
 export const ADMIN_PASSWORD = "8290";
 
 export const SCHOOL_THEMES: Record<string, SchoolTheme> = {
-  will_east: { id: 'will_east', name: 'Williamsville East High School', logo: '/images/east.png', palette: { primary: '#ed1e25', secondary: '#f8ec24', tertiary: '#000000' }, contactInfo: { address: '151 Paradise Rd, East Amherst, NY 14051', phone: '(716) 626-8400', email: 'eastoffice@williamsvillek12.org', principal: 'Mr. Brian Swatland' } },
+  will_east: { id: 'will_east', name: 'Williamsville East High School', logo: '/images/east.png', palette: { primary: '#ed1e25', secondary: '#f8ec24', tertiary: '#f8ec24' }, contactInfo: { address: '151 Paradise Rd, East Amherst, NY 14051', phone: '(716) 626-8400', email: 'eastoffice@williamsvillek12.org', principal: 'Mr. Brian Swatland' } },
 };
 
 //This section is merely for presentation purposes. Can be removed.
