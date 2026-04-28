@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
                   { id: 'GUIDE' as View, label: 'Help Guide', icon: <BookOpen size={16} /> }
                 ].map(item => (
-                  <button key={item.id} onClick={() => { onNavigate(item.id); setShowInfoMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black border border-transparent hover:bg-[#f7e8b8] hover:border-[#e7a39b] hover:text-black text-sm font-bold transition-colors">
+                  <button key={item.id} onClick={() => { onNavigate(item.id); setShowInfoMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black hover:bg-[#e7a39b] hover:text-black text-sm font-bold transition-colors">
                     {item.icon} {item.label}
                   </button>
                 ))}
@@ -95,15 +95,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button onClick={() => onNavigate('TOOLS')} className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#e7a39b] text-black border-[#e7a39b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
 
           <div className="relative" ref={settingsRef}>
-            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] hover:border-[#e7a39b] ${isAdmin ? 'text-[#e7a39b]' : 'text-black'}`} title="Settings"><Settings size={20} /></button>
+            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#e7a39b] ${isAdmin ? 'text-[#e7a39b]' : 'text-black'}`} title="Settings"><Settings size={20} /></button>
             {showSettingsMenu && (
               <div className="absolute top-full right-0 mt-2 w-64 bg-[#f3df9b] border-2 border-[#e7a39b] rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mb-3">Settings</p>
 
                 <div className="space-y-2 mb-4">
-                  <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-full flex items-center justify-between p-2 rounded-xl border border-transparent hover:bg-[#f7e8b8] hover:border-[#e7a39b] transition-colors group">
+                  <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
                     <div className="flex items-center gap-3">
-                      <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-indigo-500/20 text-indigo-400' : 'bg-yellow-500/20 text-yellow-500'}`}>{isDarkMode ? <Moon size={16} /> : <Sun size={16} />}</div>
+                      <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-indigo-500/20 text-indigo-400' : 'bg-[#fff4bf] text-[#b45309]'}`}>{isDarkMode ? <Moon size={16} /> : <Sun size={16} />}</div>
                       <span className="text-sm font-bold text-black/80 group-hover:text-black">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
                     </div>
                     <div className={`w-8 h-4 rounded-full relative transition-colors ${isDarkMode ? 'bg-indigo-500' : 'bg-slate-600'}`}>
@@ -111,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </div>
                   </button>
 
-                  <button onClick={() => setShowDoodles(!showDoodles)} className="w-full flex items-center justify-between p-2 rounded-xl border border-transparent hover:bg-[#f7e8b8] hover:border-[#e7a39b] transition-colors group">
+                  <button onClick={() => setShowDoodles(!showDoodles)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
                     <div className="flex items-center gap-3">
                       <div className={`p-1.5 rounded-lg ${showDoodles ? 'bg-pink-500/20 text-pink-400' : 'bg-slate-500/20 text-slate-400'}`}><Palette size={16} /></div>
                       <span className="text-sm font-bold text-black/80 group-hover:text-black">Doodle Background</span>
@@ -122,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </button>
 
                   {isDarkMode && (
-                    <button onClick={() => setNeonMode(!neonMode)} className="w-full flex items-center justify-between p-2 rounded-xl border border-transparent hover:bg-[#f7e8b8] hover:border-[#e7a39b] transition-colors group">
+                    <button onClick={() => setNeonMode(!neonMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
                       <div className="flex items-center gap-3">
                         <div className={`p-1.5 rounded-lg ${neonMode ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-500/20 text-slate-400'}`}><Sparkles size={16} /></div>
                         <span className="text-sm font-bold text-black/80 group-hover:text-black">Neon Accents</span>
@@ -133,7 +133,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </button>
                   )}
 
-                  <button onClick={() => setGlassMode(!glassMode)} className="w-full flex items-center justify-between p-2 rounded-xl border border-transparent hover:bg-[#f7e8b8] hover:border-[#e7a39b] transition-colors group">
+                  <button onClick={() => setGlassMode(!glassMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
                     <div className="flex items-center gap-3">
                       <div className={`p-1.5 rounded-lg ${glassMode ? 'bg-sky-500/20 text-sky-400' : 'bg-slate-500/20 text-slate-400'}`}><div className="w-4 h-4 rounded-full border-2 border-current opacity-50" /></div>
                       <span className="text-sm font-bold text-black/80 group-hover:text-black">Glassmorphism</span>
@@ -155,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <button onClick={() => { setIsAdmin(false); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 text-sm font-bold transition-colors"><LogOut size={15} /> Logout Admin</button>
                   </>
                 ) : (
-                  <button onClick={() => { onOpenAdminLogin(); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-black border border-transparent hover:bg-[#f7e8b8] hover:border-[#e7a39b] hover:text-black text-sm font-bold transition-colors"><Lock size={15} /> Admin Portal</button>
+                  <button onClick={() => { onOpenAdminLogin(); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-black hover:bg-[#e7a39b] hover:text-black text-sm font-bold transition-colors"><Lock size={15} /> Admin Portal</button>
                 )}
               </div>
             )}
