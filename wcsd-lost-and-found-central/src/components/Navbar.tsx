@@ -102,9 +102,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                 <div className="space-y-2 mb-4">
                   <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-indigo-500/20 text-indigo-400' : 'bg-[#e7a39b]/25 text-[#c7776f]'}`}>{isDarkMode ? <Moon size={16} /> : <Sun size={16} />}</div>
-                      <span className="text-sm font-bold text-black/80 group-hover:text-black">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
+                      <span className="flex-1 text-center text-sm font-bold text-black/80 group-hover:text-black">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
                     </div>
                     <div className={`w-8 h-4 rounded-full relative transition-colors ${isDarkMode ? 'bg-indigo-500' : 'bg-slate-600'}`}>
                       <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${isDarkMode ? 'left-5' : 'left-1'}`} />
@@ -112,9 +112,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </button>
 
                   <button onClick={() => setShowDoodles(!showDoodles)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div className={`p-1.5 rounded-lg ${showDoodles ? 'bg-pink-500/20 text-pink-600' : 'bg-black/10 text-black/80'}`}><Palette size={16} /></div>
-                      <span className="text-sm font-bold text-black/80 group-hover:text-black">Doodle Background</span>
+                      <span className="flex-1 text-center text-sm font-bold text-black/80 group-hover:text-black">Doodle Background</span>
                     </div>
                     <div className={`w-8 h-4 rounded-full relative transition-colors ${showDoodles ? 'bg-pink-500' : 'bg-slate-600'}`}>
                       <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${showDoodles ? 'left-5' : 'left-1'}`} />
@@ -123,9 +123,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                   {isDarkMode && (
                     <button onClick={() => setNeonMode(!neonMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
                         <div className={`p-1.5 rounded-lg ${neonMode ? 'bg-emerald-500/20 text-emerald-600' : 'bg-black/10 text-black/80'}`}><Sparkles size={16} /></div>
-                        <span className="text-sm font-bold text-black/80 group-hover:text-black">Neon Accents</span>
+                        <span className="flex-1 text-center text-sm font-bold text-black/80 group-hover:text-black">Neon Accents</span>
                       </div>
                       <div className={`w-8 h-4 rounded-full relative transition-colors ${neonMode ? 'bg-emerald-500' : 'bg-slate-600'}`}>
                         <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${neonMode ? 'left-5' : 'left-1'}`} />
@@ -134,9 +134,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                   )}
 
                   <button onClick={() => setGlassMode(!glassMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div className={`p-1.5 rounded-lg ${glassMode ? 'bg-sky-500/20 text-sky-600' : 'bg-black/10 text-black/80'}`}><div className="w-4 h-4 rounded-full border-2 border-current opacity-70" /></div>
-                      <span className="text-sm font-bold text-black/80 group-hover:text-black">Glassmorphism</span>
+                      <span className="flex-1 text-center text-sm font-bold text-black/80 group-hover:text-black">Glassmorphism</span>
                     </div>
                     <div className={`w-8 h-4 rounded-full relative transition-colors ${glassMode ? 'bg-sky-500' : 'bg-slate-600'}`}>
                       <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${glassMode ? 'left-5' : 'left-1'}`} />
