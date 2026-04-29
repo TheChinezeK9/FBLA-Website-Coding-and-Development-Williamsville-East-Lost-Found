@@ -275,11 +275,11 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
       <header
         className="pt-32 pb-16 px-6 rounded-b-[40px] shadow-lg relative overflow-hidden mb-12 text-black"
         style={{
-          backgroundImage: 'linear-gradient(90deg, rgba(243, 223, 155, 0.82) 0%, rgba(255, 250, 244, 0.12) 18%, rgba(231, 163, 155, 1) 50%, rgba(255, 250, 244, 0.12) 82%, rgba(243, 223, 155, 0.82) 100%)'
+          backgroundImage: 'linear-gradient(90deg, rgb(243, 223, 155) 0%, rgb(255, 250, 244) 18%, rgb(231, 163, 155) 50%, rgb(255, 250, 244) 82%, rgb(243, 223, 155) 100%)'
         }}
       >
-        <div className="absolute top-0 right-0 p-8 opacity-35 rotate-12">
-          <img src={school.logo} alt="Logo" className="w-64 h-64 object-contain" />
+        <div className="absolute top-0 right-0 p-6 opacity-50 rotate-12">
+          <img src={school.logo} alt="Logo" className="w-72 h-72 object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.18)]" />
         </div>
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
           <div>
