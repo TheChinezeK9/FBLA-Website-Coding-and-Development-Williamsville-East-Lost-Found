@@ -7,7 +7,7 @@ export const HamsterBot: React.FC = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: 'model' | 'user'; text: string }[]>([
-    { role: 'model', text: "Hello there! I'm Hammy! 🐹 Did you lose something? I can help you find it!" }
+    { role: 'model', text: "Hello there! I'm Fawkes! 🐦‍🔥 Did you lose something? I can help you track it down and rise above the confusion!" }
   ]);
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
@@ -42,8 +42,8 @@ export const HamsterBot: React.FC = () => {
       if (event.detail?.source !== 'tools-chatbot') return;
       setIsOpen(true);
     };
-    window.addEventListener('open-hammy-bot', openBot as EventListener);
-    return () => window.removeEventListener('open-hammy-bot', openBot as EventListener);
+    window.addEventListener('open-fawkes-bot', openBot as EventListener);
+    return () => window.removeEventListener('open-fawkes-bot', openBot as EventListener);
   }, []);
 
   useEffect(() => {
@@ -175,7 +175,7 @@ export const HamsterBot: React.FC = () => {
           model: 'gemini-3-flash-preview',
           contents: [{ role: 'user', parts: [{ text: userMsg }] }],
           config: {
-            systemInstruction: "You are 'Hammy', a cute, helpful, and energetic hamster mascot for the Williamsville School District Lost and Found platform. You talk with light excitement, use emojis (🐹, 🥜, ✨), and help students locate items on the platform. Be concise and friendly."
+            systemInstruction: "You are 'Fawkes', a bright, reassuring, and sharp-eyed phoenix mascot for the Williamsville East High School Lost and Found platform. You sound warm, observant, and uplifting. Use light phoenix-themed energy and occasional emojis (🔥, 🪶, ✨). Help students locate items, report losses, and understand the site. Be concise, calm, and encouraging."
           }
         })
       });
@@ -190,8 +190,8 @@ export const HamsterBot: React.FC = () => {
 
       setMessages(prev => [...prev, { role: 'model', text: text || "I'm not sure what to say!" }]);
     } catch (error) {
-      console.error('Hammy error:', error);
-      setMessages(prev => [...prev, { role: 'model', text: 'Oops! My hamster wheel got stuck! 🐹 Try again later? ✨' }]);
+      console.error('Fawkes error:', error);
+      setMessages(prev => [...prev, { role: 'model', text: 'Oops! My wings hit a crosswind! 🐦‍🔥 Try again in a moment? ✨' }]);
     } finally {
       setIsThinking(false);
     }
@@ -204,22 +204,22 @@ export const HamsterBot: React.FC = () => {
           className="fixed z-[50] rounded-[18px] shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden transition-all duration-200 bg-white dark:bg-[#2b2b2b] border border-transparent dark:border-[#4b5563]"
           style={{ left: panelPos.x, top: panelPos.y, width: panelSize.w, height: panelSize.h }}
         >
-          <div onMouseDown={startDrag} className={`bg-[#ab1e2f] p-4 flex justify-between items-center select-none ${isFullscreen ? 'cursor-default' : 'cursor-move'}`}>
+          <div onMouseDown={startDrag} className={`bg-[#e7a39b] p-4 flex justify-between items-center select-none ${isFullscreen ? 'cursor-default' : 'cursor-move'}`}>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-xl">🐹</div>
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-xl">🐦‍🔥</div>
               <div>
-                <h3 className="text-white font-bold leading-tight">Hammy Bot</h3>
-                <div className="flex items-center gap-1.5 text-[10px] text-white/80 font-bold uppercase tracking-widest">
+                <h3 className="text-black font-bold leading-tight">Fawkes Bot</h3>
+                <div className="flex items-center gap-1.5 text-[10px] text-black/70 font-bold uppercase tracking-widest">
                   <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
                   Online
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={toggleFullscreen} className="text-white/80 hover:text-white transition-colors">
+              <button onClick={toggleFullscreen} className="text-black/70 hover:text-black transition-colors">
                 {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
               </button>
-              <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white transition-colors"><X size={20} /></button>
+              <button onClick={() => setIsOpen(false)} className="text-black/70 hover:text-black transition-colors"><X size={20} /></button>
             </div>
           </div>
 
@@ -227,7 +227,7 @@ export const HamsterBot: React.FC = () => {
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-[#2b2b2b] no-scrollbar">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] p-3 rounded-2xl font-medium text-sm shadow-sm ${msg.role === 'user' ? 'bg-[#ab1e2f] text-white rounded-tr-none' : 'bg-white dark:bg-[#1f1f1f] text-black dark:text-white rounded-tl-none border border-gray-200 dark:border-[#4b5563]'}`}>
+                  <div className={`max-w-[85%] p-3 rounded-2xl font-medium text-sm shadow-sm ${msg.role === 'user' ? 'bg-[#e7a39b] text-black rounded-tr-none' : 'bg-white dark:bg-[#1f1f1f] text-black dark:text-white rounded-tl-none border border-gray-200 dark:border-[#4b5563]'}`}>
                     {msg.text}
                   </div>
                 </div>
@@ -249,13 +249,13 @@ export const HamsterBot: React.FC = () => {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask Hammy anything..."
-                className="flex-1 rounded-[12px] px-3 py-2 outline-none text-black dark:text-white bg-white dark:bg-[#1f1f1f] border-2 border-black dark:border-[#4b5563] focus:ring-2 focus:ring-[#ab1e2f]"
+                placeholder="Ask Fawkes anything..."
+                className="flex-1 rounded-[12px] px-3 py-2 outline-none text-black dark:text-white bg-white dark:bg-[#1f1f1f] border-2 border-black dark:border-[#4b5563] focus:ring-2 focus:ring-[#e7a39b]"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isThinking}
-                className="p-2 bg-[#ab1e2f] text-white rounded-[12px] hover:bg-[#8f1927] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 bg-[#e7a39b] text-black rounded-[12px] hover:bg-[#d38a83] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <Send size={18} />
               </button>
@@ -265,7 +265,7 @@ export const HamsterBot: React.FC = () => {
           {!isFullscreen && (
             <button
               type="button"
-              aria-label="Resize Hammy Bot"
+              aria-label="Resize Fawkes Bot"
               onMouseDown={startResize}
               className="absolute bottom-1 right-1 w-5 h-5 rounded-sm text-slate-400 hover:text-slate-200"
             >
@@ -280,10 +280,10 @@ export const HamsterBot: React.FC = () => {
       <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-[50] pointer-events-none">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`pointer-events-auto group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen ? 'bg-gray-800' : 'bg-[#ab1e2f]'}`}
+          className={`pointer-events-auto group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen ? 'bg-[#f3df9b]' : 'bg-[#e7a39b]'}`}
         >
-          <div className="flex items-center justify-center w-full h-full text-white">
-            {isOpen ? <X size={28} /> : <div className="text-3xl animate-bounce">🐹</div>}
+          <div className="flex items-center justify-center w-full h-full text-black">
+            {isOpen ? <X size={28} /> : <div className="text-3xl animate-bounce">🐦‍🔥</div>}
           </div>
         </button>
       </div>
