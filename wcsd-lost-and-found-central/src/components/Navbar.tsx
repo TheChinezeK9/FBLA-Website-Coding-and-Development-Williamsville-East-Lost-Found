@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[60]" style={{ height: 'calc(1.4 * 64px)' }}>
-      <div className="flex justify-between items-center bg-[#ed1e25] w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-[#f3df9b]">
+      <div className="flex justify-between items-center bg-[#e7a39b] w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-[#f3df9b]">
         <div onClick={() => onNavigate('HOME')} className="flex items-center gap-2 cursor-pointer px-4 py-2 hover:scale-105 transition-all">
           <img src="/images/east.png" alt="Williamsville East High School logo" className="w-12 h-12 rounded-lg object-cover shadow-sm bg-white p-1" />
           <span className="font-bold text-xl tracking-tight text-black">East High School Lost &amp; Found</span>
@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="relative">
             <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:text-black"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
             {showInfoMenu && (
-              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-48 bg-[#ed1e25] border-2 border-[#f3df9b] rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
+              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-48 bg-[#e7a39b] border-2 border-[#f3df9b] rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
                 {[
                   { id: 'ABOUT' as View, label: 'About Project', icon: <Info size={16} /> },
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
@@ -95,9 +95,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button onClick={() => onNavigate('TOOLS')} className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
 
           <div className="relative" ref={settingsRef}>
-            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] ${isAdmin ? 'text-[#ed1e25]' : 'text-black'}`} title="Settings"><Settings size={20} /></button>
+            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] ${isAdmin ? 'text-[#e7a39b]' : 'text-black'}`} title="Settings"><Settings size={20} /></button>
             {showSettingsMenu && (
-              <div className="absolute top-full right-0 mt-2 w-64 bg-[#ed1e25] border-2 border-[#f3df9b] rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
+              <div className="absolute top-full right-0 mt-2 w-64 bg-[#e7a39b] border-2 border-[#f3df9b] rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mb-3">Settings</p>
 
                 <div className="space-y-2 mb-4">

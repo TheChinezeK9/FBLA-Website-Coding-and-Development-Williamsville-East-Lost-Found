@@ -8,7 +8,7 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="relative z-10 bg-[#ed1e25] border-t border-[#f3df9b] mt-0">
+    <footer className="relative z-10 bg-[#e7a39b] border-t border-[#f3df9b] mt-0">
       <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-2.5 mb-4">
@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <h4 className="text-black text-[11px] font-black tracking-[0.2em] uppercase mb-4">Search Items</h4>
           <div className="flex rounded-lg overflow-hidden border border-black/15">
             <input placeholder="Search..." className="flex-1 bg-black/5 border-none px-3 py-2 text-black text-xs outline-none focus:bg-black/10" />
-            <button onClick={() => onNavigate('BULLETIN_BOARD')} className="bg-[#ed1e25] px-3 py-2 text-black font-bold text-[11px] tracking-wider hover:opacity-90">Search</button>
+            <button onClick={() => onNavigate('BULLETIN_BOARD')} className="bg-[#e7a39b] px-3 py-2 text-black font-bold text-[11px] tracking-wider hover:bg-[#ebb2ab]">Search</button>
           </div>
         </div>
       </div>
