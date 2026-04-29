@@ -275,10 +275,10 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
       <header
         className="pt-32 pb-16 px-6 rounded-b-[40px] shadow-lg relative overflow-hidden mb-12 text-black"
         style={{
-          backgroundImage: 'linear-gradient(90deg, rgba(231, 163, 155, 0.99) 0%, rgba(231, 163, 155, 0.99) 44%, rgba(243, 223, 155, 0.84) 50%, rgba(231, 163, 155, 0.99) 56%, rgba(255, 250, 244, 0.28) 100%)'
+          backgroundImage: 'linear-gradient(90deg, rgba(243, 223, 155, 0.74) 0%, rgba(255, 250, 244, 0.18) 18%, rgba(231, 163, 155, 0.99) 50%, rgba(255, 250, 244, 0.18) 82%, rgba(243, 223, 155, 0.74) 100%)'
         }}
       >
-        <div className="absolute top-0 right-0 p-8 opacity-20 rotate-12">
+        <div className="absolute top-0 right-0 p-8 opacity-35 rotate-12">
           <img src={school.logo} alt="Logo" className="w-64 h-64 object-contain" />
         </div>
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
@@ -346,7 +346,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                   <div className="p-6 flex-1 flex flex-col">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="text-xl font-bold text-slate-900 dark:text-white line-clamp-1">{item.name}</h3>
-                      <div className="font-bold text-xs uppercase flex items-center gap-1 shrink-0 ml-2" style={{ color: school.palette.primary, opacity: 0.6 }}>
+                      <div className="font-bold text-xs uppercase flex items-center gap-1 shrink-0 ml-2" style={{ color: school.palette.primary, opacity: 0.82 }}>
                         <Calendar size={12} /> {item.date}
                       </div>
                     </div>
