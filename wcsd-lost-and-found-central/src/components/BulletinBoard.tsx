@@ -275,7 +275,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
       <header
         className="pt-32 pb-16 px-6 rounded-b-[40px] shadow-lg relative overflow-hidden mb-12 text-white"
         style={{
-          backgroundImage: 'radial-gradient(circle at top, rgba(231, 163, 155, 0.96) 0%, rgba(255, 250, 244, 0.94) 42%, rgba(243, 223, 155, 0.92) 100%)'
+          backgroundImage: 'linear-gradient(90deg, rgba(231, 163, 155, 0.98) 0%, rgba(231, 163, 155, 0.98) 72%, rgba(243, 223, 155, 0.94) 90%, rgba(255, 250, 244, 0.82) 100%)'
         }}
       >
         <div className="absolute top-0 right-0 p-8 opacity-20 rotate-12">

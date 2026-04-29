@@ -53,8 +53,14 @@ export default function App() {
   const [items, setItems] = useState<LostItem[]>(INITIAL_ITEMS);
   const [claimLogs, setClaimLogs] = useState<ClaimedLog[]>([]);
   const [claimIntent, setClaimIntent] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('wcsd_dark_mode') === 'true');
-  const [showDoodles, setShowDoodles] = useState(() => localStorage.getItem('wcsd_show_doodles') !== 'false');
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem('wcsd_dark_mode');
+    return saved === 'true';
+  });
+  const [showDoodles, setShowDoodles] = useState(() => {
+    const saved = localStorage.getItem('wcsd_show_doodles');
+    return saved === null ? true : saved !== 'false';
+  });
   const [neonMode, setNeonMode] = useState(() => localStorage.getItem('wcsd_neon_mode') === 'true');
   const [glassMode, setGlassMode] = useState(() => localStorage.getItem('wcsd_glass_mode') === 'true');
   const [isAdmin, setIsAdmin] = useState(false);
