@@ -211,7 +211,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
     <div className="min-h-screen w-full transition-colors duration-300 pb-24">
       <div className="relative z-10 pt-10 pb-8 px-6 text-center">
         <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Your Toolkit</h1>
-        <p className="text-slate-500 dark:text-white text-base max-w-lg mx-auto">Everything Williamsville East needs to find, report, and track lost items.</p>
+        <p className="text-slate-500 dark:text-white text-base max-w-lg mx-auto">Everything YOU need to find, report, and track lost items.</p>
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto px-6 mb-12">
@@ -267,7 +267,6 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
               </div>
               {matches.map((m, idx) => (
                 <button key={idx} type="button" onClick={() => m.item && onOpenMatchedItem(m.item)} className="w-full text-left flex items-center gap-3 p-4 bg-slate-50 dark:bg-[#1f1f1f] rounded-[16px] mb-3 border border-[#ab1e2f]/20 dark:border-[#4b5563] hover:border-[#ab1e2f] transition-colors">
-                  <img src={m.item?.imageUrl} className="w-14 h-14 rounded-[10px] object-cover" alt={m.itemName} />
                   <div className="flex-1">
                     <div className="flex items-center gap-2"><span className="text-sm font-black text-slate-900 dark:text-white">{m.itemName}</span><span className="text-[10px] font-bold uppercase text-[#ab1e2f]">{m.confidence} match</span></div>
                     <p className="text-[11px] text-slate-500 dark:text-white">{m.reason}</p>
