@@ -273,9 +273,9 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   return (
     <div className="min-h-screen w-full text-slate-900 dark:text-white pb-20 transition-colors duration-300">
       <header
-        className="pt-32 pb-16 px-6 rounded-b-[40px] shadow-lg relative overflow-hidden mb-12 text-white"
+        className="pt-32 pb-16 px-6 rounded-b-[40px] shadow-lg relative overflow-hidden mb-12 text-black"
         style={{
-          backgroundImage: 'linear-gradient(90deg, rgba(255, 250, 244, 0.5) 0%, rgba(243, 223, 155, 0.82) 18%, rgba(231, 163, 155, 0.98) 50%, rgba(243, 223, 155, 0.82) 82%, rgba(255, 250, 244, 0.5) 100%)'
+          backgroundImage: 'linear-gradient(90deg, rgba(231, 163, 155, 0.99) 0%, rgba(231, 163, 155, 0.99) 44%, rgba(243, 223, 155, 0.84) 50%, rgba(231, 163, 155, 0.99) 56%, rgba(255, 250, 244, 0.28) 100%)'
         }}
       >
         <div className="absolute top-0 right-0 p-8 opacity-20 rotate-12">
@@ -283,22 +283,22 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
         </div>
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
           <div>
-            <button onClick={goBack} className="flex items-center gap-2 font-bold mb-6 opacity-90 hover:opacity-100 transition-all text-sm uppercase tracking-widest text-white">
+            <button onClick={goBack} className="flex items-center gap-2 font-bold mb-6 opacity-90 hover:opacity-100 transition-all text-sm uppercase tracking-widest text-black">
               <ArrowUp className="-rotate-90" size={18} /> Back to Home
             </button>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 leading-none text-white drop-shadow-sm">{school.name}</h1>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 leading-none text-black drop-shadow-sm">{school.name}</h1>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <button onClick={() => setActiveTab('SUBMIT')} className="flex items-center gap-2 px-5 py-3 rounded-[25px] font-bold text-sm uppercase tracking-wider bg-white/20 backdrop-blur-xl border border-white/30 hover:bg-white/30 text-white transition-all shadow-lg hover:-translate-y-0.5">
+            <button onClick={() => setActiveTab('SUBMIT')} className="flex items-center gap-2 px-5 py-3 rounded-[25px] font-bold text-sm uppercase tracking-wider bg-white/20 backdrop-blur-xl border border-black/15 hover:bg-white/30 text-black transition-all shadow-lg hover:-translate-y-0.5">
               <Camera size={16} /> Report Lost Item
             </button>
             {activeTab !== 'BOARD' && (
-              <button onClick={() => setActiveTab('BOARD')} className="flex items-center gap-2 px-5 py-3 bg-black/20 text-white border border-white/20 rounded-[25px] font-bold text-sm uppercase tracking-wider hover:bg-black/30 transition-all">
+              <button onClick={() => setActiveTab('BOARD')} className="flex items-center gap-2 px-5 py-3 bg-white/30 text-black border border-black/15 rounded-[25px] font-bold text-sm uppercase tracking-wider hover:bg-white/40 transition-all">
                 View Board
               </button>
             )}
             {isAdmin && (
-              <button onClick={() => setActiveTab('ADMIN')} className="flex items-center gap-2 px-5 py-3 rounded-[25px] font-bold text-sm uppercase tracking-wider bg-yellow-400/20 border border-yellow-400/40 hover:bg-yellow-400/30 text-yellow-200 transition-all shadow-lg">
+              <button onClick={() => setActiveTab('ADMIN')} className="flex items-center gap-2 px-5 py-3 rounded-[25px] font-bold text-sm uppercase tracking-wider bg-yellow-400/25 border border-black/15 hover:bg-yellow-400/35 text-black transition-all shadow-lg">
                 <Shield size={16} /> Admin Panel
               </button>
             )}
