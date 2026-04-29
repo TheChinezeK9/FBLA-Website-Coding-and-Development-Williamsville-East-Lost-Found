@@ -98,8 +98,8 @@ export const ContactsPage: React.FC = () => {
               <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
                 <div className="w-32 h-32 bg-white rounded-full p-4 shadow-lg flex-shrink-0"><img src={selectedSchool.logo} className="w-full h-full object-contain" onError={(e) => { e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedSchool.name)}&background=random&color=fff&size=200`; }} /></div>
                 <div className="text-center md:text-left">
-                  <h2 className="text-3xl font-black text-white mb-2">{selectedSchool.name}</h2>
-                  <p className="opacity-90 font-medium text-lg flex items-center justify-center md:justify-start gap-2 text-white"><MapPin size={20} /> {selectedSchool.contactInfo.address}</p>
+                  <h2 className="text-3xl font-black text-black mb-2">{selectedSchool.name}</h2>
+                  <p className="opacity-90 font-medium text-lg flex items-center justify-center md:justify-start gap-2 text-black"><MapPin size={20} /> {selectedSchool.contactInfo.address}</p>
                 </div>
               </div>
             </div>

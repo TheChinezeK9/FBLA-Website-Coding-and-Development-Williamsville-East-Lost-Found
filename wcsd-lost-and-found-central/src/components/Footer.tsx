@@ -12,8 +12,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-2.5 mb-4">
-            <div className="w-8 h-8 bg-[#f3df9b] rounded-lg flex items-center justify-center text-black font-black text-lg">E</div>
-            <span className="text-black font-extrabold text-sm tracking-tight">East High School Lost&amp;Found</span>
+            <img src="/images/east.png" alt="East logo" className="w-8 h-8 object-contain" />
+            <span className="text-black font-extrabold text-sm tracking-tight">East High School Lost &amp; Found</span>
           </div>
           <p className="text-black text-xs leading-relaxed mb-1">151 Paradise Rd<br/>East Amherst, NY 14051</p>
           <p className="text-black text-xs mb-1">(716) 626-8400</p>
