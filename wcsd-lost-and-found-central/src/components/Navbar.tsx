@@ -95,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button onClick={() => onNavigate('TOOLS')} className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
 
           <div className="relative" ref={settingsRef}>
-            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] ${isAdmin ? 'text-[#f3df9b]' : 'text-black'}`} title="Settings"><Settings size={20} /></button>
+            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] ${isAdmin ? 'text-[#e7a39b]' : 'text-black'}`} title="Settings"><Settings size={20} /></button>
             {showSettingsMenu && (
               <div className="absolute top-full right-0 mt-2 w-64 bg-[#e7a39b] border-2 border-[#f3df9b] rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mb-3">Settings</p>

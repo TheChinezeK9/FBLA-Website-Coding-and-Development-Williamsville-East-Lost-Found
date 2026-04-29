@@ -272,7 +272,12 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
 
   return (
     <div className="min-h-screen w-full text-slate-900 dark:text-white pb-20 transition-colors duration-300">
-      <header className="pt-32 pb-16 px-6 rounded-b-[40px] shadow-lg relative overflow-hidden mb-12 text-white" style={{ backgroundColor: school.palette.primary }}>
+      <header
+        className="pt-32 pb-16 px-6 rounded-b-[40px] shadow-lg relative overflow-hidden mb-12 text-white"
+        style={{
+          backgroundImage: 'radial-gradient(circle at top, rgba(231, 163, 155, 0.96) 0%, rgba(255, 250, 244, 0.94) 42%, rgba(243, 223, 155, 0.92) 100%)'
+        }}
+      >
         <div className="absolute top-0 right-0 p-8 opacity-20 rotate-12">
           <img src={school.logo} alt="Logo" className="w-64 h-64 object-contain" />
         </div>
