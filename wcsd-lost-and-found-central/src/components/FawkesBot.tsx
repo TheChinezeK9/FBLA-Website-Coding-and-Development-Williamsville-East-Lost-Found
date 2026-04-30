@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Minimize2, Maximize2, Send, X } from 'lucide-react';
 
-export const HamsterBot: React.FC = () => {
+export const FawkesBot: React.FC = () => {
   const FULLSCREEN_TOP_OFFSET = 92;
   const FULLSCREEN_GAP = 8;
 
@@ -204,9 +204,9 @@ export const HamsterBot: React.FC = () => {
           className="fixed z-[50] rounded-[18px] shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden transition-all duration-200 bg-white dark:bg-[#2b2b2b] border border-transparent dark:border-[#4b5563]"
           style={{ left: panelPos.x, top: panelPos.y, width: panelSize.w, height: panelSize.h }}
         >
-          <div onMouseDown={startDrag} className={`bg-[#e7a39b] p-4 flex justify-between items-center select-none ${isFullscreen ? 'cursor-default' : 'cursor-move'}`}>
+          <div onMouseDown={startDrag} className={`bg-[#f3df9b] p-4 flex justify-between items-center select-none ${isFullscreen ? 'cursor-default' : 'cursor-move'}`}>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-xl">🐦‍🔥</div>
+              <div className="w-10 h-10 bg-[#e7a39b]/35 rounded-full flex items-center justify-center text-xl">🐦‍🔥</div>
               <div>
                 <h3 className="text-black font-bold leading-tight">Fawkes Bot</h3>
                 <div className="flex items-center gap-1.5 text-[10px] text-black/70 font-bold uppercase tracking-widest">
@@ -227,7 +227,7 @@ export const HamsterBot: React.FC = () => {
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-[#2b2b2b] no-scrollbar">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] p-3 rounded-2xl font-medium text-sm shadow-sm ${msg.role === 'user' ? 'bg-[#e7a39b] text-black rounded-tr-none' : 'bg-white dark:bg-[#1f1f1f] text-black dark:text-white rounded-tl-none border border-gray-200 dark:border-[#4b5563]'}`}>
+                  <div className={`max-w-[85%] p-3 rounded-2xl font-medium text-sm shadow-sm ${msg.role === 'user' ? 'bg-[#f3df9b] text-black rounded-tr-none' : 'bg-white dark:bg-[#1f1f1f] text-black dark:text-white rounded-tl-none border border-gray-200 dark:border-[#4b5563]'}`}>
                     {msg.text}
                   </div>
                 </div>
@@ -250,12 +250,12 @@ export const HamsterBot: React.FC = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask Fawkes anything..."
-                className="flex-1 rounded-[12px] px-3 py-2 outline-none text-black dark:text-white bg-white dark:bg-[#1f1f1f] border-2 border-black dark:border-[#4b5563] focus:ring-2 focus:ring-[#e7a39b]"
+                className="flex-1 rounded-[12px] px-3 py-2 outline-none text-black dark:text-white bg-white dark:bg-[#1f1f1f] border-2 border-black dark:border-[#4b5563] focus:ring-2 focus:ring-[#f3df9b]"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isThinking}
-                className="p-2 bg-[#e7a39b] text-black rounded-[12px] hover:bg-[#d38a83] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 bg-[#f3df9b] text-black rounded-[12px] hover:bg-[#f6e9b8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <Send size={18} />
               </button>
@@ -280,7 +280,7 @@ export const HamsterBot: React.FC = () => {
       <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-[50] pointer-events-none">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`pointer-events-auto group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen ? 'bg-[#f3df9b]' : 'bg-[#e7a39b]'}`}
+          className={`pointer-events-auto group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen ? 'bg-[#e7a39b]' : 'bg-[#f3df9b]'}`}
         >
           <div className="flex items-center justify-center w-full h-full text-black">
             {isOpen ? <X size={28} /> : <div className="text-3xl animate-bounce">🐦‍🔥</div>}

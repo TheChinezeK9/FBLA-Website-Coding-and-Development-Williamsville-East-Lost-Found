@@ -8,7 +8,7 @@ import { InfoPages } from './components/InfoPages';
 import { ToolsPage } from './components/ToolsPage';
 import { LiveTracker } from './components/LiveTracker';
 import { Footer } from './components/Footer';
-import { HamsterBot } from './components/HamsterBot';
+import { FawkesBot } from './components/FawkesBot';
 import { Login } from './components/Login';
 import { ProfilePage } from './components/ProfilePage';
 import { DoodleBackground } from './components/DoodleBackground';
@@ -351,7 +351,7 @@ export default function App() {
 
       {currentView === 'LIVE_TRACKER' && <LiveTracker onItemFound={handleTrackerItemFound} onCancel={() => navigate('HOME')} />}
       {currentView !== 'LIVE_TRACKER' && <Footer onNavigate={navigate} />}
-      <HamsterBot />
+      <FawkesBot />
 
       {showAdminModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">

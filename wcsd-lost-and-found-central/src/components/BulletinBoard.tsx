@@ -294,7 +294,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
             </button>
             {activeTab !== 'BOARD' && (
               <button onClick={() => setActiveTab('BOARD')} className="flex items-center gap-2 px-5 py-3 bg-white/30 text-black border border-black/15 rounded-[25px] font-bold text-sm uppercase tracking-wider hover:bg-white/40 transition-all">
-                View Board
+                Item Board
               </button>
             )}
             {isAdmin && (

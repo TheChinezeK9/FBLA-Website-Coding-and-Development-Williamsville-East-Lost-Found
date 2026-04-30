@@ -218,7 +218,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
                     </div>
 
                     <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-[#4b5563]">
-                      <label className="block text-sm font-bold text-gray-400 dark:text-white mb-3 uppercase tracking-wider">Select School Board *</label>
+                      <label className="block text-sm font-bold text-gray-400 dark:text-white mb-3 uppercase tracking-wider">Select Item Board *</label>
                       <select
                         required
                         value={selectedSchool}
