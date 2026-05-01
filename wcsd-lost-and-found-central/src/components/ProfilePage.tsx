@@ -254,16 +254,18 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563] flex flex-col md:flex-row items-center gap-8">
           <div className="flex flex-col items-center gap-3">
-            <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-[#e7a39b] to-[#f3df9b] flex items-center justify-center text-black text-5xl font-black shadow-lg overflow-hidden">
-              {profileImage ? (
-                <img src={profileImage} alt={`${profileUser.name} profile`} className="w-full h-full object-cover" />
-              ) : (
-                profileUser.name.charAt(0)
-              )}
+            <div className="relative w-32 h-32">
+              <div className="w-full h-full rounded-full bg-gradient-to-br from-[#e7a39b] to-[#f3df9b] flex items-center justify-center text-black text-5xl font-black shadow-lg overflow-hidden">
+                {profileImage ? (
+                  <img src={profileImage} alt={`${profileUser.name} profile`} className="w-full h-full object-cover" />
+                ) : (
+                  profileUser.name.charAt(0)
+                )}
+              </div>
               <button
                 type="button"
                 onClick={() => photoInputRef.current?.click()}
-                className="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black transition-colors"
+                className="absolute -bottom-1 -right-1 z-10 w-9 h-9 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black transition-colors shadow-lg"
                 aria-label={profileImage ? 'Switch profile picture' : 'Upload profile picture'}
               >
                 {profileImage ? <RefreshCcw size={16} /> : <Camera size={16} />}
@@ -272,7 +274,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
                 <button
                   type="button"
                   onClick={clearProfileImage}
-                  className="absolute top-2 right-2 w-9 h-9 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition-colors"
+                  className="absolute -top-1 -right-1 z-10 w-9 h-9 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
                   aria-label="Delete profile picture"
                 >
                   <Trash2 size={16} />
@@ -492,32 +494,32 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               <div className="space-y-5">
                 <label className="block">
                   <span className="block text-sm font-bold text-slate-900 dark:text-white mb-2">Zoom</span>
-                  <input type="range" min="1" max="2.6" step="0.05" value={cropZoom} onChange={e => setCropZoom(Number(e.target.value))} className="w-full accent-[#e7a39b]" />
+                  <input type="range" min="1" max="2.6" step="0.05" value={cropZoom} onChange={e => setCropZoom(Number(e.target.value))} className="w-full accent-[#f3df9b] transition hover:brightness-105" />
                 </label>
                 <label className="block">
                   <span className="block text-sm font-bold text-slate-900 dark:text-white mb-2">Move Left / Right</span>
-                  <input type="range" min="-100" max="100" step="1" value={cropOffsetX} onChange={e => setCropOffsetX(Number(e.target.value))} className="w-full accent-[#f3df9b]" />
+                  <input type="range" min="-100" max="100" step="1" value={cropOffsetX} onChange={e => setCropOffsetX(Number(e.target.value))} className="w-full accent-[#f3df9b] transition hover:brightness-105" />
                 </label>
                 <label className="block">
                   <span className="block text-sm font-bold text-slate-900 dark:text-white mb-2">Move Up / Down</span>
-                  <input type="range" min="-100" max="100" step="1" value={cropOffsetY} onChange={e => setCropOffsetY(Number(e.target.value))} className="w-full accent-[#f3df9b]" />
+                  <input type="range" min="-100" max="100" step="1" value={cropOffsetY} onChange={e => setCropOffsetY(Number(e.target.value))} className="w-full accent-[#f3df9b] transition hover:brightness-105" />
                 </label>
 
                 <div className="flex flex-wrap gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={saveCroppedProfileImage}
-                    disabled={isSavingPhoto}
-                    className="px-5 py-3 rounded-xl bg-[#e7a39b] text-black font-bold hover:bg-[#d38a83] disabled:opacity-50 transition-colors"
-                  >
-                    {isSavingPhoto ? 'Uploading...' : 'Upload'}
-                  </button>
                   <button
                     type="button"
                     onClick={cancelProfileImageCrop}
                     className="px-5 py-3 rounded-xl bg-slate-100 dark:bg-[#1f1f1f] text-slate-700 dark:text-white font-bold hover:bg-slate-200 dark:hover:bg-[#333333] transition-colors"
                   >
                     Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={saveCroppedProfileImage}
+                    disabled={isSavingPhoto}
+                    className="px-5 py-3 rounded-xl bg-[#f3df9b] text-black font-bold hover:bg-[#f6e9b8] disabled:opacity-50 transition-colors"
+                  >
+                    {isSavingPhoto ? 'Uploading...' : 'Upload'}
                   </button>
                 </div>
               </div>
