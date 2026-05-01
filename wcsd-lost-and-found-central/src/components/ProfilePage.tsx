@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, GraduationCap, Hash, Calendar, Bell, Heart, LogOut, Settings, X, Shield, ExternalLink, Camera, Upload, Trash2 } from 'lucide-react';
+import { Mail, GraduationCap, Hash, Calendar, Bell, Heart, LogOut, Settings, X, Shield, ExternalLink, Camera, RefreshCcw, Trash2 } from 'lucide-react';
 import { User as UserType, WishlistItem, View } from '../types';
 
 interface ProfilePageProps {
@@ -8,9 +8,49 @@ interface ProfilePageProps {
   onNavigate: (view: View) => void;
 }
 
+const createCroppedProfileImage = async (
+  src: string,
+  zoom: number,
+  offsetX: number,
+  offsetY: number
+) => {
+  const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+
+  const size = 320;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Could not create image cropper.');
+
+  const baseScale = Math.max(size / image.width, size / image.height);
+  const scale = baseScale * zoom;
+  const drawWidth = image.width * scale;
+  const drawHeight = image.height * scale;
+  const maxOffsetX = Math.max(0, (drawWidth - size) / 2);
+  const maxOffsetY = Math.max(0, (drawHeight - size) / 2);
+  const drawX = (size - drawWidth) / 2 - (offsetX / 100) * maxOffsetX;
+  const drawY = (size - drawHeight) / 2 - (offsetY / 100) * maxOffsetY;
+
+  ctx.clearRect(0, 0, size, size);
+  ctx.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+
+  return canvas.toDataURL('image/jpeg', 0.92);
+};
+
 export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavigate }) => {
   const [profileUser, setProfileUser] = useState<UserType>(user);
   const [profileImage, setProfileImage] = useState('');
+  const [pendingProfileImage, setPendingProfileImage] = useState('');
+  const [cropZoom, setCropZoom] = useState(1);
+  const [cropOffsetX, setCropOffsetX] = useState(0);
+  const [cropOffsetY, setCropOffsetY] = useState(0);
+  const [isSavingPhoto, setIsSavingPhoto] = useState(false);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [popupText, setPopupText] = useState('');
   const [showPopup, setShowPopup] = useState(false);
@@ -167,10 +207,34 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
     reader.onload = () => {
       const result = typeof reader.result === 'string' ? reader.result : '';
       if (!result) return;
-      setProfileImage(result);
-      localStorage.setItem(profileImageKey, result);
+      setPendingProfileImage(result);
+      setCropZoom(1);
+      setCropOffsetX(0);
+      setCropOffsetY(0);
     };
     reader.readAsDataURL(file);
+  };
+
+  const saveCroppedProfileImage = async () => {
+    if (!pendingProfileImage) return;
+    setIsSavingPhoto(true);
+    try {
+      const cropped = await createCroppedProfileImage(pendingProfileImage, cropZoom, cropOffsetX, cropOffsetY);
+      setProfileImage(cropped);
+      localStorage.setItem(profileImageKey, cropped);
+      setPendingProfileImage('');
+    } catch {
+    } finally {
+      setIsSavingPhoto(false);
+    }
+  };
+
+  const cancelProfileImageCrop = () => {
+    setPendingProfileImage('');
+    setCropZoom(1);
+    setCropOffsetX(0);
+    setCropOffsetY(0);
+    if (photoInputRef.current) photoInputRef.current.value = '';
   };
 
   const clearProfileImage = () => {
@@ -200,22 +264,22 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
                 type="button"
                 onClick={() => photoInputRef.current?.click()}
                 className="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black transition-colors"
-                aria-label="Upload profile picture"
+                aria-label={profileImage ? 'Switch profile picture' : 'Upload profile picture'}
               >
-                <Camera size={16} />
-              </button>
-            </div>
-            <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handleProfileImageUpload} />
-            <div className="flex gap-2">
-              <button type="button" onClick={() => photoInputRef.current?.click()} className="px-3 py-2 rounded-xl bg-[#f3df9b] text-black text-xs font-bold flex items-center gap-2 hover:bg-[#f6e9b8] transition-colors">
-                <Upload size={14} /> Upload Photo
+                {profileImage ? <RefreshCcw size={16} /> : <Camera size={16} />}
               </button>
               {profileImage && (
-                <button type="button" onClick={clearProfileImage} className="px-3 py-2 rounded-xl bg-red-50 text-red-600 text-xs font-bold flex items-center gap-2 hover:bg-red-100 transition-colors">
-                  <Trash2 size={14} /> Remove
+                <button
+                  type="button"
+                  onClick={clearProfileImage}
+                  className="absolute top-2 right-2 w-9 h-9 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition-colors"
+                  aria-label="Delete profile picture"
+                >
+                  <Trash2 size={16} />
                 </button>
               )}
             </div>
+            <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handleProfileImageUpload} />
           </div>
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">{profileUser.name}</h1>
@@ -397,6 +461,70 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           </div>
         </div>
       </div>
+      {pendingProfileImage && (
+        <div className="fixed inset-0 z-[260] flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm">
+          <div className="w-full max-w-2xl bg-white dark:bg-[#2b2b2b] rounded-[32px] border border-slate-200 dark:border-[#4b5563] shadow-2xl p-6 md:p-8">
+            <div className="flex items-start justify-between gap-4 mb-6">
+              <div>
+                <h2 className="text-2xl font-black text-slate-900 dark:text-white">Crop Profile Picture</h2>
+                <p className="text-sm text-slate-500 dark:text-white mt-1">Adjust the framing before saving your profile photo.</p>
+              </div>
+              <button type="button" onClick={cancelProfileImageCrop} className="text-slate-400 hover:text-red-500 transition-colors">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="grid md:grid-cols-[320px_1fr] gap-8 items-start">
+              <div className="mx-auto">
+                <div className="w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-[#f3df9b] shadow-xl bg-slate-100 dark:bg-[#1f1f1f]">
+                  <img
+                    src={pendingProfileImage}
+                    alt="Profile crop preview"
+                    className="w-full h-full object-cover"
+                    style={{
+                      transform: `scale(${cropZoom}) translate(${cropOffsetX}%, ${cropOffsetY}%)`,
+                      transformOrigin: 'center'
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-5">
+                <label className="block">
+                  <span className="block text-sm font-bold text-slate-900 dark:text-white mb-2">Zoom</span>
+                  <input type="range" min="1" max="2.6" step="0.05" value={cropZoom} onChange={e => setCropZoom(Number(e.target.value))} className="w-full accent-[#e7a39b]" />
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-bold text-slate-900 dark:text-white mb-2">Move Left / Right</span>
+                  <input type="range" min="-100" max="100" step="1" value={cropOffsetX} onChange={e => setCropOffsetX(Number(e.target.value))} className="w-full accent-[#f3df9b]" />
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-bold text-slate-900 dark:text-white mb-2">Move Up / Down</span>
+                  <input type="range" min="-100" max="100" step="1" value={cropOffsetY} onChange={e => setCropOffsetY(Number(e.target.value))} className="w-full accent-[#f3df9b]" />
+                </label>
+
+                <div className="flex flex-wrap gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={saveCroppedProfileImage}
+                    disabled={isSavingPhoto}
+                    className="px-5 py-3 rounded-xl bg-[#e7a39b] text-black font-bold hover:bg-[#d38a83] disabled:opacity-50 transition-colors"
+                  >
+                    {isSavingPhoto ? 'Uploading...' : 'Upload'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={cancelProfileImageCrop}
+                    className="px-5 py-3 rounded-xl bg-slate-100 dark:bg-[#1f1f1f] text-slate-700 dark:text-white font-bold hover:bg-slate-200 dark:hover:bg-[#333333] transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
