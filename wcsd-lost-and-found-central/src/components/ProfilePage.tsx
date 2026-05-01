@@ -494,7 +494,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               <div className="space-y-5">
                 <label className="block">
                   <span className="block text-sm font-bold text-slate-900 dark:text-white mb-2">Zoom</span>
-                  <input type="range" min="1" max="2.6" step="0.05" value={cropZoom} onChange={e => setCropZoom(Number(e.target.value))} className="w-full accent-[#f3df9b] transition hover:brightness-105" />
+                  <input type="range" min="0.6" max="2.6" step="0.05" value={cropZoom} onChange={e => setCropZoom(Number(e.target.value))} className="w-full accent-[#f3df9b] transition hover:brightness-105" />
                 </label>
                 <label className="block">
                   <span className="block text-sm font-bold text-slate-900 dark:text-white mb-2">Move Left / Right</span>
