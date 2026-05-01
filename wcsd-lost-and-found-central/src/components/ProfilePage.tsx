@@ -398,21 +398,21 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
                 value={currentPassword}
                 onChange={e => setCurrentPassword(e.target.value)}
                 placeholder="Current password"
-                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-white"
+                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
               />
               <input
                 type="password"
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
                 placeholder="New password"
-                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-white"
+                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
               />
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
                 placeholder="Confirm new password"
-                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-white"
+                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
               />
 
               {passwordError && <p className="text-xs font-semibold text-red-500">{passwordError}</p>}
@@ -437,7 +437,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               <div className="space-y-3">
                 <a
                   href="/privacypolicy.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] hover:text-[#e7a39b] dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] dark:hover:bg-[#1f1f1f] transition-colors"
                 >
                   <span>Privacy Policy</span>
                   <ExternalLink size={16} />
@@ -445,7 +445,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
                 <a
                   href="/termsofservice.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] hover:text-[#e7a39b] dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] dark:hover:bg-[#1f1f1f] transition-colors"
                 >
                   <span>Terms of Use</span>
                   <ExternalLink size={16} />
@@ -453,7 +453,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
                 <a
                   href="/accessibility.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] hover:text-[#e7a39b] dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] dark:hover:bg-[#1f1f1f] transition-colors"
                 >
                   <span>Accessibility</span>
                   <ExternalLink size={16} />
