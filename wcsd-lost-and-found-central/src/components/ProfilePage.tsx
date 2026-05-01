@@ -437,7 +437,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               <div className="space-y-3">
                 <a
                   href="/privacypolicy.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#f3f4f6]/10 transition-colors"
                 >
                   <span>Privacy Policy</span>
                   <ExternalLink size={16} />
@@ -445,7 +445,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
                 <a
                   href="/termsofservice.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#f3f4f6]/10 transition-colors"
                 >
                   <span>Terms of Use</span>
                   <ExternalLink size={16} />
@@ -453,7 +453,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
                 <a
                   href="/accessibility.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#f3f4f6]/10 transition-colors"
                 >
                   <span>Accessibility</span>
                   <ExternalLink size={16} />
