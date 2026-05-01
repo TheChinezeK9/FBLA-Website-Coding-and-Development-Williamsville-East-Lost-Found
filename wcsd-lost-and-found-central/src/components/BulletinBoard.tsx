@@ -28,6 +28,8 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   setIsAdmin,
   currentUser
 }) => {
+  const profileImageKey = `wcsd_profile_photo_${currentUser.email.toLowerCase()}`;
+  const currentUserProfileImage = typeof window !== 'undefined' ? localStorage.getItem(profileImageKey) || '' : '';
   const [activeTab, setActiveTab] = useState<'BOARD' | 'SUBMIT' | 'ADMIN'>(initialTab);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
@@ -256,7 +258,10 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
       status: 'lost',
       imageUrl: newItemImage,
       reporterUserId: currentUser.id,
+      reporterName: currentUser.name,
+      reporterGrade: currentUser.grade || currentUser.studentId || '',
       reporterEmail: currentUser.email,
+      reporterProfileImage: currentUserProfileImage,
       foundLocation: foundLocation.trim(),
       finderName: finderName.trim()
     };
@@ -352,7 +357,26 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     </div>
                     <p className="text-slate-500 dark:text-white text-sm font-medium leading-relaxed mb-3 line-clamp-2">{item.description}</p>
                     {item.foundLocation && <p className="text-xs text-slate-500 dark:text-white mb-1"><span className="font-bold">Location Found:</span> {item.foundLocation}</p>}
-                    {item.finderName && <p className="text-xs text-slate-500 dark:text-white mb-4"><span className="font-bold">Found By:</span> {item.finderName}</p>}
+                    {item.finderName && <p className="text-xs text-slate-500 dark:text-white mb-3"><span className="font-bold">Found By:</span> {item.finderName}</p>}
+                    <div className="rounded-[14px] bg-slate-50 dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] p-3 mb-4">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-white mb-2">Posted By</p>
+                      <div className="flex items-center gap-3">
+                        <div className="w-11 h-11 rounded-full overflow-hidden bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#4b5563] flex items-center justify-center text-sm font-black text-slate-700 dark:text-white shrink-0">
+                          {item.reporterProfileImage ? (
+                            <img src={item.reporterProfileImage} alt={item.reporterName || 'Poster'} className="w-full h-full object-cover" />
+                          ) : (
+                            (item.reporterName || 'U').charAt(0)
+                          )}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{item.reporterName || 'Unknown Poster'}</p>
+                          <p className="text-xs text-slate-500 dark:text-white">Grade: {item.reporterGrade || 'N/A'}</p>
+                          <a href={item.reporterEmail ? `mailto:${item.reporterEmail}` : undefined} className={`text-xs ${item.reporterEmail ? 'text-slate-500 dark:text-white underline hover:opacity-80' : 'text-slate-400 dark:text-white'}`}>
+                            {item.reporterEmail || 'No email provided'}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                     <div className="mt-auto">
                       {item.status === 'lost' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-amber-50 text-amber-600 border border-amber-100 text-sm uppercase tracking-widest">Pending Review</div>}
                       {item.status === 'found' && (
@@ -468,6 +492,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     <div className="flex-1">
                       <h4 className="font-bold text-slate-900 dark:text-white">{item.name}</h4>
                       <p className="text-slate-600 dark:text-white text-sm">{item.description}</p>
+                      <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Poster:</span> {item.reporterName || 'Unknown'} | Grade {item.reporterGrade || 'N/A'} | {item.reporterEmail ? <a href={`mailto:${item.reporterEmail}`} className="underline hover:opacity-80">{item.reporterEmail}</a> : 'No email'}</p>
                       {item.foundLocation && <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Location Found:</span> {item.foundLocation}</p>}
                       {item.finderName && <p className="text-xs text-slate-500 dark:text-white"><span className="font-bold">Found By:</span> {item.finderName}</p>}
                     </div>
@@ -500,6 +525,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     <div className="flex-1">
                       <h4 className="font-bold text-slate-900 dark:text-white mb-1">{item.name}</h4>
                       <p className="text-slate-600 dark:text-white text-sm mb-2">{item.description}</p>
+                      <p className="text-xs text-slate-500 dark:text-white mb-2"><span className="font-bold">Poster:</span> {item.reporterName || 'Unknown'} | Grade {item.reporterGrade || 'N/A'} | {item.reporterEmail ? <a href={`mailto:${item.reporterEmail}`} className="underline hover:opacity-80">{item.reporterEmail}</a> : 'No email'}</p>
                       <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-white">
                         Claimant: {item.claimantName || 'Unknown'} | {item.claimantEmail ? <a href={`mailto:${item.claimantEmail}`} className="underline hover:opacity-80">{item.claimantEmail}</a> : 'No email'} | ID {item.claimantGrade || '-'}
                       </p>
@@ -554,6 +580,9 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     <div className="flex-1">
                       <p className="font-bold text-slate-900 dark:text-white">{item.name}</p>
                       <p className="text-xs text-slate-500 dark:text-white uppercase tracking-wider">{item.status.replace('_', ' ')}</p>
+                      <p className="text-xs text-slate-500 dark:text-white mt-1">Poster: {item.reporterName || 'Unknown'} | Grade {item.reporterGrade || 'N/A'} | {item.reporterEmail ? <a href={`mailto:${item.reporterEmail}`} className="underline hover:opacity-80">{item.reporterEmail}</a> : 'No email'}</p>
+                      {item.foundLocation && <p className="text-xs text-slate-500 dark:text-white">Location: {item.foundLocation}</p>}
+                      {item.finderName && <p className="text-xs text-slate-500 dark:text-white">Finder: {item.finderName}</p>}
                     </div>
                     <button onClick={() => handleDelete(item.id)} className="px-4 py-2 bg-red-50 text-red-500 rounded-full font-bold text-xs uppercase tracking-widest">
                       Delete

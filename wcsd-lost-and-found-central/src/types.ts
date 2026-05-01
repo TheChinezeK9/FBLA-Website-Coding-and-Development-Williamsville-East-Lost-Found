@@ -27,7 +27,10 @@ export interface LostItem {
   status: 'lost' | 'found' | 'pending_claim' | 'claimed';
   imageUrl?: string;
   reporterUserId?: string;
+  reporterName?: string;
+  reporterGrade?: string;
   reporterEmail?: string;
+  reporterProfileImage?: string;
   foundLocation?: string;
   finderName?: string;
   claimantName?: string;
