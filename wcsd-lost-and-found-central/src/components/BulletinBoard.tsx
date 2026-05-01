@@ -500,7 +500,9 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     <div className="flex-1">
                       <h4 className="font-bold text-slate-900 dark:text-white mb-1">{item.name}</h4>
                       <p className="text-slate-600 dark:text-white text-sm mb-2">{item.description}</p>
-                      <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-white">Claimant: {item.claimantName || 'Unknown'} | {item.claimantEmail || 'No email'} | ID {item.claimantGrade || '-'}</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-white">
+                        Claimant: {item.claimantName || 'Unknown'} | {item.claimantEmail ? <a href={`mailto:${item.claimantEmail}`} className="underline hover:opacity-80">{item.claimantEmail}</a> : 'No email'} | ID {item.claimantGrade || '-'}
+                      </p>
                       {item.claimantLastSeen && <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Last Seen:</span> {item.claimantLastSeen}</p>}
                       {item.claimantProof && <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Proof of Ownership:</span> {item.claimantProof}</p>}
                     </div>
@@ -525,7 +527,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                       <h4 className="font-bold text-slate-900 dark:text-white">{log.itemName}</h4>
                       <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-white">Claimed {new Date(log.claimedAt).toLocaleString()}</span>
                     </div>
-                    <p className="text-sm text-slate-600 dark:text-white mt-2">By: {log.claimedBy} ({log.claimedEmail || 'no email'})</p>
+                    <p className="text-sm text-slate-600 dark:text-white mt-2">By: {log.claimedBy} ({log.claimedEmail ? <a href={`mailto:${log.claimedEmail}`} className="underline hover:opacity-80">{log.claimedEmail}</a> : 'no email'})</p>
                     <p className="text-xs text-slate-400 dark:text-white mt-1">Expires: {new Date(log.expiresAt).toLocaleString()}</p>
                   </div>
                 ))}

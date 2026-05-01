@@ -99,7 +99,7 @@ html.dark.neon-mode .text-black\/70,
 html.dark.neon-mode .text-black\/60,
 html.dark.neon-mode .text-black\/50,
 html.dark.neon-mode .hover\:text-black:hover {
-  color: #fff6d8 !important;
+  color: inherit !important;
   text-shadow: 0 0 6px rgba(243, 223, 155, 0.42), 0 0 12px rgba(231, 163, 155, 0.22);
 }
 

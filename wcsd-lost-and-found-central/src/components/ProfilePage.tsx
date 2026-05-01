@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, GraduationCap, Hash, Calendar, Bell, Heart, LogOut, Settings, X, Shield, ExternalLink } from 'lucide-react';
+import { Mail, GraduationCap, Hash, Calendar, Bell, Heart, LogOut, Settings, X, Shield, ExternalLink, Camera, Upload, Trash2 } from 'lucide-react';
 import { User as UserType, WishlistItem, View } from '../types';
 
 interface ProfilePageProps {
@@ -10,6 +10,7 @@ interface ProfilePageProps {
 
 export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavigate }) => {
   const [profileUser, setProfileUser] = useState<UserType>(user);
+  const [profileImage, setProfileImage] = useState('');
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [popupText, setPopupText] = useState('');
   const [showPopup, setShowPopup] = useState(false);
@@ -21,6 +22,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const seenNotificationIdsRef = useRef<Set<string>>(new Set((user.notifications || []).map(n => n.id)));
   const initializedRef = useRef(false);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const profileImageKey = `wcsd_profile_photo_${user.email.toLowerCase()}`;
+
+  useEffect(() => {
+    const saved = localStorage.getItem(profileImageKey);
+    if (saved) setProfileImage(saved);
+  }, [profileImageKey]);
 
   const load = async () => {
     try {
@@ -151,6 +159,26 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
     }
   };
 
+  const handleProfileImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === 'string' ? reader.result : '';
+      if (!result) return;
+      setProfileImage(result);
+      localStorage.setItem(profileImageKey, result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const clearProfileImage = () => {
+    setProfileImage('');
+    localStorage.removeItem(profileImageKey);
+    if (photoInputRef.current) photoInputRef.current.value = '';
+  };
+
   return (
     <div className="min-h-screen pt-24 pb-12 px-6">
       {showPopup && (
@@ -161,13 +189,40 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       )}
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563] flex flex-col md:flex-row items-center gap-8">
-          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#ab1e2f] to-[#142e53] flex items-center justify-center text-white text-5xl font-black shadow-lg">
-            {profileUser.name.charAt(0)}
+          <div className="flex flex-col items-center gap-3">
+            <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-[#e7a39b] to-[#f3df9b] flex items-center justify-center text-black text-5xl font-black shadow-lg overflow-hidden">
+              {profileImage ? (
+                <img src={profileImage} alt={`${profileUser.name} profile`} className="w-full h-full object-cover" />
+              ) : (
+                profileUser.name.charAt(0)
+              )}
+              <button
+                type="button"
+                onClick={() => photoInputRef.current?.click()}
+                className="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black transition-colors"
+                aria-label="Upload profile picture"
+              >
+                <Camera size={16} />
+              </button>
+            </div>
+            <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handleProfileImageUpload} />
+            <div className="flex gap-2">
+              <button type="button" onClick={() => photoInputRef.current?.click()} className="px-3 py-2 rounded-xl bg-[#f3df9b] text-black text-xs font-bold flex items-center gap-2 hover:bg-[#f6e9b8] transition-colors">
+                <Upload size={14} /> Upload Photo
+              </button>
+              {profileImage && (
+                <button type="button" onClick={clearProfileImage} className="px-3 py-2 rounded-xl bg-red-50 text-red-600 text-xs font-bold flex items-center gap-2 hover:bg-red-100 transition-colors">
+                  <Trash2 size={14} /> Remove
+                </button>
+              )}
+            </div>
           </div>
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">{profileUser.name}</h1>
             <div className="flex flex-wrap justify-center md:justify-start gap-4 text-slate-500 dark:text-white text-sm font-medium">
-              <div className="flex items-center gap-1.5"><Mail size={16} /> {profileUser.email}</div>
+              <a href={`mailto:${profileUser.email}`} className="flex items-center gap-1.5 hover:text-[#e7a39b] transition-colors">
+                <Mail size={16} /> {profileUser.email}
+              </a>
               {profileUser.grade && <div className="flex items-center gap-1.5"><GraduationCap size={16} /> Grade {profileUser.grade}</div>}
               {profileUser.studentId && <div className="flex items-center gap-1.5"><Hash size={16} /> ID: {profileUser.studentId}</div>}
               <div className="flex items-center gap-1.5"><Calendar size={16} /> Joined {new Date(profileUser.joinedAt).toLocaleDateString()}</div>
@@ -300,13 +355,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               <button
                 type="submit"
                 disabled={isChangingPassword}
-                className="w-full rounded-xl bg-[#142e53] text-white py-3 text-sm font-bold disabled:opacity-50"
+                className="w-full rounded-xl bg-[#e7a39b] text-black py-3 text-sm font-bold hover:bg-[#d38a83] disabled:opacity-50 transition-colors"
               >
                 {isChangingPassword ? 'Updating...' : 'Save New Password'}
               </button>
             </form>
 
-            <div className="p-5 rounded-2xl border border-slate-200 dark:border-[#4b5563] hover:bg-slate-50 dark:hover:bg-[#1f1f1f] transition-colors space-y-4">
+            <div className="p-5 rounded-2xl border border-slate-200 dark:border-[#4b5563] space-y-4">
               <div className="flex items-center gap-2 text-slate-900 dark:text-white">
                 <ExternalLink size={18} />
                 <p className="text-sm font-bold">Policies & Accessibility</p>
@@ -316,7 +371,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               <div className="space-y-3">
                 <a
                   href="/privacypolicy.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] hover:text-[#e7a39b] dark:hover:bg-[#1f1f1f] transition-colors"
                 >
                   <span>Privacy Policy</span>
                   <ExternalLink size={16} />
@@ -324,7 +379,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
                 <a
                   href="/termsofservice.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] hover:text-[#e7a39b] dark:hover:bg-[#1f1f1f] transition-colors"
                 >
                   <span>Terms of Use</span>
                   <ExternalLink size={16} />
@@ -332,7 +387,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
                 <a
                   href="/accessibility.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#1f1f1f] transition-colors"
+                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-[#f8efe4] hover:text-[#e7a39b] dark:hover:bg-[#1f1f1f] transition-colors"
                 >
                   <span>Accessibility</span>
                   <ExternalLink size={16} />
