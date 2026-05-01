@@ -84,7 +84,7 @@ html.dark.neon-mode .text-white\/60,
 html.dark.neon-mode .text-white\/50,
 html.dark.neon-mode .text-white\/40,
 html.dark.neon-mode .text-\[\#e9ecef\] {
-  color: #ffffff;
+  color: inherit !important;
   text-shadow: 0 0 4px rgba(255, 255, 255, 0.28);
 }
 
