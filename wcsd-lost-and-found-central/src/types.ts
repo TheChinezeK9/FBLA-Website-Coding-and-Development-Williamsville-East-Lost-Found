@@ -36,6 +36,7 @@ export interface LostItem {
   claimantName?: string;
   claimantEmail?: string;
   claimantGrade?: string;
+  claimantStudentId?: string;
   claimantUserId?: string;
   claimantLastSeen?: string;
   claimantProof?: string;

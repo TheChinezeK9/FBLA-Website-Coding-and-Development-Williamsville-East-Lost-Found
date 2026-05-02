@@ -358,10 +358,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
             >
               <span>{label}</span>
               {key === 'NOTIFICATIONS' && unreadNotificationCount > 0 && (
-                <span className="absolute top-2 right-2 inline-block w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.55)]" />
+                <span className="absolute -top-1 -right-1 inline-block w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.55)]" />
               )}
               {key === 'WISHLIST' && wishlistCount > 0 && (
-                <span className="absolute top-2 right-2 inline-block w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
+                <span className="absolute -top-1 -right-1 inline-block w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
               )}
             </button>
           ))}

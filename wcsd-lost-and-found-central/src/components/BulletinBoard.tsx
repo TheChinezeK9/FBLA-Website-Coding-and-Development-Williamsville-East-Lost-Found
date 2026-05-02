@@ -34,9 +34,6 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
   const [claimingItem, setClaimingItem] = useState<LostItem | null>(null);
-  const [claimName, setClaimName] = useState('');
-  const [claimEmail, setClaimEmail] = useState(currentUser.email || '');
-  const [claimGrade, setClaimGrade] = useState((currentUser.studentId || '').replace(/\D/g, ''));
   const [claimLastSeen, setClaimLastSeen] = useState('');
   const [claimProof, setClaimProof] = useState('');
   const [newItemName, setNewItemName] = useState('');
@@ -104,9 +101,10 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
           ? {
               ...item,
               status: 'pending_claim',
-              claimantName: claimName.trim(),
+              claimantName: currentUser.name?.trim() || '',
               claimantEmail: currentUser.email,
-              claimantGrade: claimGrade.trim(),
+              claimantGrade: (currentUser.grade || '').trim(),
+              claimantStudentId: (currentUser.studentId || '').trim(),
               claimantUserId: currentUser.id,
               claimantLastSeen: claimLastSeen.trim(),
               claimantProof: claimProof.trim()
@@ -115,9 +113,6 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
       )
     );
     setClaimingItem(null);
-    setClaimName('');
-    setClaimEmail(currentUser.email || '');
-    setClaimGrade((currentUser.studentId || '').replace(/\D/g, ''));
     setClaimLastSeen('');
     setClaimProof('');
   };
@@ -191,6 +186,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
               claimantName: undefined,
               claimantEmail: undefined,
               claimantGrade: undefined,
+              claimantStudentId: undefined,
               claimantUserId: undefined,
               claimantLastSeen: undefined,
               claimantProof: undefined
@@ -259,7 +255,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
       imageUrl: newItemImage,
       reporterUserId: currentUser.id,
       reporterName: currentUser.name,
-      reporterGrade: currentUser.grade || currentUser.studentId || '',
+      reporterGrade: currentUser.grade || '',
       reporterEmail: currentUser.email,
       reporterProfileImage: currentUserProfileImage,
       foundLocation: foundLocation.trim(),
@@ -370,7 +366,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{item.reporterName || 'Unknown Poster'}</p>
-                          <p className="text-xs text-slate-500 dark:text-white">Grade: {item.reporterGrade || 'N/A'}</p>
+                          <p className="text-xs text-slate-500 dark:text-white"><span className="font-bold">Grade:</span> {item.reporterGrade || 'N/A'}</p>
                           <a href={item.reporterEmail ? `mailto:${item.reporterEmail}` : undefined} className={`text-xs ${item.reporterEmail ? 'text-slate-500 dark:text-white underline hover:opacity-80' : 'text-slate-400 dark:text-white'}`}>
                             {item.reporterEmail || 'No email provided'}
                           </a>
@@ -492,7 +488,23 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     <div className="flex-1">
                       <h4 className="font-bold text-slate-900 dark:text-white">{item.name}</h4>
                       <p className="text-slate-600 dark:text-white text-sm">{item.description}</p>
-                      <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Poster:</span> {item.reporterName || 'Unknown'} | Grade {item.reporterGrade || 'N/A'} | {item.reporterEmail ? <a href={`mailto:${item.reporterEmail}`} className="underline hover:opacity-80">{item.reporterEmail}</a> : 'No email'}</p>
+                      <div className="flex items-center gap-3 mt-2">
+                        <div className="w-10 h-10 rounded-full overflow-hidden bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] flex items-center justify-center text-sm font-black text-slate-700 dark:text-white shrink-0">
+                          {item.reporterProfileImage ? (
+                            <img src={item.reporterProfileImage} alt={item.reporterName || 'Poster'} className="w-full h-full object-cover" />
+                          ) : (
+                            (item.reporterName || 'U').charAt(0)
+                          )}
+                        </div>
+                        <div className="min-w-0 text-xs text-slate-500 dark:text-white">
+                          <p><span className="font-bold">Poster:</span> {item.reporterName || 'Unknown'}</p>
+                          <p><span className="font-bold">Grade:</span> {item.reporterGrade || 'N/A'}</p>
+                          <p>
+                            <span className="font-bold">Email:</span>{' '}
+                            {item.reporterEmail ? <a href={`mailto:${item.reporterEmail}`} className="underline hover:opacity-80">{item.reporterEmail}</a> : 'No email'}
+                          </p>
+                        </div>
+                      </div>
                       {item.foundLocation && <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Location Found:</span> {item.foundLocation}</p>}
                       {item.finderName && <p className="text-xs text-slate-500 dark:text-white"><span className="font-bold">Found By:</span> {item.finderName}</p>}
                     </div>
@@ -525,10 +537,32 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     <div className="flex-1">
                       <h4 className="font-bold text-slate-900 dark:text-white mb-1">{item.name}</h4>
                       <p className="text-slate-600 dark:text-white text-sm mb-2">{item.description}</p>
-                      <p className="text-xs text-slate-500 dark:text-white mb-2"><span className="font-bold">Poster:</span> {item.reporterName || 'Unknown'} | Grade {item.reporterGrade || 'N/A'} | {item.reporterEmail ? <a href={`mailto:${item.reporterEmail}`} className="underline hover:opacity-80">{item.reporterEmail}</a> : 'No email'}</p>
-                      <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-white">
-                        Claimant: {item.claimantName || 'Unknown'} | {item.claimantEmail ? <a href={`mailto:${item.claimantEmail}`} className="underline hover:opacity-80">{item.claimantEmail}</a> : 'No email'} | ID {item.claimantGrade || '-'}
-                      </p>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-full overflow-hidden bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] flex items-center justify-center text-sm font-black text-slate-700 dark:text-white shrink-0">
+                          {item.reporterProfileImage ? (
+                            <img src={item.reporterProfileImage} alt={item.reporterName || 'Poster'} className="w-full h-full object-cover" />
+                          ) : (
+                            (item.reporterName || 'U').charAt(0)
+                          )}
+                        </div>
+                        <div className="min-w-0 text-xs text-slate-500 dark:text-white">
+                          <p><span className="font-bold">Poster:</span> {item.reporterName || 'Unknown'}</p>
+                          <p><span className="font-bold">Grade:</span> {item.reporterGrade || 'N/A'}</p>
+                          <p>
+                            <span className="font-bold">Email:</span>{' '}
+                            {item.reporterEmail ? <a href={`mailto:${item.reporterEmail}`} className="underline hover:opacity-80">{item.reporterEmail}</a> : 'No email'}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-white space-y-1">
+                        <p><span className="font-bold">Claimant:</span> {item.claimantName || 'Unknown'}</p>
+                        <p>
+                          <span className="font-bold">Email:</span>{' '}
+                          {item.claimantEmail ? <a href={`mailto:${item.claimantEmail}`} className="underline hover:opacity-80">{item.claimantEmail}</a> : 'No email'}
+                        </p>
+                        <p><span className="font-bold">Grade:</span> {item.claimantGrade || '-'}</p>
+                        <p><span className="font-bold">School ID:</span> {item.claimantStudentId || '-'}</p>
+                      </div>
                       {item.claimantLastSeen && <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Last Seen:</span> {item.claimantLastSeen}</p>}
                       {item.claimantProof && <p className="text-xs text-slate-500 dark:text-white mt-1"><span className="font-bold">Proof of Ownership:</span> {item.claimantProof}</p>}
                     </div>
@@ -551,7 +585,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                   <div key={log.id} className="bg-white dark:bg-[#2b2b2b] border border-slate-200 dark:border-[#4b5563] p-5 rounded-[18px] shadow-sm">
                     <div className="flex flex-wrap gap-3 items-center justify-between">
                       <h4 className="font-bold text-slate-900 dark:text-white">{log.itemName}</h4>
-                      <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-white">Claimed {new Date(log.claimedAt).toLocaleString()}</span>
+                      <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-white"><span>Claimed</span>{' '}{new Date(log.claimedAt).toLocaleString()}</span>
                     </div>
                     <p className="text-sm text-slate-600 dark:text-white mt-2">By: {log.claimedBy} ({log.claimedEmail ? <a href={`mailto:${log.claimedEmail}`} className="underline hover:opacity-80">{log.claimedEmail}</a> : 'no email'})</p>
                     <p className="text-xs text-slate-400 dark:text-white mt-1">Expires: {new Date(log.expiresAt).toLocaleString()}</p>
@@ -580,9 +614,25 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                     <div className="flex-1">
                       <p className="font-bold text-slate-900 dark:text-white">{item.name}</p>
                       <p className="text-xs text-slate-500 dark:text-white uppercase tracking-wider">{item.status.replace('_', ' ')}</p>
-                      <p className="text-xs text-slate-500 dark:text-white mt-1">Poster: {item.reporterName || 'Unknown'} | Grade {item.reporterGrade || 'N/A'} | {item.reporterEmail ? <a href={`mailto:${item.reporterEmail}`} className="underline hover:opacity-80">{item.reporterEmail}</a> : 'No email'}</p>
-                      {item.foundLocation && <p className="text-xs text-slate-500 dark:text-white">Location: {item.foundLocation}</p>}
-                      {item.finderName && <p className="text-xs text-slate-500 dark:text-white">Finder: {item.finderName}</p>}
+                      <div className="flex items-center gap-3 mt-2">
+                        <div className="w-10 h-10 rounded-full overflow-hidden bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] flex items-center justify-center text-sm font-black text-slate-700 dark:text-white shrink-0">
+                          {item.reporterProfileImage ? (
+                            <img src={item.reporterProfileImage} alt={item.reporterName || 'Poster'} className="w-full h-full object-cover" />
+                          ) : (
+                            (item.reporterName || 'U').charAt(0)
+                          )}
+                        </div>
+                        <div className="min-w-0 text-xs text-slate-500 dark:text-white">
+                          <p><span className="font-bold">Poster:</span> {item.reporterName || 'Unknown'}</p>
+                          <p><span className="font-bold">Grade:</span> {item.reporterGrade || 'N/A'}</p>
+                          <p>
+                            <span className="font-bold">Email:</span>{' '}
+                            {item.reporterEmail ? <a href={`mailto:${item.reporterEmail}`} className="underline hover:opacity-80">{item.reporterEmail}</a> : 'No email'}
+                          </p>
+                        </div>
+                      </div>
+                      {item.foundLocation && <p className="text-xs text-slate-500 dark:text-white"><span className="font-bold">Location:</span> {item.foundLocation}</p>}
+                      {item.finderName && <p className="text-xs text-slate-500 dark:text-white"><span className="font-bold">Finder:</span> {item.finderName}</p>}
                     </div>
                     <button onClick={() => handleDelete(item.id)} className="px-4 py-2 bg-red-50 text-red-500 rounded-full font-bold text-xs uppercase tracking-widest">
                       Delete
@@ -604,9 +654,13 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
             <button onClick={() => setClaimingItem(null)} className="absolute top-5 right-5 text-slate-300 dark:text-white"><X size={22} /></button>
             <h3 className="text-2xl font-bold text-center mb-6 text-slate-900 dark:text-white">Claim Item</h3>
             <form onSubmit={handleClaim} className="space-y-4">
-              <input required value={claimName} onChange={e => setClaimName(e.target.value)} className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] text-slate-900 dark:text-white" placeholder="Full Name" />
-              <input required value={claimGrade} onChange={e => setClaimGrade(e.target.value.replace(/\D/g, ''))} className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] text-slate-900 dark:text-white" placeholder="Grade / ID (numbers only)" />
-              <input required type="email" value={claimEmail} onChange={e => setClaimEmail(e.target.value)} className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] text-slate-900 dark:text-white" placeholder="School Email" />
+              <div className="rounded-[16px] bg-slate-50 dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] p-4 space-y-2">
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-white">Using Profile Information</p>
+                <p className="text-sm text-slate-900 dark:text-white"><span className="font-bold">Full Name:</span> {currentUser.name || 'N/A'}</p>
+                <p className="text-sm text-slate-900 dark:text-white"><span className="font-bold">Grade:</span> {currentUser.grade || 'N/A'}</p>
+                <p className="text-sm text-slate-900 dark:text-white"><span className="font-bold">School ID:</span> {currentUser.studentId || 'N/A'}</p>
+                <p className="text-sm text-slate-900 dark:text-white"><span className="font-bold">School Email:</span> {currentUser.email || 'N/A'}</p>
+              </div>
               <input
                 required
                 value={claimLastSeen}
