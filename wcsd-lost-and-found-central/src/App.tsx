@@ -26,7 +26,7 @@ const pruneExpiredClaimLogs = (logs: ClaimedLog[]) => {
 
 export default function App() {
   const eastSchool = SCHOOL_THEMES.will_east;
-  const { isTranslating } = useTranslationSettings();
+  const { isTranslating, languageCode } = useTranslationSettings();
   const [user, setUser] = useState<User | null>(() => {
     try {
       const saved = localStorage.getItem('wcsd_user');
@@ -296,7 +296,7 @@ export default function App() {
     );
   }
 
-  const showGlobalLoader = isTranslating;
+  const showGlobalLoader = languageCode !== 'en' && isTranslating;
 
   useEffect(() => {
     let timer: number | null = null;
