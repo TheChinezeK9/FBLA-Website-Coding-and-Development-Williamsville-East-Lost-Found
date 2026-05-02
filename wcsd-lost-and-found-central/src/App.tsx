@@ -407,7 +407,7 @@ export default function App() {
               <X size={22} />
             </button>
             <div className="text-center mb-7">
-              <div className="w-14 h-14 bg-[#142e53] text-white rounded-[16px] flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <div className="w-14 h-14 bg-[#e7a39b] text-black rounded-[16px] flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <Lock size={22} />
               </div>
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Admin Portal</h3>
@@ -423,7 +423,7 @@ export default function App() {
                 placeholder="••••"
               />
               {adminError && <p className="text-red-500 text-center font-bold text-xs uppercase tracking-widest">Incorrect access code</p>}
-              <button type="submit" className="w-full bg-[#142e53] text-white py-4 rounded-[14px] font-bold text-base shadow-lg hover:bg-[#1f3a5a] active:scale-[0.98] transition-all">
+              <button type="submit" className="w-full bg-[#e7a39b] text-black py-4 rounded-[14px] font-bold text-base shadow-lg hover:brightness-105 active:scale-[0.98] transition-all">
                 Unlock Dashboard
               </button>
             </form>
