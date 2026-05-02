@@ -85,7 +85,7 @@ const mutationTouchesTranslatableContent = (mutations: MutationRecord[]) => {
 };
 
 export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [languageCode, setLanguageCode] = useState(() => localStorage.getItem('wcsd_language_code') || 'en');
+  const [languageCode, setLanguageCode] = useState('en');
   const [supportedLanguages] = useState<SupportedLanguage[]>(SUPPORTED_LANGUAGES);
   const [isLoadingLanguages] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
@@ -101,6 +101,11 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     localStorage.setItem('wcsd_language_code', languageCode);
     document.documentElement.lang = languageCode;
   }, [languageCode]);
+
+  useEffect(() => {
+    localStorage.setItem('wcsd_language_code', 'en');
+    document.documentElement.lang = 'en';
+  }, []);
 
   useEffect(() => {
     const body = document.body;
