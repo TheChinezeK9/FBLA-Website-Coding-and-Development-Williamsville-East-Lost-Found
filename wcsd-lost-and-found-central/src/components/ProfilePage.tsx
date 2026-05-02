@@ -413,7 +413,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           />
         )}
 
-        <div data-no-translate className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563]">
+        <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563]">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#1f1f1f] text-slate-600 dark:text-white flex items-center justify-center">
               <Globe size={20} />
@@ -425,7 +425,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           </div>
 
           <div className="max-w-sm space-y-3">
-            <div className="relative">
+            <div data-no-translate className="relative">
               <select
                 value={languageCode}
                 onChange={e => setLanguageCode(e.target.value)}

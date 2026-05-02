@@ -93,6 +93,44 @@ const chunk = <T,>(items: T[], size: number) => {
   return result;
 };
 
+const mutationTouchesTranslatableContent = (mutations: MutationRecord[]) => {
+  return mutations.some(mutation => {
+    if (mutation.type === 'attributes') {
+      const target = mutation.target as Element | null;
+      return !!target && !shouldSkipElement(target);
+    }
+
+    if (mutation.type === 'characterData') {
+      const textNode = mutation.target as Text;
+      const parentElement = textNode.parentElement;
+      return !!parentElement && !shouldSkipElement(parentElement) && looksTranslatable(textNode.textContent || '');
+    }
+
+    const changedNodes = [...Array.from(mutation.addedNodes), ...Array.from(mutation.removedNodes)];
+    if (changedNodes.length === 0) {
+      const target = mutation.target instanceof Element ? mutation.target : mutation.target.parentElement;
+      return !!target && !shouldSkipElement(target);
+    }
+
+    return changedNodes.some(node => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const textNode = node as Text;
+        const parentElement = textNode.parentElement;
+        return !!parentElement && !shouldSkipElement(parentElement) && looksTranslatable(textNode.textContent || '');
+      }
+
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const element = node as Element;
+        if (shouldSkipElement(element)) return false;
+        if (looksTranslatable(element.textContent || '')) return true;
+        return ATTRIBUTES_TO_TRANSLATE.some(attribute => looksTranslatable(element.getAttribute(attribute) || ''));
+      }
+
+      return false;
+    });
+  });
+};
+
 export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [languageCode, setLanguageCode] = useState(() => localStorage.getItem('wcsd_language_code') || 'en');
   const [supportedLanguages, setSupportedLanguages] = useState<SupportedLanguage[]>(FALLBACK_LANGUAGES);
@@ -312,8 +350,9 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }, 80);
     };
 
-    const observer = new MutationObserver(() => {
+    const observer = new MutationObserver((mutations) => {
       if (applyingRef.current) return;
+      if (!mutationTouchesTranslatableContent(mutations)) return;
       scheduleApply();
     });
 

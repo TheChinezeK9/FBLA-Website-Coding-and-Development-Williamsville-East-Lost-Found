@@ -71,7 +71,9 @@ export default function App() {
   const [adminError, setAdminError] = useState(false);
   const [hasLoadedServerData, setHasLoadedServerData] = useState(false);
   const [isViewTransitioning, setIsViewTransitioning] = useState(false);
+  const [showLoaderOverlay, setShowLoaderOverlay] = useState(false);
   const didMountRef = useRef(false);
+  const loaderShownAtRef = useRef(0);
 
   useEffect(() => {
     if (!user?.email) return;
@@ -309,10 +311,33 @@ export default function App() {
 
   const showGlobalLoader = isViewTransitioning || isTranslating || !hasLoadedServerData;
 
+  useEffect(() => {
+    let timer: number | null = null;
+
+    if (showGlobalLoader) {
+      if (!showLoaderOverlay) {
+        timer = window.setTimeout(() => {
+          loaderShownAtRef.current = Date.now();
+          setShowLoaderOverlay(true);
+        }, 140);
+      }
+    } else if (showLoaderOverlay) {
+      const elapsed = Date.now() - loaderShownAtRef.current;
+      const remaining = Math.max(0, 260 - elapsed);
+      timer = window.setTimeout(() => {
+        setShowLoaderOverlay(false);
+      }, remaining);
+    }
+
+    return () => {
+      if (timer !== null) window.clearTimeout(timer);
+    };
+  }, [showGlobalLoader, showLoaderOverlay]);
+
   return (
     <div className="min-h-screen bg-transparent text-black dark:text-white font-sans transition-colors duration-300 relative">
-      {showGlobalLoader && (
-        <div className="fixed inset-0 z-[280] flex items-center justify-center bg-[#fffaf4]/82 dark:bg-[#181818]/82 backdrop-blur-sm">
+      {showLoaderOverlay && (
+        <div data-no-translate className="fixed inset-0 z-[280] flex items-center justify-center bg-[#fffaf4]/82 dark:bg-[#181818]/82 backdrop-blur-sm">
           <div className="flex flex-col items-center gap-4 px-8 py-7 rounded-[28px] bg-white/92 dark:bg-[#2b2b2b]/94 border border-slate-200 dark:border-[#4b5563] shadow-2xl">
             <div className="relative">
               <div className="absolute inset-0 rounded-full bg-[#f3df9b]/70 blur-xl scale-125" />
