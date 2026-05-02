@@ -296,7 +296,7 @@ export default function App() {
     );
   }
 
-  const showGlobalLoader = isTranslating || !hasLoadedServerData;
+  const showGlobalLoader = isTranslating;
 
   useEffect(() => {
     let timer: number | null = null;
