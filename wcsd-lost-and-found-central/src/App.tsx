@@ -288,14 +288,6 @@ export default function App() {
     }
   };
 
-  if (!isLoggedIn) {
-    return (
-      <div className={isDarkMode ? 'dark' : ''}>
-        <Login onLogin={handleLogin} />
-      </div>
-    );
-  }
-
   const showGlobalLoader = languageCode !== 'en' && isTranslating;
 
   useEffect(() => {
@@ -320,6 +312,14 @@ export default function App() {
       if (timer !== null) window.clearTimeout(timer);
     };
   }, [showGlobalLoader, showLoaderOverlay]);
+
+  if (!isLoggedIn) {
+    return (
+      <div className={isDarkMode ? 'dark' : ''}>
+        <Login onLogin={handleLogin} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-transparent text-black dark:text-white font-sans transition-colors duration-300 relative">
