@@ -1,9 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
-
-type SupportedLanguage = {
-  code: string;
-  name: string;
-};
+import { LOCAL_TRANSLATIONS, SUPPORTED_LANGUAGES, type SupportedLanguage } from './localTranslations';
 
 type TranslationContextValue = {
   languageCode: string;
@@ -16,50 +12,7 @@ type TranslationContextValue = {
 
 const TranslationContext = createContext<TranslationContextValue | null>(null);
 
-const FALLBACK_LANGUAGES: SupportedLanguage[] = [
-  { code: 'en', name: 'English' },
-  { code: 'es', name: 'Spanish' },
-  { code: 'ar', name: 'Arabic' },
-  { code: 'bn', name: 'Bengali' },
-  { code: 'bg', name: 'Bulgarian' },
-  { code: 'zh-CN', name: 'Chinese (Simplified)' },
-  { code: 'zh-TW', name: 'Chinese (Traditional)' },
-  { code: 'hr', name: 'Croatian' },
-  { code: 'cs', name: 'Czech' },
-  { code: 'da', name: 'Danish' },
-  { code: 'nl', name: 'Dutch' },
-  { code: 'et', name: 'Estonian' },
-  { code: 'fi', name: 'Finnish' },
-  { code: 'fr', name: 'French' },
-  { code: 'de', name: 'German' },
-  { code: 'el', name: 'Greek' },
-  { code: 'he', name: 'Hebrew' },
-  { code: 'it', name: 'Italian' },
-  { code: 'id', name: 'Indonesian' },
-  { code: 'hu', name: 'Hungarian' },
-  { code: 'pt', name: 'Portuguese' },
-  { code: 'ja', name: 'Japanese' },
-  { code: 'ko', name: 'Korean' },
-  { code: 'hi', name: 'Hindi' },
-  { code: 'lv', name: 'Latvian' },
-  { code: 'lt', name: 'Lithuanian' },
-  { code: 'no', name: 'Norwegian' },
-  { code: 'pl', name: 'Polish' },
-  { code: 'ro', name: 'Romanian' },
-  { code: 'ru', name: 'Russian' },
-  { code: 'sr', name: 'Serbian' },
-  { code: 'sk', name: 'Slovak' },
-  { code: 'sl', name: 'Slovenian' },
-  { code: 'sw', name: 'Swahili' },
-  { code: 'sv', name: 'Swedish' },
-  { code: 'th', name: 'Thai' },
-  { code: 'tr', name: 'Turkish' },
-  { code: 'uk', name: 'Ukrainian' },
-  { code: 'vi', name: 'Vietnamese' }
-];
-
 const ATTRIBUTES_TO_TRANSLATE = ['placeholder', 'title', 'aria-label', 'alt'] as const;
-const BATCH_SIZE = 96;
 
 const shouldSkipElement = (element: Element | null) => {
   if (!element) return true;
@@ -133,8 +86,8 @@ const mutationTouchesTranslatableContent = (mutations: MutationRecord[]) => {
 
 export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [languageCode, setLanguageCode] = useState(() => localStorage.getItem('wcsd_language_code') || 'en');
-  const [supportedLanguages, setSupportedLanguages] = useState<SupportedLanguage[]>(FALLBACK_LANGUAGES);
-  const [isLoadingLanguages, setIsLoadingLanguages] = useState(false);
+  const [supportedLanguages] = useState<SupportedLanguage[]>(SUPPORTED_LANGUAGES);
+  const [isLoadingLanguages] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
   const [translationError, setTranslationError] = useState('');
   const textOriginalsRef = useRef(new WeakMap<Text, string>());
@@ -148,38 +101,6 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     localStorage.setItem('wcsd_language_code', languageCode);
     document.documentElement.lang = languageCode;
   }, [languageCode]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadLanguages = async () => {
-      setIsLoadingLanguages(true);
-      try {
-        const response = await fetch('/api/translation/languages');
-        const data = await response.json().catch(() => null);
-        if (cancelled) return;
-        if (response.ok && Array.isArray(data?.languages) && data.languages.length > 0) {
-          const normalized = data.languages
-            .map((language: any) => ({
-              code: String(language.code || language.language || '').trim(),
-              name: String(language.name || language.code || language.language || '').trim()
-            }))
-            .filter((language: SupportedLanguage) => language.code && language.name);
-          if (normalized.length > 0) {
-            setSupportedLanguages(normalized);
-          }
-        }
-      } catch {
-      } finally {
-        if (!cancelled) setIsLoadingLanguages(false);
-      }
-    };
-
-    void loadLanguages();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   useEffect(() => {
     const body = document.body;
@@ -269,30 +190,14 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
       return entries;
     };
 
-    const requestTranslations = async (texts: string[]) => {
-      const missing = texts.filter(text => !translationCacheRef.current.has(`${languageCode}::${text}`));
-      if (missing.length === 0) return;
-
-      for (const group of chunk(missing, BATCH_SIZE)) {
-        const response = await fetch('/api/translation/translate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            target: languageCode,
-            source: 'en',
-            texts: group
-          })
-        });
-
-        const data = await response.json().catch(() => null);
-        if (!response.ok || !Array.isArray(data?.translations)) {
-          throw new Error(data?.error || 'Could not translate this page yet.');
+    const buildLocalTranslations = (texts: string[]) => {
+      const dictionary = LOCAL_TRANSLATIONS[languageCode] || {};
+      texts.forEach(text => {
+        const key = `${languageCode}::${text}`;
+        if (!translationCacheRef.current.has(key)) {
+          translationCacheRef.current.set(key, dictionary[text] || text);
         }
-
-        group.forEach((text, index) => {
-          translationCacheRef.current.set(`${languageCode}::${text}`, String(data.translations[index] || text));
-        });
-      }
+      });
     };
 
     const applyTranslations = async () => {
@@ -310,7 +215,7 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
           ...attributeEntries.map(entry => entry.original)
         ].filter(looksTranslatable)));
 
-        await requestTranslations(uniqueTexts);
+        buildLocalTranslations(uniqueTexts);
         if (cancelled) return;
 
         textNodes.forEach(node => {

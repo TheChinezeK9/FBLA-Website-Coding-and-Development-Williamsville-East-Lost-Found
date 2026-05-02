@@ -3,6 +3,8 @@
   document.documentElement.lang = languageCode;
 
   if (languageCode === 'en') return;
+  var localConfig = window.WCSD_LOCAL_TRANSLATIONS || { translations: {} };
+  var localDictionary = localConfig.translations[languageCode] || {};
 
   var ATTRIBUTES_TO_TRANSLATE = ['placeholder', 'title', 'aria-label', 'alt'];
   var cache = new Map();
@@ -100,27 +102,10 @@
     return entries;
   }
 
-  async function requestTranslations(texts) {
-    var missing = texts.filter(function (text) {
-      return !cache.has(languageCode + '::' + text);
+  function requestTranslations(texts) {
+    texts.forEach(function (text) {
+      cache.set(languageCode + '::' + text, localDictionary[text] || text);
     });
-    if (missing.length === 0) return;
-
-    for (var _i = 0, _arr = chunk(missing, 96); _i < _arr.length; _i++) {
-      var group = _arr[_i];
-      var response = await fetch('/api/translation/translate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ target: languageCode, source: 'en', texts: group })
-      });
-      var data = await response.json().catch(function () { return null; });
-      if (!response.ok || !Array.isArray(data && data.translations)) {
-        throw new Error((data && data.error) || 'Could not translate this page yet.');
-      }
-      group.forEach(function (text, index) {
-        cache.set(languageCode + '::' + text, String(data.translations[index] || text));
-      });
-    }
   }
 
   async function applyTranslations() {
@@ -136,7 +121,7 @@
           .filter(looksTranslatable)
       ));
 
-      await requestTranslations(uniqueTexts);
+      requestTranslations(uniqueTexts);
 
       textNodes.forEach(function (node) {
         var original = textOriginals.get(node) || '';
