@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navbar } from './components/Navbar';
 import { Home } from './components/Home';
 import { BulletinBoard } from './components/BulletinBoard';
@@ -14,7 +14,8 @@ import { ProfilePage } from './components/ProfilePage';
 import { DoodleBackground } from './components/DoodleBackground';
 import { View, LostItem, SchoolTheme, User, ClaimedLog } from './types';
 import { INITIAL_ITEMS, ADMIN_PASSWORD, SCHOOL_THEMES } from './constants';
-import { X, Lock } from 'lucide-react';
+import { X, Lock, LoaderCircle } from 'lucide-react';
+import { useTranslationSettings } from './translation/TranslationProvider';
 
 const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -25,6 +26,7 @@ const pruneExpiredClaimLogs = (logs: ClaimedLog[]) => {
 
 export default function App() {
   const eastSchool = SCHOOL_THEMES.will_east;
+  const { isTranslating } = useTranslationSettings();
   const [user, setUser] = useState<User | null>(() => {
     try {
       const saved = localStorage.getItem('wcsd_user');
@@ -68,6 +70,8 @@ export default function App() {
   const [adminPassword, setAdminPassword] = useState('');
   const [adminError, setAdminError] = useState(false);
   const [hasLoadedServerData, setHasLoadedServerData] = useState(false);
+  const [isViewTransitioning, setIsViewTransitioning] = useState(false);
+  const didMountRef = useRef(false);
 
   useEffect(() => {
     if (!user?.email) return;
@@ -203,6 +207,17 @@ export default function App() {
     }
   }, [showAdminModal]);
 
+  useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
+
+    setIsViewTransitioning(true);
+    const timer = window.setTimeout(() => setIsViewTransitioning(false), 450);
+    return () => window.clearTimeout(timer);
+  }, [currentView]);
+
   const handleLogin = (loggedInUser: User) => {
     const normalizedUser: User = {
       ...loggedInUser,
@@ -292,8 +307,28 @@ export default function App() {
     );
   }
 
+  const showGlobalLoader = isViewTransitioning || isTranslating || !hasLoadedServerData;
+
   return (
     <div className="min-h-screen bg-transparent text-black dark:text-white font-sans transition-colors duration-300 relative">
+      {showGlobalLoader && (
+        <div className="fixed inset-0 z-[280] flex items-center justify-center bg-[#fffaf4]/82 dark:bg-[#181818]/82 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-4 px-8 py-7 rounded-[28px] bg-white/92 dark:bg-[#2b2b2b]/94 border border-slate-200 dark:border-[#4b5563] shadow-2xl">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-full bg-[#f3df9b]/70 blur-xl scale-125" />
+              <img src="/images/east.png" alt="Loading East High School Lost & Found" className="relative w-16 h-16 object-contain" />
+            </div>
+            <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white tracking-wide uppercase">
+              <LoaderCircle size={18} className="animate-spin text-[#e7a39b]" />
+              <span>Loading</span>
+            </div>
+            <p className="text-xs text-slate-500 dark:text-white text-center max-w-[220px]">
+              Bringing everything into place for you.
+            </p>
+          </div>
+        </div>
+      )}
+
       <Navbar
         onNavigate={navigate}
         currentView={currentView}

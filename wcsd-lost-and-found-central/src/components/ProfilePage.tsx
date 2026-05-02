@@ -74,6 +74,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const initializedRef = useRef(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const profileImageKey = `wcsd_profile_photo_${user.email.toLowerCase()}`;
+  const unreadNotificationCount = profileUser.notifications.filter(n => !n.read).length;
+  const wishlistCount = wishlist.length;
 
   useEffect(() => {
     const saved = localStorage.getItem(profileImageKey);
@@ -354,7 +356,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               onClick={() => setActiveSection(key as 'OVERVIEW' | 'NOTIFICATIONS' | 'WISHLIST')}
               className={`px-5 py-3 rounded-full font-bold transition-colors border ${activeSection === key ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-white dark:bg-[#2b2b2b] text-slate-700 dark:text-white border-slate-200 dark:border-[#4b5563]'}`}
             >
-              {label}
+              <span className="flex items-center gap-2">
+                <span>{label}</span>
+                {key === 'NOTIFICATIONS' && unreadNotificationCount > 0 && (
+                  <span className="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.55)]" />
+                )}
+                {key === 'WISHLIST' && wishlistCount > 0 && (
+                  <span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
+                )}
+              </span>
             </button>
           ))}
         </div>

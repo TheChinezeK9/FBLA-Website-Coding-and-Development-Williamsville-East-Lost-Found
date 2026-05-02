@@ -93,9 +93,9 @@ export const ProfileEdit: React.FC<ProfileEditProps> = ({
         <button
           type="submit"
           disabled={isSavingProfile}
-          className="w-full rounded-xl bg-[#e7a39b] text-black py-3 text-sm font-bold hover:bg-[#d38a83] disabled:opacity-50 transition-colors"
+          className="w-full rounded-xl bg-[#f3df9b] text-black py-3 text-sm font-bold hover:bg-[#f6e9b8] disabled:opacity-50 transition-colors"
         >
-          {isSavingProfile ? 'Saving...' : 'Save Profile'}
+          {isSavingProfile ? 'Saving...' : 'Save Basic Info'}
         </button>
       </form>
 
@@ -134,7 +134,7 @@ export const ProfileEdit: React.FC<ProfileEditProps> = ({
         <button
           type="submit"
           disabled={isChangingPassword}
-          className="w-full rounded-xl bg-[#e7a39b] text-black py-3 text-sm font-bold hover:bg-[#d38a83] disabled:opacity-50 transition-colors"
+          className="w-full rounded-xl bg-[#f3df9b] text-black py-3 text-sm font-bold hover:bg-[#f6e9b8] disabled:opacity-50 transition-colors"
         >
           {isChangingPassword ? 'Updating...' : 'Save New Password'}
         </button>
