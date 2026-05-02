@@ -70,9 +70,7 @@ export default function App() {
   const [adminPassword, setAdminPassword] = useState('');
   const [adminError, setAdminError] = useState(false);
   const [hasLoadedServerData, setHasLoadedServerData] = useState(false);
-  const [isViewTransitioning, setIsViewTransitioning] = useState(false);
   const [showLoaderOverlay, setShowLoaderOverlay] = useState(false);
-  const didMountRef = useRef(false);
   const loaderShownAtRef = useRef(0);
 
   useEffect(() => {
@@ -209,17 +207,6 @@ export default function App() {
     }
   }, [showAdminModal]);
 
-  useEffect(() => {
-    if (!didMountRef.current) {
-      didMountRef.current = true;
-      return;
-    }
-
-    setIsViewTransitioning(true);
-    const timer = window.setTimeout(() => setIsViewTransitioning(false), 450);
-    return () => window.clearTimeout(timer);
-  }, [currentView]);
-
   const handleLogin = (loggedInUser: User) => {
     const normalizedUser: User = {
       ...loggedInUser,
@@ -309,7 +296,7 @@ export default function App() {
     );
   }
 
-  const showGlobalLoader = isViewTransitioning || isTranslating || !hasLoadedServerData;
+  const showGlobalLoader = isTranslating || !hasLoadedServerData;
 
   useEffect(() => {
     let timer: number | null = null;
@@ -319,11 +306,11 @@ export default function App() {
         timer = window.setTimeout(() => {
           loaderShownAtRef.current = Date.now();
           setShowLoaderOverlay(true);
-        }, 140);
+        }, 650);
       }
     } else if (showLoaderOverlay) {
       const elapsed = Date.now() - loaderShownAtRef.current;
-      const remaining = Math.max(0, 260 - elapsed);
+      const remaining = Math.max(0, 220 - elapsed);
       timer = window.setTimeout(() => {
         setShowLoaderOverlay(false);
       }, remaining);

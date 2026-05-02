@@ -354,17 +354,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               key={key}
               type="button"
               onClick={() => setActiveSection(key as 'OVERVIEW' | 'NOTIFICATIONS' | 'WISHLIST')}
-              className={`px-5 py-3 rounded-full font-bold transition-colors border ${activeSection === key ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-white dark:bg-[#2b2b2b] text-slate-700 dark:text-white border-slate-200 dark:border-[#4b5563]'}`}
+              className={`relative px-5 py-3 rounded-full font-bold transition-colors border ${activeSection === key ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-white dark:bg-[#2b2b2b] text-slate-700 dark:text-white border-slate-200 dark:border-[#4b5563]'}`}
             >
-              <span className="flex items-center gap-2">
-                <span>{label}</span>
-                {key === 'NOTIFICATIONS' && unreadNotificationCount > 0 && (
-                  <span className="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.55)]" />
-                )}
-                {key === 'WISHLIST' && wishlistCount > 0 && (
-                  <span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
-                )}
-              </span>
+              <span>{label}</span>
+              {key === 'NOTIFICATIONS' && unreadNotificationCount > 0 && (
+                <span className="absolute top-2 right-2 inline-block w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.55)]" />
+              )}
+              {key === 'WISHLIST' && wishlistCount > 0 && (
+                <span className="absolute top-2 right-2 inline-block w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
+              )}
             </button>
           ))}
         </div>
