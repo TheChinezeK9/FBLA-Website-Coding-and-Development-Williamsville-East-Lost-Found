@@ -205,6 +205,36 @@ async function startServer() {
     }
   });
 
+  app.put("/api/users/:id", (req, res) => {
+    try {
+      const { email, name, nextEmail, grade, studentId } = req.body;
+      const resolvedId = resolveUserId(req.params.id, String(email || ""));
+      if (!resolvedId) return res.status(404).json({ error: "User not found" });
+
+      const existingUser = db.prepare("SELECT * FROM users WHERE id = ?").get(resolvedId) as any;
+      if (!existingUser) return res.status(404).json({ error: "User not found" });
+
+      const cleanedName = String(name || "").trim();
+      const cleanedEmail = String(nextEmail || existingUser.email || "").trim().toLowerCase();
+      const cleanedGrade = String(grade || "").trim();
+      const cleanedStudentId = String(studentId || "").trim();
+
+      if (!cleanedName) return res.status(400).json({ error: "Name is required" });
+      if (!cleanedEmail) return res.status(400).json({ error: "Email is required" });
+
+      const duplicate = db.prepare("SELECT id FROM users WHERE lower(email) = lower(?) AND id != ?").get(cleanedEmail, resolvedId) as any;
+      if (duplicate?.id) return res.status(400).json({ error: "Email already exists" });
+
+      db.prepare("UPDATE users SET name = ?, email = ?, grade = ?, studentId = ? WHERE id = ?")
+        .run(cleanedName, cleanedEmail, cleanedGrade || null, cleanedStudentId || null, resolvedId);
+
+      const updatedUser = getUserById(resolvedId);
+      res.json({ user: updatedUser });
+    } catch (error: any) {
+      res.status(500).json({ error: error?.message || "Failed to update profile" });
+    }
+  });
+
   app.post("/api/users/:id/change-password", (req, res) => {
     try {
       const { email, currentPassword, newPassword } = req.body;

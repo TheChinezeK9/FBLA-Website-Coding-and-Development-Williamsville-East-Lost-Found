@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, GraduationCap, Hash, Calendar, Bell, Heart, LogOut, Settings, X, Shield, ExternalLink, Camera, RefreshCcw, Trash2 } from 'lucide-react';
+import { Mail, GraduationCap, Hash, Calendar, LogOut, Settings, X, Camera, RefreshCcw, Trash2 } from 'lucide-react';
 import { User as UserType, WishlistItem, View } from '../types';
+import { ProfileOverview } from './profile/ProfileOverview';
+import { ProfileNotifications } from './profile/ProfileNotifications';
+import { ProfileWishlist } from './profile/ProfileWishlist';
+import { ProfileEdit } from './profile/ProfileEdit';
 
 interface ProfilePageProps {
   user: UserType;
   onLogout: () => void;
   onNavigate: (view: View) => void;
+  onUserUpdated: (user: UserType) => void;
 }
 
-const createCroppedProfileImage = async (
-  src: string,
-  zoom: number,
-  offsetX: number,
-  offsetY: number
-) => {
+const createCroppedProfileImage = async (src: string, zoom: number, offsetX: number, offsetY: number) => {
   const image = await new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
@@ -43,7 +43,8 @@ const createCroppedProfileImage = async (
   return canvas.toDataURL('image/jpeg', 0.92);
 };
 
-export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavigate }) => {
+export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavigate, onUserUpdated }) => {
+  const [activeSection, setActiveSection] = useState<'OVERVIEW' | 'NOTIFICATIONS' | 'WISHLIST' | 'EDIT'>('OVERVIEW');
   const [profileUser, setProfileUser] = useState<UserType>(user);
   const [profileImage, setProfileImage] = useState('');
   const [pendingProfileImage, setPendingProfileImage] = useState('');
@@ -54,6 +55,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [popupText, setPopupText] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [editName, setEditName] = useState(user.name);
+  const [editEmail, setEditEmail] = useState(user.email);
+  const [editGrade, setEditGrade] = useState(user.grade || '');
+  const [editStudentId, setEditStudentId] = useState(user.studentId || '');
+  const [profileSaveMessage, setProfileSaveMessage] = useState('');
+  const [profileSaveError, setProfileSaveError] = useState('');
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -88,6 +96,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         seenNotificationIdsRef.current = incomingIds;
         initializedRef.current = true;
         setProfileUser(data.user);
+        setEditName(data.user.name || '');
+        setEditEmail(data.user.email || '');
+        setEditGrade(data.user.grade || '');
+        setEditStudentId(data.user.studentId || '');
       }
       if (Array.isArray(data?.wishlist)) setWishlist(data.wishlist);
     } catch {
@@ -96,18 +108,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
   useEffect(() => {
     let cancelled = false;
-
     const initial = async () => {
-      if (cancelled) return;
-      await load();
+      if (!cancelled) await load();
     };
-
     void initial();
-
     const timer = window.setInterval(() => {
       if (!cancelled) void load();
     }, 1000);
-
     return () => {
       cancelled = true;
       window.clearInterval(timer);
@@ -122,23 +129,16 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
   const removeNotification = async (notificationId: string) => {
     try {
-      const response = await fetch(`/api/users/${user.id}/notifications/${notificationId}?email=${encodeURIComponent(user.email)}`, {
-        method: 'DELETE'
-      });
+      const response = await fetch(`/api/users/${user.id}/notifications/${notificationId}?email=${encodeURIComponent(user.email)}`, { method: 'DELETE' });
       if (!response.ok) return;
-      setProfileUser(prev => ({
-        ...prev,
-        notifications: prev.notifications.filter(n => n.id !== notificationId)
-      }));
+      setProfileUser(prev => ({ ...prev, notifications: prev.notifications.filter(n => n.id !== notificationId) }));
     } catch {
     }
   };
 
   const removeWish = async (wishId: string) => {
     try {
-      const response = await fetch(`/api/users/${user.id}/wishlist/${wishId}?email=${encodeURIComponent(user.email)}`, {
-        method: 'DELETE'
-      });
+      const response = await fetch(`/api/users/${user.id}/wishlist/${wishId}?email=${encodeURIComponent(user.email)}`, { method: 'DELETE' });
       if (!response.ok) return;
       setWishlist(prev => prev.filter(w => w.id !== wishId));
     } catch {
@@ -150,6 +150,46 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
     onNavigate('TOOLS');
   };
 
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setProfileSaveMessage('');
+    setProfileSaveError('');
+
+    if (!editName.trim() || !editEmail.trim()) {
+      setProfileSaveError('Name and email are required.');
+      return;
+    }
+
+    setIsSavingProfile(true);
+    try {
+      const response = await fetch(`/api/users/${user.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user.email,
+          name: editName.trim(),
+          nextEmail: editEmail.trim().toLowerCase(),
+          grade: editGrade.trim(),
+          studentId: editStudentId.trim()
+        })
+      });
+
+      const data = await response.json().catch(() => null);
+      if (!response.ok || !data?.user) {
+        setProfileSaveError(data?.error || 'Could not update profile.');
+        return;
+      }
+
+      setProfileUser(data.user);
+      onUserUpdated(data.user);
+      setProfileSaveMessage('Profile updated successfully.');
+    } catch {
+      setProfileSaveError('Network error while updating profile.');
+    } finally {
+      setIsSavingProfile(false);
+    }
+  };
+
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setPasswordMessage('');
@@ -159,12 +199,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       setPasswordError('Fill in all password fields.');
       return;
     }
-
     if (newPassword.length < 4) {
       setPasswordError('New password must be at least 4 characters.');
       return;
     }
-
     if (newPassword !== confirmPassword) {
       setPasswordError('New passwords do not match.');
       return;
@@ -175,11 +213,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       const response = await fetch(`/api/users/${user.id}/change-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: user.email,
-          currentPassword,
-          newPassword
-        })
+        body: JSON.stringify({ email: user.email, currentPassword, newPassword })
       });
 
       const data = await response.json().catch(() => null);
@@ -202,7 +236,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const handleProfileImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = () => {
       const result = typeof reader.result === 'string' ? reader.result : '';
@@ -251,6 +284,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           <p className="text-sm font-semibold">{popupText}</p>
         </div>
       )}
+
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563] flex flex-col md:flex-row items-center gap-8">
           <div className="flex flex-col items-center gap-3">
@@ -283,186 +317,92 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
             </div>
             <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handleProfileImageUpload} />
           </div>
+
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">{profileUser.name}</h1>
             <div className="flex flex-wrap justify-center md:justify-start gap-4 text-slate-500 dark:text-white text-sm font-medium">
+              <div className="flex items-center gap-1.5"><GraduationCap size={16} /> Grade {profileUser.grade || 'N/A'}</div>
+              <div className="flex items-center gap-1.5"><Hash size={16} /> School ID: {profileUser.studentId || 'N/A'}</div>
               <a href={`mailto:${profileUser.email}`} className="flex items-center gap-1.5 hover:text-[#e7a39b] transition-colors">
                 <Mail size={16} /> {profileUser.email}
               </a>
-              {profileUser.grade && <div className="flex items-center gap-1.5"><GraduationCap size={16} /> Grade {profileUser.grade}</div>}
-              {profileUser.studentId && <div className="flex items-center gap-1.5"><Hash size={16} /> ID: {profileUser.studentId}</div>}
               <div className="flex items-center gap-1.5"><Calendar size={16} /> Joined {new Date(profileUser.joinedAt).toLocaleDateString()}</div>
             </div>
           </div>
+
+          <button onClick={() => setActiveSection('EDIT')} className="px-6 py-3 bg-[#e7a39b] text-black rounded-2xl font-bold flex items-center gap-2 hover:bg-[#d38a83] transition-colors">
+            <Settings size={18} /> Edit Profile
+          </button>
+        </div>
+
+        <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+          {[
+            ['OVERVIEW', 'Overview'],
+            ['NOTIFICATIONS', 'Notifications'],
+            ['WISHLIST', 'Wishlist']
+          ].map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setActiveSection(key as 'OVERVIEW' | 'NOTIFICATIONS' | 'WISHLIST')}
+              className={`px-5 py-3 rounded-full font-bold transition-colors border ${activeSection === key ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-white dark:bg-[#2b2b2b] text-slate-700 dark:text-white border-slate-200 dark:border-[#4b5563]'}`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {activeSection === 'OVERVIEW' && <ProfileOverview />}
+
+        {activeSection === 'NOTIFICATIONS' && (
+          <ProfileNotifications
+            notifications={profileUser.notifications}
+            onRemoveNotification={(notificationId) => void removeNotification(notificationId)}
+          />
+        )}
+
+        {activeSection === 'WISHLIST' && (
+          <ProfileWishlist
+            wishlist={wishlist}
+            onRemoveWish={(wishId) => void removeWish(wishId)}
+            onOpenWish={openWishInTools}
+          />
+        )}
+
+        {activeSection === 'EDIT' && (
+          <ProfileEdit
+            editName={editName}
+            editEmail={editEmail}
+            editGrade={editGrade}
+            editStudentId={editStudentId}
+            currentPassword={currentPassword}
+            newPassword={newPassword}
+            confirmPassword={confirmPassword}
+            profileSaveMessage={profileSaveMessage}
+            profileSaveError={profileSaveError}
+            passwordMessage={passwordMessage}
+            passwordError={passwordError}
+            isSavingProfile={isSavingProfile}
+            isChangingPassword={isChangingPassword}
+            onEditNameChange={setEditName}
+            onEditEmailChange={setEditEmail}
+            onEditGradeChange={setEditGrade}
+            onEditStudentIdChange={setEditStudentId}
+            onCurrentPasswordChange={setCurrentPassword}
+            onNewPasswordChange={setNewPassword}
+            onConfirmPasswordChange={setConfirmPassword}
+            onSaveProfile={handleSaveProfile}
+            onChangePassword={handleChangePassword}
+          />
+        )}
+
+        <div className="flex justify-center pt-2">
           <button onClick={onLogout} className="px-6 py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-2xl font-bold flex items-center gap-2 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
             <LogOut size={18} /> Logout
           </button>
         </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] shadow-xl border border-slate-100 dark:border-[#4b5563] overflow-hidden">
-            <div className="p-6 border-b border-slate-100 dark:border-[#4b5563] flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-                  <Bell size={20} />
-                </div>
-                <h2 className="text-xl font-black text-slate-900 dark:text-white">Notifications</h2>
-              </div>
-              <span className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-widest">
-                {profileUser.notifications.filter(n => !n.read).length} New
-              </span>
-            </div>
-            <div className="p-6 space-y-4 max-h-[420px] overflow-y-auto">
-              {profileUser.notifications.length > 0 ? (
-                profileUser.notifications.map(notif => (
-                  <div key={notif.id} className={`p-4 rounded-2xl border ${notif.read ? 'bg-slate-50 dark:bg-[#1f1f1f] border-slate-100 dark:border-[#4b5563]' : 'bg-blue-50/30 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30'} transition-colors`}>
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="text-sm font-semibold text-slate-800 dark:text-white mb-1">{notif.text}</p>
-                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{new Date(notif.date).toLocaleDateString()}</p>
-                      </div>
-                      <button type="button" onClick={() => void removeNotification(notif.id)} className="text-slate-400 hover:text-red-500">
-                        <X size={14} />
-                      </button>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="py-12 text-center">
-                  <p className="text-slate-400 dark:text-white font-medium">No notifications yet.</p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] shadow-xl border border-slate-100 dark:border-[#4b5563] overflow-hidden">
-            <div className="p-6 border-b border-slate-100 dark:border-[#4b5563] flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 flex items-center justify-center">
-                  <Heart size={20} />
-                </div>
-                <h2 className="text-xl font-black text-slate-900 dark:text-white">I'm looking for...</h2>
-              </div>
-            </div>
-            <div className="p-6 space-y-3 max-h-[420px] overflow-y-auto">
-              {wishlist.length > 0 ? (
-                wishlist.map(wish => (
-                  <div key={wish.id} className="relative p-4 pr-28 min-h-[104px] bg-slate-50 dark:bg-[#1f1f1f] rounded-2xl border border-slate-100 dark:border-[#4b5563]">
-                    <button
-                      type="button"
-                      onClick={() => void removeWish(wish.id)}
-                      className="absolute top-3 right-3 text-slate-400 hover:text-red-500"
-                    >
-                      <X size={14} />
-                    </button>
-                    <div className="pr-2">
-                      <p className="text-sm font-bold text-slate-800 dark:text-white">{wish.text}</p>
-                      <p className="text-[10px] text-slate-400 dark:text-white font-bold uppercase tracking-widest">{wish.category}</p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => openWishInTools(wish)}
-                      className="absolute bottom-3 right-3 text-xs font-bold text-[#142e53] dark:text-white hover:opacity-80"
-                    >
-                      Check for item -&gt;
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <div className="py-12 text-center">
-                  <p className="text-slate-400 dark:text-white font-medium">Your list is empty.</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563]">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#1f1f1f] text-slate-600 dark:text-white flex items-center justify-center">
-              <Settings size={20} />
-            </div>
-            <h2 className="text-xl font-black text-slate-900 dark:text-white">Account Settings</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <form onSubmit={handleChangePassword} className="p-5 rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-slate-50/70 dark:bg-[#1f1f1f] space-y-3">
-              <div className="flex items-center gap-2 text-slate-900 dark:text-white">
-                <Shield size={18} />
-                <p className="text-sm font-bold">Change Password</p>
-              </div>
-              <p className="text-xs text-slate-500 dark:text-white">Update your password right from your profile.</p>
-
-              <input
-                type="password"
-                value={currentPassword}
-                onChange={e => setCurrentPassword(e.target.value)}
-                placeholder="Current password"
-                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
-              />
-              <input
-                type="password"
-                value={newPassword}
-                onChange={e => setNewPassword(e.target.value)}
-                placeholder="New password"
-                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
-              />
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
-                placeholder="Confirm new password"
-                className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
-              />
-
-              {passwordError && <p className="text-xs font-semibold text-red-500">{passwordError}</p>}
-              {passwordMessage && <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">{passwordMessage}</p>}
-
-              <button
-                type="submit"
-                disabled={isChangingPassword}
-                className="w-full rounded-xl bg-[#e7a39b] text-black py-3 text-sm font-bold hover:bg-[#d38a83] disabled:opacity-50 transition-colors"
-              >
-                {isChangingPassword ? 'Updating...' : 'Save New Password'}
-              </button>
-            </form>
-
-            <div className="p-5 rounded-2xl border border-slate-200 dark:border-[#4b5563] space-y-4">
-              <div className="flex items-center gap-2 text-slate-900 dark:text-white">
-                <ExternalLink size={18} />
-                <p className="text-sm font-bold">Policies & Accessibility</p>
-              </div>
-              <p className="text-xs text-slate-500 dark:text-white">Open the documents directly from your profile page.</p>
-
-              <div className="space-y-3">
-                <a
-                  href="/privacypolicy.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#f3f4f6]/10 transition-colors"
-                >
-                  <span>Privacy Policy</span>
-                  <ExternalLink size={16} />
-                </a>
-
-                <a
-                  href="/termsofservice.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#f3f4f6]/10 transition-colors"
-                >
-                  <span>Terms of Use</span>
-                  <ExternalLink size={16} />
-                </a>
-
-                <a
-                  href="/accessibility.html"
-                  className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 text-sm font-semibold text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-[#f3f4f6]/10 transition-colors"
-                >
-                  <span>Accessibility</span>
-                  <ExternalLink size={16} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
+
       {pendingProfileImage && (
         <div className="fixed inset-0 z-[260] flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm">
           <div className="w-full max-w-2xl bg-white dark:bg-[#2b2b2b] rounded-[32px] border border-slate-200 dark:border-[#4b5563] shadow-2xl p-6 md:p-8">
@@ -483,10 +423,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
                     src={pendingProfileImage}
                     alt="Profile crop preview"
                     className="w-full h-full object-cover"
-                    style={{
-                      transform: `scale(${cropZoom}) translate(${cropOffsetX}%, ${cropOffsetY}%)`,
-                      transformOrigin: 'center'
-                    }}
+                    style={{ transform: `scale(${cropZoom}) translate(${cropOffsetX}%, ${cropOffsetY}%)`, transformOrigin: 'center' }}
                   />
                 </div>
               </div>
@@ -506,19 +443,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
                 </label>
 
                 <div className="flex flex-wrap gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={cancelProfileImageCrop}
-                    className="px-5 py-3 rounded-xl bg-slate-100 dark:bg-[#1f1f1f] text-slate-700 dark:text-white font-bold hover:bg-slate-200 dark:hover:bg-[#333333] transition-colors"
-                  >
+                  <button type="button" onClick={cancelProfileImageCrop} className="px-5 py-3 rounded-xl bg-slate-100 dark:bg-[#1f1f1f] text-slate-700 dark:text-white font-bold hover:bg-slate-200 dark:hover:bg-[#333333] transition-colors">
                     Cancel
                   </button>
-                  <button
-                    type="button"
-                    onClick={saveCroppedProfileImage}
-                    disabled={isSavingPhoto}
-                    className="px-5 py-3 rounded-xl bg-[#f3df9b] text-black font-bold hover:bg-[#f6e9b8] disabled:opacity-50 transition-colors"
-                  >
+                  <button type="button" onClick={saveCroppedProfileImage} disabled={isSavingPhoto} className="px-5 py-3 rounded-xl bg-[#f3df9b] text-black font-bold hover:bg-[#f6e9b8] disabled:opacity-50 transition-colors">
                     {isSavingPhoto ? 'Uploading...' : 'Upload'}
                   </button>
                 </div>
