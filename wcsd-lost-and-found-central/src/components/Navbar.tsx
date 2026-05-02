@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="relative">
             <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:text-black"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
             {showInfoMenu && (
-              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-48 bg-[#e7a39b] border border-black/20 rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
+              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-max min-w-[220px] bg-[#e7a39b] border border-black/20 rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
                 {[
                   { id: 'ABOUT' as View, label: 'About Project', icon: <Info size={16} /> },
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
