@@ -34,7 +34,8 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
   const [claimingItem, setClaimingItem] = useState<LostItem | null>(null);
-  const [claimLastSeen, setClaimLastSeen] = useState('');
+  const [claimLostLocation, setClaimLostLocation] = useState('');
+  const [claimLostTime, setClaimLostTime] = useState('');
   const [claimProof, setClaimProof] = useState('');
   const [newItemName, setNewItemName] = useState('');
   const [newItemDesc, setNewItemDesc] = useState('');
@@ -71,14 +72,6 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   const schoolClaimLogs = claimLogs
     .filter(log => log.schoolId === school.id)
     .sort((a, b) => new Date(b.claimedAt).getTime() - new Date(a.claimedAt).getTime());
-  const canSubmitClaim =
-    !!currentUser.name?.trim() &&
-    !!currentUser.email?.trim() &&
-    !!currentUser.grade?.trim() &&
-    !!currentUser.studentId?.trim() &&
-    !!claimLastSeen.trim() &&
-    !!claimProof.trim();
-
   const sendNotification = async ({ userId, email, text }: { userId?: string; email?: string; text: string }) => {
     const cleanedEmail = String(email || '').trim();
     if (!userId && !cleanedEmail) return;
@@ -113,14 +106,15 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
               claimantGrade: (currentUser.grade || '').trim(),
               claimantStudentId: (currentUser.studentId || '').trim(),
               claimantUserId: currentUser.id,
-              claimantLastSeen: claimLastSeen.trim(),
+              claimantLastSeen: [claimLostLocation.trim(), claimLostTime.trim()].filter(Boolean).join(' | '),
               claimantProof: claimProof.trim()
             }
           : item
       )
     );
     setClaimingItem(null);
-    setClaimLastSeen('');
+    setClaimLostLocation('');
+    setClaimLostTime('');
     setClaimProof('');
   };
 
@@ -292,13 +286,13 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
           <div>
             <button onClick={goBack} className="flex items-center gap-2 font-bold mb-6 opacity-90 hover:opacity-100 transition-all text-sm uppercase tracking-widest text-black">
-              <ArrowUp className="-rotate-90" size={18} /> Back to Home
+              <ArrowUp className="-rotate-90" size={18} /> <span>Back to Home</span>
             </button>
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 leading-none text-black drop-shadow-sm">{school.name}</h1>
           </div>
           <div className="flex gap-3 flex-wrap">
             <button onClick={() => setActiveTab('SUBMIT')} className="flex items-center gap-2 px-5 py-3 rounded-[25px] font-bold text-sm uppercase tracking-wider bg-white/20 backdrop-blur-xl border border-black/15 hover:bg-white/30 text-black transition-all shadow-lg hover:-translate-y-0.5">
-              <Camera size={16} /> Report Lost Item
+              <Camera size={16} /> <span>Report Lost Item</span>
             </button>
             {activeTab !== 'BOARD' && (
               <button onClick={() => setActiveTab('BOARD')} className="flex items-center gap-2 px-5 py-3 bg-white/30 text-black border border-black/15 rounded-[25px] font-bold text-sm uppercase tracking-wider hover:bg-white/40 transition-all">
@@ -307,7 +301,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
             )}
             {isAdmin && (
               <button onClick={() => setActiveTab('ADMIN')} className="flex items-center gap-2 px-5 py-3 rounded-[25px] font-bold text-sm uppercase tracking-wider bg-yellow-400/25 border border-black/15 hover:bg-yellow-400/35 text-black transition-all shadow-lg">
-                <Shield size={16} /> Admin Panel
+                <Shield size={16} /> <span>Admin Panel</span>
               </button>
             )}
           </div>
@@ -384,7 +378,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                       {item.status === 'lost' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-amber-50 text-amber-600 border border-amber-100 text-sm uppercase tracking-widest">Pending Review</div>}
                       {item.status === 'found' && (
                         <button onClick={() => setClaimingItem(item)} className="w-full py-3 rounded-[12px] font-bold text-sm uppercase tracking-widest border-2 bg-white dark:bg-[#2b2b2b] hover:opacity-80 transition-all" style={{ borderColor: school.palette.primary, color: school.palette.primary }}>
-                          Claim Item
+                          <span>Claim Item</span>
                         </button>
                       )}
                       {item.status === 'pending_claim' && <div className="w-full py-3 rounded-[12px] font-bold text-center bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-white border border-blue-100 dark:border-blue-800 text-sm uppercase tracking-widest">Pending Approval</div>}
@@ -670,10 +664,17 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
               </div>
               <input
                 required
-                value={claimLastSeen}
-                onChange={e => setClaimLastSeen(e.target.value)}
+                value={claimLostLocation}
+                onChange={e => setClaimLostLocation(e.target.value)}
                 className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] text-slate-900 dark:text-white"
-                placeholder="Location and approximate time the item was lost"
+                placeholder="Where was the item lost?"
+              />
+              <input
+                required
+                value={claimLostTime}
+                onChange={e => setClaimLostTime(e.target.value)}
+                className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] text-slate-900 dark:text-white"
+                placeholder="About what time was it lost?"
               />
               <textarea
                 required
@@ -685,15 +686,10 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
               />
               <button
                 type="submit"
-                disabled={!canSubmitClaim}
-                className="w-full py-4 rounded-[14px] font-bold transition-all disabled:cursor-not-allowed"
-                style={{
-                  backgroundColor: canSubmitClaim ? school.palette.primary : school.palette.tertiary,
-                  color: 'black',
-                  opacity: canSubmitClaim ? 1 : 0.78
-                }}
+                className="w-full py-4 rounded-[14px] font-bold transition-all text-black"
+                style={{ backgroundColor: school.palette.primary }}
               >
-                Submit Claim
+                <span>Submit Claim</span>
               </button>
             </form>
           </div>

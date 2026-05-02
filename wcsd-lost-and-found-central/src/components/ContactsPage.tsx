@@ -13,7 +13,7 @@ export const ContactsPage: React.FC = () => {
       <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${colorClass} text-white shadow-lg group-hover:rotate-12 transition-transform duration-300`}><Icon size={32} /></div>
       <h3 className="text-2xl font-bold text-black dark:text-white mb-2">{title}</h3>
       <p className="text-black dark:text-white font-medium text-lg">{description}</p>
-      <div className="mt-8 flex items-center text-sm font-bold uppercase tracking-widest text-black dark:text-white">View Contacts <ChevronRight size={16} className="ml-1" /></div>
+      <div className="mt-8 flex items-center text-sm font-bold uppercase tracking-widest text-black dark:text-white"><span>View Contacts</span> <ChevronRight size={16} className="ml-1" /></div>
     </button>
   );
 

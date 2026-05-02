@@ -340,21 +340,21 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">{profileUser.name}</h1>
             <div className="flex flex-wrap justify-center md:justify-start gap-4 text-slate-500 dark:text-white text-sm font-medium">
-              <div className="flex items-center gap-1.5"><GraduationCap size={16} /> Grade {profileUser.grade || 'N/A'}</div>
-              <div className="flex items-center gap-1.5"><Hash size={16} /> School ID: {profileUser.studentId || 'N/A'}</div>
+              <div className="flex items-center gap-1.5"><GraduationCap size={16} /> <span className="font-bold">Grade:</span> {profileUser.grade || 'N/A'}</div>
+              <div className="flex items-center gap-1.5"><Hash size={16} /> <span className="font-bold">School ID:</span> {profileUser.studentId || 'N/A'}</div>
               <a href={`mailto:${profileUser.email}`} className="flex items-center gap-1.5 hover:text-[#e7a39b] transition-colors">
-                <Mail size={16} /> {profileUser.email}
+                <Mail size={16} /> <span className="font-bold">Email:</span> {profileUser.email}
               </a>
-              <div className="flex items-center gap-1.5"><Calendar size={16} /> Joined {new Date(profileUser.joinedAt).toLocaleDateString()}</div>
+              <div className="flex items-center gap-1.5"><Calendar size={16} /> <span className="font-bold">Date Joined:</span> {new Date(profileUser.joinedAt).toLocaleDateString()}</div>
             </div>
           </div>
 
           <div className="flex flex-col gap-3 w-full md:w-auto">
             <button onClick={() => setActiveSection('EDIT')} className="px-6 py-3 bg-[#f3df9b] text-black rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[#f6e9b8] transition-colors">
-              <Settings size={18} /> Edit Profile
+              <Settings size={18} /> <span>Edit Profile</span>
             </button>
             <button onClick={onLogout} className="px-6 py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
-              <LogOut size={18} /> Logout
+              <LogOut size={18} /> <span>Logout</span>
             </button>
           </div>
         </div>

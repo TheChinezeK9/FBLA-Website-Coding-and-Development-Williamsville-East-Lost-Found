@@ -52,7 +52,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       </div>
 
       <div className="border-t border-black px-8 py-4 flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto">
-        <p className="text-black text-[11px]">© {currentYear} Williamsville East High School Lost & Found. Built with ♥ by Justin, Haolin, and Abraham.</p>
+        <p className="text-black text-[11px]">
+          <span>©</span> {currentYear} <span>Williamsville East High School Lost &amp; Found.</span> <span>Built with ♥ by Justin, Haolin, and Abraham.</span>
+        </p>
         <div className="flex gap-5">
           {[
             { label: 'Privacy Policy', href: '/privacypolicy.html' },

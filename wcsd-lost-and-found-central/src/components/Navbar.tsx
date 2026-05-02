@@ -98,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button onClick={() => setShowSettingsMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black" title="Settings"><Settings size={20} /></button>
             {showSettingsMenu && (
               <div className="absolute top-full right-0 mt-2 w-64 bg-[#f3df9b] border border-black/20 rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-black/40 mb-3">Settings</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-black mb-3">Settings</p>
 
                 <div className="space-y-2 mb-4">
                   <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
@@ -149,8 +149,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {isAdmin ? (
                   <>
                     <div className="flex items-center gap-2 px-3 py-2 mb-1">
-                      <div className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
-                      <span className="text-xs font-bold text-yellow-400 uppercase tracking-widest">Admin Active</span>
+                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-xs font-bold text-emerald-600 uppercase tracking-widest">Admin Active</span>
                     </div>
                     <button onClick={() => { setIsAdmin(false); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 text-sm font-bold transition-colors"><LogOut size={15} /> Logout Admin</button>
                   </>

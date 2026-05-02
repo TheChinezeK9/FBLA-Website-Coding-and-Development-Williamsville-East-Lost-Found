@@ -24,7 +24,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
       </div>
 
       <h1 className="text-black dark:text-white text-3xl font-bold my-4 leading-tight">
-        Williamsville East High School Lost &amp; Found
+        <span>Williamsville East High School Lost &amp; Found</span>
       </h1>
 
       <p className="text-black dark:text-white text-lg italic my-4 font-serif">
@@ -35,7 +35,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
         onClick={() => onNavigate('BULLETIN_BOARD')}
         className="bg-[#f3df9b] text-black border-2 border-[#f3df9b] w-[250px] mt-8 py-3 rounded-[25px] text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
       >
-        View Lost Items →
+        <span>View Lost Items →</span>
       </button>
 
       <div className="flex justify-center gap-4 mt-6">
@@ -43,14 +43,14 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
           onClick={onStartClaim}
           className="flex items-center justify-center gap-2 bg-[#e7a39b] text-black border-2 border-[#e7a39b] dark:border-[#e7a39b] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
-          <FileText size={16} /> File a Claim
+          <FileText size={16} /> <span>File a Claim</span>
         </button>
 
         <button
           onClick={() => onNavigate('LIVE_TRACKER')}
           className="flex items-center justify-center gap-2 bg-[#e7a39b] text-black border-2 border-[#e7a39b] dark:border-[#e7a39b] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"
         >
-          <Camera size={16} /> AI Scanner
+          <Camera size={16} /> <span>AI Scanner</span>
         </button>
       </div>
 
