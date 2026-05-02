@@ -129,9 +129,115 @@ const resolveUserId = (requestedId?: string, email?: string) => {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
+  const geminiSupportedLanguages = [
+    { code: "en", name: "English" },
+    { code: "ar", name: "Arabic" },
+    { code: "bn", name: "Bengali" },
+    { code: "bg", name: "Bulgarian" },
+    { code: "zh-CN", name: "Chinese (Simplified)" },
+    { code: "zh-TW", name: "Chinese (Traditional)" },
+    { code: "hr", name: "Croatian" },
+    { code: "cs", name: "Czech" },
+    { code: "da", name: "Danish" },
+    { code: "nl", name: "Dutch" },
+    { code: "et", name: "Estonian" },
+    { code: "fi", name: "Finnish" },
+    { code: "fr", name: "French" },
+    { code: "de", name: "German" },
+    { code: "el", name: "Greek" },
+    { code: "he", name: "Hebrew" },
+    { code: "hi", name: "Hindi" },
+    { code: "hu", name: "Hungarian" },
+    { code: "id", name: "Indonesian" },
+    { code: "it", name: "Italian" },
+    { code: "ja", name: "Japanese" },
+    { code: "ko", name: "Korean" },
+    { code: "lv", name: "Latvian" },
+    { code: "lt", name: "Lithuanian" },
+    { code: "no", name: "Norwegian" },
+    { code: "pl", name: "Polish" },
+    { code: "pt", name: "Portuguese" },
+    { code: "ro", name: "Romanian" },
+    { code: "ru", name: "Russian" },
+    { code: "sr", name: "Serbian" },
+    { code: "sk", name: "Slovak" },
+    { code: "sl", name: "Slovenian" },
+    { code: "es", name: "Spanish" },
+    { code: "sw", name: "Swahili" },
+    { code: "sv", name: "Swedish" },
+    { code: "th", name: "Thai" },
+    { code: "tr", name: "Turkish" },
+    { code: "uk", name: "Ukrainian" },
+    { code: "vi", name: "Vietnamese" }
+  ];
 
   app.use(express.json({ limit: "10mb" }));
+
+  app.get("/api/translation/languages", async (_req, res) => {
+    res.json({
+      languages: geminiSupportedLanguages,
+      apiConfigured: !!process.env.GEMINI_API_KEY
+    });
+  });
+
+  app.post("/api/translation/translate", async (req, res) => {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ error: "GEMINI_API_KEY is not configured on the server." });
+    }
+
+    try {
+      const target = String(req.body?.target || "").trim();
+      const source = String(req.body?.source || "en").trim();
+      const texts = Array.isArray(req.body?.texts) ? req.body.texts.map((text: any) => String(text || "")) : [];
+
+      if (!target) return res.status(400).json({ error: "Target language is required." });
+      if (texts.length === 0) return res.json({ translations: [] });
+      if (texts.length > 128) return res.status(400).json({ error: "Too many text segments in one request." });
+
+      const ai = new GoogleGenAI({ apiKey });
+      const prompt = [
+        `Translate each text from ${source} to ${target}.`,
+        "Return JSON only.",
+        "Keep the same number of entries and the same order.",
+        "Do not add explanations.",
+        "Preserve emails, URLs, names, IDs, and short UI labels naturally where appropriate.",
+        JSON.stringify({ texts })
+      ].join("\n");
+
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "object",
+            properties: {
+              translations: {
+                type: "array",
+                items: { type: "string" }
+              }
+            },
+            required: ["translations"]
+          }
+        }
+      });
+      const rawText = response.text || "{}";
+      const data = JSON.parse(rawText);
+      const translations = Array.isArray(data?.translations)
+        ? data.translations.map((entry: any) => String(entry || ""))
+        : [];
+
+      if (translations.length !== texts.length) {
+        return res.status(500).json({ error: "Translation response was incomplete." });
+      }
+
+      res.json({ translations });
+    } catch (error: any) {
+      res.status(500).json({ error: error?.message || "Translation request failed." });
+    }
+  });
 
   app.post("/api/auth/signup", (req, res) => {
     try {

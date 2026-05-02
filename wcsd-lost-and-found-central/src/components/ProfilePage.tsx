@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, GraduationCap, Hash, Calendar, LogOut, Settings, X, Camera, RefreshCcw, Trash2, Globe } from 'lucide-react';
+import { Mail, GraduationCap, Hash, Calendar, LogOut, Settings, X, Camera, RefreshCcw, Trash2, Globe, ChevronDown } from 'lucide-react';
 import { User as UserType, WishlistItem, View } from '../types';
 import { ProfileOverview } from './profile/ProfileOverview';
 import { ProfileNotifications } from './profile/ProfileNotifications';
 import { ProfileWishlist } from './profile/ProfileWishlist';
 import { ProfileEdit } from './profile/ProfileEdit';
+import { useTranslationSettings } from '../translation/TranslationProvider';
 
 interface ProfilePageProps {
   user: UserType;
@@ -68,7 +69,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [passwordMessage, setPasswordMessage] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-  const [preferredLanguage, setPreferredLanguage] = useState(() => localStorage.getItem('wcsd_preferred_language') || 'English');
+  const { languageCode, setLanguageCode, supportedLanguages, isLoadingLanguages, isTranslating, translationError } = useTranslationSettings();
   const seenNotificationIdsRef = useRef<Set<string>>(new Set((user.notifications || []).map(n => n.id)));
   const initializedRef = useRef(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
@@ -127,10 +128,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
     const timer = window.setTimeout(() => setShowPopup(false), 4500);
     return () => window.clearTimeout(timer);
   }, [showPopup]);
-
-  useEffect(() => {
-    localStorage.setItem('wcsd_preferred_language', preferredLanguage);
-  }, [preferredLanguage]);
 
   const removeNotification = async (notificationId: string) => {
     try {
@@ -406,7 +403,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           />
         )}
 
-        <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563]">
+        <div data-no-translate className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563]">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#1f1f1f] text-slate-600 dark:text-white flex items-center justify-center">
               <Globe size={20} />
@@ -418,21 +415,27 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           </div>
 
           <div className="max-w-sm space-y-3">
-            <select
-              value={preferredLanguage}
-              onChange={e => setPreferredLanguage(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm font-semibold text-slate-900 dark:text-white outline-none"
-            >
-              <option>English</option>
-              <option>Spanish</option>
-              <option>French</option>
-              <option>Chinese</option>
-              <option>Arabic</option>
-              <option>Hindi</option>
-            </select>
+            <div className="relative">
+              <select
+                value={languageCode}
+                onChange={e => setLanguageCode(e.target.value)}
+                className="w-full appearance-none rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] pl-4 pr-12 py-3 text-sm font-semibold text-slate-900 dark:text-white outline-none"
+              >
+                {supportedLanguages.map(language => (
+                  <option key={language.code} value={language.code}>
+                    {language.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                size={18}
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-white"
+              />
+            </div>
             <p className="text-xs text-slate-500 dark:text-white">
-              Preference is saved now. Full page-by-page translation still needs to be wired across the app.
+              {isLoadingLanguages ? 'Loading languages...' : isTranslating ? 'Translating the site...' : 'Language preference is saved automatically.'}
             </p>
+            {translationError && <p className="text-xs font-semibold text-red-500">{translationError}</p>}
           </div>
         </div>
       </div>
