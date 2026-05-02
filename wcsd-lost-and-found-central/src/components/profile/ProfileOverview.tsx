@@ -8,7 +8,7 @@ export const ProfileOverview: React.FC = () => {
         <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#1f1f1f] text-slate-600 dark:text-white flex items-center justify-center">
           <ExternalLink size={20} />
         </div>
-        <h2 className="text-xl font-black text-slate-900 dark:text-white">Policies & Accessibility</h2>
+        <h2 className="text-xl font-black text-slate-900 dark:text-white">Policy Pages</h2>
       </div>
       <div className="space-y-3">
         <a
