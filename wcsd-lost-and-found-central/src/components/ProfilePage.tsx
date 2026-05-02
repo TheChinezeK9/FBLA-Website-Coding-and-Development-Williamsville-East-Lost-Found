@@ -56,6 +56,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [popupText, setPopupText] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [showNotificationDot, setShowNotificationDot] = useState(false);
+  const [showWishlistDot, setShowWishlistDot] = useState(false);
   const [editName, setEditName] = useState(user.name);
   const [editEmail, setEditEmail] = useState(user.email);
   const [editGrade, setEditGrade] = useState(user.grade || '');
@@ -72,6 +74,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const { languageCode, setLanguageCode, supportedLanguages, isLoadingLanguages, isTranslating, translationError } = useTranslationSettings();
   const seenNotificationIdsRef = useRef<Set<string>>(new Set((user.notifications || []).map(n => n.id)));
   const initializedRef = useRef(false);
+  const previousWishlistCountRef = useRef(0);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const profileImageKey = `wcsd_profile_photo_${user.email.toLowerCase()}`;
   const unreadNotificationCount = profileUser.notifications.filter(n => !n.read).length;
@@ -95,6 +98,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           if (newestUnseen?.text) {
             setPopupText(newestUnseen.text);
             setShowPopup(true);
+            setShowNotificationDot(true);
           }
         }
         seenNotificationIdsRef.current = incomingIds;
@@ -105,7 +109,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         setEditGrade(data.user.grade || '');
         setEditStudentId(data.user.studentId || '');
       }
-      if (Array.isArray(data?.wishlist)) setWishlist(data.wishlist);
+      if (Array.isArray(data?.wishlist)) {
+        if (initializedRef.current && data.wishlist.length > previousWishlistCountRef.current) {
+          setShowWishlistDot(true);
+        }
+        previousWishlistCountRef.current = data.wishlist.length;
+        setWishlist(data.wishlist);
+      }
     } catch {
     }
   };
@@ -130,6 +140,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
     const timer = window.setTimeout(() => setShowPopup(false), 4500);
     return () => window.clearTimeout(timer);
   }, [showPopup]);
+
+  useEffect(() => {
+    if (activeSection === 'NOTIFICATIONS') setShowNotificationDot(false);
+    if (activeSection === 'WISHLIST') setShowWishlistDot(false);
+  }, [activeSection]);
 
   const removeNotification = async (notificationId: string) => {
     try {
@@ -357,11 +372,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               className={`relative px-5 py-3 rounded-full font-bold transition-colors border ${activeSection === key ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-white dark:bg-[#2b2b2b] text-slate-700 dark:text-white border-slate-200 dark:border-[#4b5563]'}`}
             >
               <span>{label}</span>
-              {key === 'NOTIFICATIONS' && unreadNotificationCount > 0 && (
-                <span className="absolute -top-1 -right-1 inline-block w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.55)]" />
+              {key === 'NOTIFICATIONS' && showNotificationDot && (
+                <span className="absolute -top-0.5 -right-0.5 inline-block w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.55)]" />
               )}
-              {key === 'WISHLIST' && wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 inline-block w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
+              {key === 'WISHLIST' && showWishlistDot && (
+                <span className="absolute -top-0.5 -right-0.5 inline-block w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
               )}
             </button>
           ))}

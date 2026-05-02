@@ -71,6 +71,13 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   const schoolClaimLogs = claimLogs
     .filter(log => log.schoolId === school.id)
     .sort((a, b) => new Date(b.claimedAt).getTime() - new Date(a.claimedAt).getTime());
+  const canSubmitClaim =
+    !!currentUser.name?.trim() &&
+    !!currentUser.email?.trim() &&
+    !!currentUser.grade?.trim() &&
+    !!currentUser.studentId?.trim() &&
+    !!claimLastSeen.trim() &&
+    !!claimProof.trim();
 
   const sendNotification = async ({ userId, email, text }: { userId?: string; email?: string; text: string }) => {
     const cleanedEmail = String(email || '').trim();
@@ -676,7 +683,18 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                 className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] text-slate-900 dark:text-white"
                 placeholder="Proof of Ownership (i.e., information that can verify ownership, such as distinctive characteristics, contents, or identifying markings)"
               />
-              <button type="submit" className="w-full text-white py-4 rounded-[14px] font-bold" style={{ backgroundColor: school.palette.primary }}>Submit Claim</button>
+              <button
+                type="submit"
+                disabled={!canSubmitClaim}
+                className="w-full py-4 rounded-[14px] font-bold transition-all disabled:cursor-not-allowed"
+                style={{
+                  backgroundColor: canSubmitClaim ? school.palette.primary : school.palette.tertiary,
+                  color: 'black',
+                  opacity: canSubmitClaim ? 1 : 0.78
+                }}
+              >
+                Submit Claim
+              </button>
             </form>
           </div>
         </div>
