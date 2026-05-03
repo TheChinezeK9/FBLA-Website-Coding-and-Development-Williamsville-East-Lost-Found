@@ -72,17 +72,41 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [passwordError, setPasswordError] = useState('');
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const { languageCode, setLanguageCode, supportedLanguages, isLoadingLanguages, isTranslating, translationError } = useTranslationSettings();
-  const initializedRef = useRef(false);
-  const lastViewedNotificationDateRef = useRef(
+  const notificationsSeenStorageKey = `wcsd_seen_notification_ts_${user.id}`;
+  const notificationsPopupStorageKey = `wcsd_popped_notification_id_${user.id}`;
+  const wishlistSeenStorageKey = `wcsd_seen_wishlist_ts_${user.id}`;
+  const initialSeenNotificationTs =
+    Number(sessionStorage.getItem(notificationsSeenStorageKey) || '') ||
     (user.notifications || []).reduce((latest, notification) => {
       const ts = Date.parse(notification.date || '');
       return Number.isNaN(ts) ? latest : Math.max(latest, ts);
-    }, 0)
-  );
-  const lastPoppedNotificationIdRef = useRef<string | null>(null);
-  const lastViewedWishlistDateRef = useRef(0);
+    }, 0);
+  const initialSeenWishlistTs = Number(sessionStorage.getItem(wishlistSeenStorageKey) || '') || 0;
+  const initializedRef = useRef(false);
+  const lastViewedNotificationDateRef = useRef(initialSeenNotificationTs);
+  const lastPoppedNotificationIdRef = useRef<string | null>(sessionStorage.getItem(notificationsPopupStorageKey));
+  const lastViewedWishlistDateRef = useRef(initialSeenWishlistTs);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const profileImageKey = `wcsd_profile_photo_${user.email.toLowerCase()}`;
+
+  const persistSeenNotificationTimestamp = (timestamp: number) => {
+    lastViewedNotificationDateRef.current = timestamp;
+    sessionStorage.setItem(notificationsSeenStorageKey, String(timestamp));
+  };
+
+  const persistPoppedNotificationId = (notificationId: string | null) => {
+    lastPoppedNotificationIdRef.current = notificationId;
+    if (notificationId) {
+      sessionStorage.setItem(notificationsPopupStorageKey, notificationId);
+    } else {
+      sessionStorage.removeItem(notificationsPopupStorageKey);
+    }
+  };
+
+  const persistSeenWishlistTimestamp = (timestamp: number) => {
+    lastViewedWishlistDateRef.current = timestamp;
+    sessionStorage.setItem(wishlistSeenStorageKey, String(timestamp));
+  };
   useEffect(() => {
     const saved = localStorage.getItem(profileImageKey);
     if (saved) setProfileImage(saved);
@@ -110,18 +134,20 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           ) {
             setPopupText(newestUnseen.text);
             setShowPopup(true);
-            lastPoppedNotificationIdRef.current = newestUnseen.id;
+            persistPoppedNotificationId(newestUnseen.id);
           }
           if (activeSection !== 'NOTIFICATIONS' && latestNotificationTimestamp > lastViewedNotificationDateRef.current) {
             setShowNotificationDot(true);
           } else if (activeSection === 'NOTIFICATIONS') {
             setShowNotificationDot(false);
-            lastViewedNotificationDateRef.current = latestNotificationTimestamp;
-            if (incoming[0]?.id) lastPoppedNotificationIdRef.current = incoming[0].id;
+            persistSeenNotificationTimestamp(latestNotificationTimestamp);
+            if (incoming[0]?.id) persistPoppedNotificationId(incoming[0].id);
           }
         } else {
-          lastViewedNotificationDateRef.current = activeSection === 'NOTIFICATIONS' ? latestNotificationTimestamp : lastViewedNotificationDateRef.current;
-          if (incoming[0]?.id) lastPoppedNotificationIdRef.current = incoming[0].id;
+          if (activeSection === 'NOTIFICATIONS') {
+            persistSeenNotificationTimestamp(latestNotificationTimestamp);
+          }
+          if (incoming[0]?.id) persistPoppedNotificationId(incoming[0].id);
         }
         initializedRef.current = true;
         setProfileUser(data.user);
@@ -140,10 +166,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
             setShowWishlistDot(true);
           } else if (activeSection === 'WISHLIST') {
             setShowWishlistDot(false);
-            lastViewedWishlistDateRef.current = latestWishlistTimestamp;
+            persistSeenWishlistTimestamp(latestWishlistTimestamp);
           }
         } else {
-          lastViewedWishlistDateRef.current = activeSection === 'WISHLIST' ? latestWishlistTimestamp : lastViewedWishlistDateRef.current;
+          if (activeSection === 'WISHLIST') {
+            persistSeenWishlistTimestamp(latestWishlistTimestamp);
+          }
         }
         setWishlist(data.wishlist);
       }
@@ -175,20 +203,20 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   useEffect(() => {
     if (activeSection === 'NOTIFICATIONS') {
       setShowNotificationDot(false);
-      lastViewedNotificationDateRef.current = profileUser.notifications.reduce((latest, notification) => {
+      persistSeenNotificationTimestamp(profileUser.notifications.reduce((latest, notification) => {
         const ts = Date.parse(notification.date || '');
         return Number.isNaN(ts) ? latest : Math.max(latest, ts);
-      }, 0);
+      }, 0));
       if (profileUser.notifications[0]?.id) {
-        lastPoppedNotificationIdRef.current = profileUser.notifications[0].id;
+        persistPoppedNotificationId(profileUser.notifications[0].id);
       }
     }
     if (activeSection === 'WISHLIST') {
       setShowWishlistDot(false);
-      lastViewedWishlistDateRef.current = wishlist.reduce((latest, wish) => {
+      persistSeenWishlistTimestamp(wishlist.reduce((latest, wish) => {
         const ts = Date.parse(wish.addedAt || '');
         return Number.isNaN(ts) ? latest : Math.max(latest, ts);
-      }, 0);
+      }, 0));
     }
   }, [activeSection, profileUser.notifications, wishlist]);
 
