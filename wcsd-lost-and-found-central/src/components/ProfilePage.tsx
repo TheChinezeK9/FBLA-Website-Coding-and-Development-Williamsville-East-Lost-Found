@@ -73,8 +73,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const { languageCode, setLanguageCode, supportedLanguages, isLoadingLanguages, isTranslating, translationError } = useTranslationSettings();
   const initializedRef = useRef(false);
-  const previousNotificationCountRef = useRef((user.notifications || []).length);
-  const previousWishlistCountRef = useRef(0);
+  const lastViewedNotificationDateRef = useRef(
+    (user.notifications || []).reduce((latest, notification) => {
+      const ts = Date.parse(notification.date || '');
+      return Number.isNaN(ts) ? latest : Math.max(latest, ts);
+    }, 0)
+  );
+  const lastViewedWishlistDateRef = useRef(0);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const profileImageKey = `wcsd_profile_photo_${user.email.toLowerCase()}`;
   useEffect(() => {
@@ -90,20 +95,27 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       const wasInitialized = initializedRef.current;
       if (data?.user) {
         const incoming = Array.isArray(data.user.notifications) ? data.user.notifications : [];
-        const incomingCount = incoming.length;
+        const latestNotificationTimestamp = incoming.reduce((latest: number, notification: any) => {
+          const ts = Date.parse(notification?.date || '');
+          return Number.isNaN(ts) ? latest : Math.max(latest, ts);
+        }, 0);
         if (wasInitialized) {
           const newestUnseen = incoming[0];
           if (newestUnseen?.text) {
-            if (incomingCount > previousNotificationCountRef.current) {
+            if (latestNotificationTimestamp > lastViewedNotificationDateRef.current) {
               setPopupText(newestUnseen.text);
               setShowPopup(true);
             }
           }
-          if (activeSection !== 'NOTIFICATIONS' && incomingCount > previousNotificationCountRef.current) {
+          if (activeSection !== 'NOTIFICATIONS' && latestNotificationTimestamp > lastViewedNotificationDateRef.current) {
             setShowNotificationDot(true);
+          } else if (activeSection === 'NOTIFICATIONS') {
+            setShowNotificationDot(false);
+            lastViewedNotificationDateRef.current = latestNotificationTimestamp;
           }
+        } else {
+          lastViewedNotificationDateRef.current = activeSection === 'NOTIFICATIONS' ? latestNotificationTimestamp : lastViewedNotificationDateRef.current;
         }
-        previousNotificationCountRef.current = incomingCount;
         initializedRef.current = true;
         setProfileUser(data.user);
         setEditName(data.user.name || '');
@@ -112,13 +124,20 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         setEditStudentId(data.user.studentId || '');
       }
       if (Array.isArray(data?.wishlist)) {
-        const incomingWishlistCount = data.wishlist.length;
+        const latestWishlistTimestamp = data.wishlist.reduce((latest: number, wish: any) => {
+          const ts = Date.parse(wish?.addedAt || '');
+          return Number.isNaN(ts) ? latest : Math.max(latest, ts);
+        }, 0);
         if (wasInitialized) {
-          if (activeSection !== 'WISHLIST' && incomingWishlistCount > previousWishlistCountRef.current) {
+          if (activeSection !== 'WISHLIST' && latestWishlistTimestamp > lastViewedWishlistDateRef.current) {
             setShowWishlistDot(true);
+          } else if (activeSection === 'WISHLIST') {
+            setShowWishlistDot(false);
+            lastViewedWishlistDateRef.current = latestWishlistTimestamp;
           }
+        } else {
+          lastViewedWishlistDateRef.current = activeSection === 'WISHLIST' ? latestWishlistTimestamp : lastViewedWishlistDateRef.current;
         }
-        previousWishlistCountRef.current = incomingWishlistCount;
         setWishlist(data.wishlist);
       }
     } catch {
@@ -149,11 +168,17 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   useEffect(() => {
     if (activeSection === 'NOTIFICATIONS') {
       setShowNotificationDot(false);
-      previousNotificationCountRef.current = profileUser.notifications.length;
+      lastViewedNotificationDateRef.current = profileUser.notifications.reduce((latest, notification) => {
+        const ts = Date.parse(notification.date || '');
+        return Number.isNaN(ts) ? latest : Math.max(latest, ts);
+      }, 0);
     }
     if (activeSection === 'WISHLIST') {
       setShowWishlistDot(false);
-      previousWishlistCountRef.current = wishlist.length;
+      lastViewedWishlistDateRef.current = wishlist.reduce((latest, wish) => {
+        const ts = Date.parse(wish.addedAt || '');
+        return Number.isNaN(ts) ? latest : Math.max(latest, ts);
+      }, 0);
     }
   }, [activeSection, profileUser.notifications, wishlist]);
 
