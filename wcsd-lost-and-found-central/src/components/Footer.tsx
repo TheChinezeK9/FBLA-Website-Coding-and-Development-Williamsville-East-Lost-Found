@@ -13,7 +13,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="md:pr-10">
           <div className="flex items-center gap-2.5 mb-4">
             <img src="/images/east.png" alt="East logo" className="w-8 h-8 object-contain" />
-            <span className="text-black font-extrabold text-[12px] tracking-tight whitespace-nowrap">Williamsville East High School Lost &amp; Found</span>
+            <span className="text-black font-bold text-[11px] leading-[11px] tracking-tight whitespace-nowrap">Williamsville East High School Lost &amp; Found</span>
           </div>
           <p className="text-black text-xs leading-relaxed mb-1">151 Paradise Rd<br/>East Amherst, NY 14051</p>
           <p className="text-black text-xs mb-1">(716) 626-8400</p>
