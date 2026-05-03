@@ -79,6 +79,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       return Number.isNaN(ts) ? latest : Math.max(latest, ts);
     }, 0)
   );
+  const lastPoppedNotificationIdRef = useRef<string | null>(null);
   const lastViewedWishlistDateRef = useRef(0);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const profileImageKey = `wcsd_profile_photo_${user.email.toLowerCase()}`;
@@ -101,20 +102,26 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         }, 0);
         if (wasInitialized) {
           const newestUnseen = incoming[0];
-          if (newestUnseen?.text) {
-            if (latestNotificationTimestamp > lastViewedNotificationDateRef.current) {
-              setPopupText(newestUnseen.text);
-              setShowPopup(true);
-            }
+          if (
+            newestUnseen?.text &&
+            newestUnseen?.id &&
+            latestNotificationTimestamp > lastViewedNotificationDateRef.current &&
+            newestUnseen.id !== lastPoppedNotificationIdRef.current
+          ) {
+            setPopupText(newestUnseen.text);
+            setShowPopup(true);
+            lastPoppedNotificationIdRef.current = newestUnseen.id;
           }
           if (activeSection !== 'NOTIFICATIONS' && latestNotificationTimestamp > lastViewedNotificationDateRef.current) {
             setShowNotificationDot(true);
           } else if (activeSection === 'NOTIFICATIONS') {
             setShowNotificationDot(false);
             lastViewedNotificationDateRef.current = latestNotificationTimestamp;
+            if (incoming[0]?.id) lastPoppedNotificationIdRef.current = incoming[0].id;
           }
         } else {
           lastViewedNotificationDateRef.current = activeSection === 'NOTIFICATIONS' ? latestNotificationTimestamp : lastViewedNotificationDateRef.current;
+          if (incoming[0]?.id) lastPoppedNotificationIdRef.current = incoming[0].id;
         }
         initializedRef.current = true;
         setProfileUser(data.user);
@@ -172,6 +179,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         const ts = Date.parse(notification.date || '');
         return Number.isNaN(ts) ? latest : Math.max(latest, ts);
       }, 0);
+      if (profileUser.notifications[0]?.id) {
+        lastPoppedNotificationIdRef.current = profileUser.notifications[0].id;
+      }
     }
     if (activeSection === 'WISHLIST') {
       setShowWishlistDot(false);
@@ -334,8 +344,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   return (
     <div className="min-h-screen pt-24 pb-12 px-6">
       {showPopup && (
-        <div className="fixed top-24 right-6 z-[250] max-w-sm bg-[#142e53] text-white rounded-2xl shadow-2xl border border-white/10 px-4 py-3 animate-fade-in-up">
-          <p className="text-xs font-bold uppercase tracking-widest text-white/70 mb-1">New Notification</p>
+        <div className="fixed top-24 right-6 z-[250] max-w-sm bg-white dark:bg-[#2b2b2b] text-slate-900 dark:text-white rounded-2xl shadow-2xl border border-slate-200 dark:border-[#4b5563] px-4 py-3 animate-fade-in-up">
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-white/70 mb-1">New Notification</p>
           <p className="text-sm font-semibold">{popupText}</p>
         </div>
       )}
