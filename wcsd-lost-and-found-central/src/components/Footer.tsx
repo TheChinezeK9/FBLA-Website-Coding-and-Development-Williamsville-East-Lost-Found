@@ -9,11 +9,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const currentYear = new Date().getFullYear();
   return (
     <footer className="relative z-10 bg-[#e7a39b] border-t border-black/20 mt-0">
-      <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-[1.35fr_1fr_1fr_1fr] gap-x-14 gap-y-10">
-        <div className="md:pr-6">
+      <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-[1.55fr_0.95fr_0.95fr_1fr] gap-x-16 gap-y-10">
+        <div className="md:pr-10">
           <div className="flex items-center gap-2.5 mb-4">
             <img src="/images/east.png" alt="East logo" className="w-8 h-8 object-contain" />
-            <span className="text-black font-extrabold text-[12px] tracking-tight whitespace-nowrap">Williamsville East High School Lost &amp; Found</span>
+            <span className="text-black font-extrabold text-[11px] uppercase tracking-[0.2em] whitespace-nowrap">Williamsville East High School Lost &amp; Found</span>
           </div>
           <p className="text-black text-xs leading-relaxed mb-1">151 Paradise Rd<br/>East Amherst, NY 14051</p>
           <p className="text-black text-xs mb-1">(716) 626-8400</p>
