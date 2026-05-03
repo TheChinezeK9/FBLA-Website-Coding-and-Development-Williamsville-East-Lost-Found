@@ -57,7 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="flex justify-between items-center bg-[#e7a39b] w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-black/20">
         <div onClick={() => onNavigate('HOME')} className="flex items-center gap-2 cursor-pointer px-4 py-2 hover:scale-105 transition-all">
           <img src="/images/east.png" alt="Williamsville East High School logo" className="w-12 h-12 rounded-lg object-cover shadow-sm bg-white p-1" />
-          <span className="font-bold text-xl tracking-tight text-black">East High School Lost &amp; Found</span>
+          <span className="font-bold text-xl tracking-tight text-black">Williamsville East High School Lost &amp; Found</span>
         </div>
         <div className="hidden lg:flex items-center gap-1">
           <button onClick={() => onNavigate('HOME')} className={navBtnClass('HOME')}><HomeIcon size={16} /><span className="text-sm font-bold">Home</span></button>
@@ -155,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <button onClick={() => { setIsAdmin(false); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 text-sm font-bold transition-colors"><LogOut size={15} /> Logout Admin</button>
                   </>
                 ) : (
-                  <button onClick={() => { onOpenAdminLogin(); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-black hover:bg-[#e7a39b] hover:text-black text-sm font-bold transition-colors"><Lock size={15} /> Admin Portal</button>
+                  <button onClick={() => { onOpenAdminLogin(); setShowSettingsMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-black hover:bg-[#e7a39b] hover:text-black text-sm font-bold transition-colors"><Lock size={15} /> <span>Admin Portal</span></button>
                 )}
               </div>
             )}

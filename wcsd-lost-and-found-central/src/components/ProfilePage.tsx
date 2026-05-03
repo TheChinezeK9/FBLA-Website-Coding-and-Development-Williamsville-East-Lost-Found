@@ -372,10 +372,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
               className={`relative px-5 py-3 rounded-full font-bold transition-colors border ${activeSection === key ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-white dark:bg-[#2b2b2b] text-slate-700 dark:text-white border-slate-200 dark:border-[#4b5563]'}`}
             >
               <span>{label}</span>
-              {key === 'NOTIFICATIONS' && showNotificationDot && (
+              {key === 'NOTIFICATIONS' && showNotificationDot && unreadNotificationCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 inline-block w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.55)]" />
               )}
-              {key === 'WISHLIST' && showWishlistDot && (
+              {key === 'WISHLIST' && showWishlistDot && wishlistCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 inline-block w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
               )}
             </button>
