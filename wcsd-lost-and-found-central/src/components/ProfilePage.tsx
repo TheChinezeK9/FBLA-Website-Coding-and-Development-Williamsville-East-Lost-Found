@@ -73,7 +73,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const { languageCode, setLanguageCode, supportedLanguages, isLoadingLanguages, isTranslating, translationError } = useTranslationSettings();
   const seenNotificationIdsRef = useRef<Set<string>>(new Set((user.notifications || []).map(n => n.id)));
-  const observedNotificationIdsRef = useRef<Set<string>>(new Set((user.notifications || []).map(n => n.id)));
   const initializedRef = useRef(false);
   const seenWishlistIdsRef = useRef<Set<string>>(new Set());
   const observedWishlistIdsRef = useRef<Set<string>>(new Set());
@@ -93,13 +92,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       if (data?.user) {
         const incoming = Array.isArray(data.user.notifications) ? data.user.notifications : [];
         const incomingIds = new Set(incoming.map((n: any) => n.id));
+        const unreadIncomingIds = new Set(incoming.filter((n: any) => !n.read).map((n: any) => n.id));
         if (wasInitialized) {
-          const newestUnseen = incoming.find((n: any) => !observedNotificationIdsRef.current.has(n.id));
+          const newestUnseen = incoming.find((n: any) => !seenNotificationIdsRef.current.has(n.id));
           if (newestUnseen?.text) {
             setPopupText(newestUnseen.text);
             setShowPopup(true);
           }
-          const hasNewUnread = incoming.some((n: any) => !n.read && !observedNotificationIdsRef.current.has(n.id));
+          const hasNewUnread = incoming.some((n: any) => !n.read && !seenNotificationIdsRef.current.has(n.id));
           if (activeSection === 'NOTIFICATIONS') {
             seenNotificationIdsRef.current = incomingIds;
             setShowNotificationDot(false);
@@ -108,8 +108,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
           }
         } else {
           seenNotificationIdsRef.current = incomingIds;
+          if (activeSection === 'NOTIFICATIONS') {
+            seenNotificationIdsRef.current = incomingIds;
+          } else {
+            seenNotificationIdsRef.current = unreadIncomingIds;
+          }
         }
-        observedNotificationIdsRef.current = incomingIds;
         initializedRef.current = true;
         setProfileUser(data.user);
         setEditName(data.user.name || '');
@@ -162,7 +166,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
     if (activeSection === 'NOTIFICATIONS') {
       setShowNotificationDot(false);
       seenNotificationIdsRef.current = new Set(profileUser.notifications.map(n => n.id));
-      observedNotificationIdsRef.current = new Set(profileUser.notifications.map(n => n.id));
     }
     if (activeSection === 'WISHLIST') {
       setShowWishlistDot(false);
