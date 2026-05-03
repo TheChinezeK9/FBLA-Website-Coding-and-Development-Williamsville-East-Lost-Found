@@ -72,10 +72,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [passwordError, setPasswordError] = useState('');
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const { languageCode, setLanguageCode, supportedLanguages, isLoadingLanguages, isTranslating, translationError } = useTranslationSettings();
-  const seenNotificationIdsRef = useRef<Set<string>>(new Set((user.notifications || []).map(n => n.id)));
   const initializedRef = useRef(false);
-  const seenWishlistIdsRef = useRef<Set<string>>(new Set());
-  const observedWishlistIdsRef = useRef<Set<string>>(new Set());
+  const previousNotificationCountRef = useRef((user.notifications || []).length);
+  const previousWishlistCountRef = useRef(0);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const profileImageKey = `wcsd_profile_photo_${user.email.toLowerCase()}`;
   useEffect(() => {
@@ -91,29 +90,20 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       const wasInitialized = initializedRef.current;
       if (data?.user) {
         const incoming = Array.isArray(data.user.notifications) ? data.user.notifications : [];
-        const incomingIds = new Set(incoming.map((n: any) => n.id));
-        const unreadIncomingIds = new Set(incoming.filter((n: any) => !n.read).map((n: any) => n.id));
+        const incomingCount = incoming.length;
         if (wasInitialized) {
-          const newestUnseen = incoming.find((n: any) => !seenNotificationIdsRef.current.has(n.id));
+          const newestUnseen = incoming[0];
           if (newestUnseen?.text) {
-            setPopupText(newestUnseen.text);
-            setShowPopup(true);
+            if (incomingCount > previousNotificationCountRef.current) {
+              setPopupText(newestUnseen.text);
+              setShowPopup(true);
+            }
           }
-          const hasNewUnread = incoming.some((n: any) => !n.read && !seenNotificationIdsRef.current.has(n.id));
-          if (activeSection === 'NOTIFICATIONS') {
-            seenNotificationIdsRef.current = incomingIds;
-            setShowNotificationDot(false);
-          } else if (hasNewUnread) {
+          if (activeSection !== 'NOTIFICATIONS' && incomingCount > previousNotificationCountRef.current) {
             setShowNotificationDot(true);
           }
-        } else {
-          seenNotificationIdsRef.current = incomingIds;
-          if (activeSection === 'NOTIFICATIONS') {
-            seenNotificationIdsRef.current = incomingIds;
-          } else {
-            seenNotificationIdsRef.current = unreadIncomingIds;
-          }
         }
+        previousNotificationCountRef.current = incomingCount;
         initializedRef.current = true;
         setProfileUser(data.user);
         setEditName(data.user.name || '');
@@ -122,19 +112,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         setEditStudentId(data.user.studentId || '');
       }
       if (Array.isArray(data?.wishlist)) {
-        const incomingWishlistIds = new Set(data.wishlist.map((wish: any) => wish.id));
+        const incomingWishlistCount = data.wishlist.length;
         if (wasInitialized) {
-          const hasNewWishlistItem = data.wishlist.some((wish: any) => !observedWishlistIdsRef.current.has(wish.id));
-          if (activeSection === 'WISHLIST') {
-            seenWishlistIdsRef.current = incomingWishlistIds;
-            setShowWishlistDot(false);
-          } else if (hasNewWishlistItem) {
+          if (activeSection !== 'WISHLIST' && incomingWishlistCount > previousWishlistCountRef.current) {
             setShowWishlistDot(true);
           }
-        } else {
-          seenWishlistIdsRef.current = incomingWishlistIds;
         }
-        observedWishlistIdsRef.current = incomingWishlistIds;
+        previousWishlistCountRef.current = incomingWishlistCount;
         setWishlist(data.wishlist);
       }
     } catch {
@@ -165,12 +149,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   useEffect(() => {
     if (activeSection === 'NOTIFICATIONS') {
       setShowNotificationDot(false);
-      seenNotificationIdsRef.current = new Set(profileUser.notifications.map(n => n.id));
+      previousNotificationCountRef.current = profileUser.notifications.length;
     }
     if (activeSection === 'WISHLIST') {
       setShowWishlistDot(false);
-      seenWishlistIdsRef.current = new Set(wishlist.map(w => w.id));
-      observedWishlistIdsRef.current = new Set(wishlist.map(w => w.id));
+      previousWishlistCountRef.current = wishlist.length;
     }
   }, [activeSection, profileUser.notifications, wishlist]);
 
