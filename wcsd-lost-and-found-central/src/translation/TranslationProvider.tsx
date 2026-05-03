@@ -17,7 +17,7 @@ const ATTRIBUTES_TO_TRANSLATE = ['placeholder', 'title', 'aria-label', 'alt'] as
 const shouldSkipElement = (element: Element | null) => {
   if (!element) return true;
   if (
-    element.closest('[data-no-translate], script, style, noscript, code, pre, textarea, [contenteditable="true"]')
+    element.closest('[data-no-translate], script, style, noscript, code, pre, [contenteditable="true"]')
   ) {
     return true;
   }

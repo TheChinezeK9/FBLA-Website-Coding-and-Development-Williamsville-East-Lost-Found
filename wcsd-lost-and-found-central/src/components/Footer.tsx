@@ -9,8 +9,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const currentYear = new Date().getFullYear();
   return (
     <footer className="relative z-10 bg-[#e7a39b] border-t border-black/20 mt-0">
-      <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
-        <div>
+      <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-[1.35fr_1fr_1fr_1fr] gap-x-14 gap-y-10">
+        <div className="md:pr-6">
           <div className="flex items-center gap-2.5 mb-4">
             <img src="/images/east.png" alt="East logo" className="w-8 h-8 object-contain" />
             <span className="text-black font-extrabold text-[12px] tracking-tight whitespace-nowrap">Williamsville East High School Lost &amp; Found</span>

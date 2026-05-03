@@ -29,7 +29,7 @@
 
   function shouldSkipElement(element) {
     if (!element) return true;
-    return !!element.closest('[data-no-translate], script, style, noscript, code, pre, textarea, [contenteditable="true"]');
+    return !!element.closest('[data-no-translate], script, style, noscript, code, pre, [contenteditable="true"]');
   }
 
   function chunk(items, size) {
