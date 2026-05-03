@@ -682,7 +682,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                 onChange={e => setClaimProof(e.target.value)}
                 rows={3}
                 className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] text-slate-900 dark:text-white"
-                placeholder="Proof of Ownership"
+                placeholder="Proof of Ownership (i.e., information that can verify ownership, such as distinctive characteristics, contents, or identifying markings)"
               />
               <button
                 type="submit"

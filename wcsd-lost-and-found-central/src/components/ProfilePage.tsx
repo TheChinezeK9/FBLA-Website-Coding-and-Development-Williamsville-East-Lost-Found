@@ -74,7 +74,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const { languageCode, setLanguageCode, supportedLanguages, isLoadingLanguages, isTranslating, translationError } = useTranslationSettings();
   const seenNotificationIdsRef = useRef<Set<string>>(new Set((user.notifications || []).map(n => n.id)));
   const initializedRef = useRef(false);
-  const previousWishlistCountRef = useRef(0);
+  const seenUnreadCountRef = useRef((user.notifications || []).filter(n => !n.read).length);
+  const seenWishlistCountRef = useRef(0);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const profileImageKey = `wcsd_profile_photo_${user.email.toLowerCase()}`;
   const unreadNotificationCount = profileUser.notifications.filter(n => !n.read).length;
@@ -90,16 +91,22 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       const response = await fetch(`/api/users/${user.id}?email=${encodeURIComponent(user.email)}`, { cache: 'no-store' });
       if (!response.ok) return;
       const data = await response.json();
+      const wasInitialized = initializedRef.current;
       if (data?.user) {
         const incoming = Array.isArray(data.user.notifications) ? data.user.notifications : [];
         const incomingIds = new Set(incoming.map((n: any) => n.id));
-        if (initializedRef.current) {
+        const unreadIncomingCount = incoming.filter((n: any) => !n.read).length;
+        if (wasInitialized) {
           const newestUnseen = incoming.find((n: any) => !seenNotificationIdsRef.current.has(n.id));
           if (newestUnseen?.text) {
             setPopupText(newestUnseen.text);
             setShowPopup(true);
+          }
+          if (unreadIncomingCount > seenUnreadCountRef.current && activeSection !== 'NOTIFICATIONS') {
             setShowNotificationDot(true);
           }
+        } else {
+          seenUnreadCountRef.current = unreadIncomingCount;
         }
         seenNotificationIdsRef.current = incomingIds;
         initializedRef.current = true;
@@ -110,10 +117,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         setEditStudentId(data.user.studentId || '');
       }
       if (Array.isArray(data?.wishlist)) {
-        if (initializedRef.current && data.wishlist.length > previousWishlistCountRef.current) {
+        if (wasInitialized && data.wishlist.length > seenWishlistCountRef.current && activeSection !== 'WISHLIST') {
           setShowWishlistDot(true);
+        } else if (!wasInitialized) {
+          seenWishlistCountRef.current = data.wishlist.length;
         }
-        previousWishlistCountRef.current = data.wishlist.length;
         setWishlist(data.wishlist);
       }
     } catch {
@@ -133,7 +141,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [user.id, user.email]);
+  }, [user.id, user.email, activeSection]);
 
   useEffect(() => {
     if (!showPopup) return;
@@ -142,8 +150,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   }, [showPopup]);
 
   useEffect(() => {
-    if (activeSection === 'NOTIFICATIONS') setShowNotificationDot(false);
-    if (activeSection === 'WISHLIST') setShowWishlistDot(false);
+    if (activeSection === 'NOTIFICATIONS') {
+      setShowNotificationDot(false);
+      seenUnreadCountRef.current = unreadNotificationCount;
+    }
+    if (activeSection === 'WISHLIST') {
+      setShowWishlistDot(false);
+      seenWishlistCountRef.current = wishlistCount;
+    }
   }, [activeSection]);
 
   const removeNotification = async (notificationId: string) => {

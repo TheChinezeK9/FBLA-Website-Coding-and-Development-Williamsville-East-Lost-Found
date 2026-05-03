@@ -37,7 +37,7 @@ export const ContactsPage: React.FC = () => {
         <div className="mb-12">
           {view !== 'ROOT' && (
             <button onClick={() => { if (view === 'SCHOOL_DETAIL' || view === 'SPORTS' || view === 'BUS' || view === 'MAIN_OFFICE_SELECT') setView('FACILITIES_MENU'); else setView('ROOT'); }} className="flex items-center gap-2 text-black dark:text-white hover:text-slate-900 font-bold mb-6 transition-colors bg-slate-100 dark:bg-black px-4 py-2 rounded-full w-fit backdrop-blur-sm border border-slate-300 dark:border-white/20 shadow-sm">
-              <ArrowLeft size={20} /> Back
+              <ArrowLeft size={20} /> <span>Back</span>
             </button>
           )}
           <h1 className="text-4xl md:text-6xl font-black text-black dark:text-white mb-4 drop-shadow-sm">
