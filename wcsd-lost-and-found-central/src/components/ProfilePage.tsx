@@ -65,6 +65,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [profileSaveMessage, setProfileSaveMessage] = useState('');
   const [profileSaveError, setProfileSaveError] = useState('');
   const [isSavingProfile, setIsSavingProfile] = useState(false);
+  const [isProfileDraftDirty, setIsProfileDraftDirty] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -151,10 +152,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
         }
         initializedRef.current = true;
         setProfileUser(data.user);
-        setEditName(data.user.name || '');
-        setEditEmail(data.user.email || '');
-        setEditGrade(data.user.grade || '');
-        setEditStudentId(data.user.studentId || '');
+        if (!(activeSection === 'EDIT' && isProfileDraftDirty)) {
+          setEditName(data.user.name || '');
+          setEditEmail(data.user.email || '');
+          setEditGrade(data.user.grade || '');
+          setEditStudentId(data.user.studentId || '');
+        }
       }
       if (Array.isArray(data?.wishlist)) {
         const latestWishlistTimestamp = data.wishlist.reduce((latest: number, wish: any) => {
@@ -275,6 +278,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
       setProfileUser(data.user);
       onUserUpdated(data.user);
+      setEditName(data.user.name || '');
+      setEditEmail(data.user.email || '');
+      setEditGrade(data.user.grade || '');
+      setEditStudentId(data.user.studentId || '');
+      setIsProfileDraftDirty(false);
       setProfileSaveMessage('Profile updated successfully.');
     } catch {
       setProfileSaveError('Network error while updating profile.');
@@ -488,10 +496,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
             passwordError={passwordError}
             isSavingProfile={isSavingProfile}
             isChangingPassword={isChangingPassword}
-            onEditNameChange={setEditName}
-            onEditEmailChange={setEditEmail}
-            onEditGradeChange={setEditGrade}
-            onEditStudentIdChange={setEditStudentId}
+            onEditNameChange={value => { setEditName(value); setIsProfileDraftDirty(true); }}
+            onEditEmailChange={value => { setEditEmail(value); setIsProfileDraftDirty(true); }}
+            onEditGradeChange={value => { setEditGrade(value); setIsProfileDraftDirty(true); }}
+            onEditStudentIdChange={value => { setEditStudentId(value); setIsProfileDraftDirty(true); }}
             onCurrentPasswordChange={setCurrentPassword}
             onNewPasswordChange={setNewPassword}
             onConfirmPasswordChange={setConfirmPassword}
@@ -539,7 +547,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
 
       {pendingProfileImage && (
         <div className="fixed inset-0 z-[260] flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm">
-          <div className="w-full max-w-2xl bg-white dark:bg-[#2b2b2b] rounded-[32px] border border-slate-200 dark:border-[#4b5563] shadow-2xl p-6 md:p-8">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-[#2b2b2b] rounded-[32px] border border-slate-200 dark:border-[#4b5563] shadow-2xl p-6 md:p-8">
             <div className="flex items-start justify-between gap-4 mb-6">
               <div>
                 <h2 className="text-2xl font-black text-slate-900 dark:text-white">Crop Profile Picture</h2>
@@ -551,7 +559,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
             </div>
 
             <div className="grid md:grid-cols-[320px_1fr] gap-8 items-start">
-              <div className="mx-auto">
+              <div className="mx-auto order-2 md:order-1">
                 <div className="w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-[#f3df9b] shadow-xl bg-slate-100 dark:bg-[#1f1f1f]">
                   <img
                     src={pendingProfileImage}
@@ -562,7 +570,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
                 </div>
               </div>
 
-              <div className="space-y-5">
+              <div className="space-y-5 order-1 md:order-2">
                 <label className="block">
                   <span className="block text-sm font-bold text-slate-900 dark:text-white mb-2">Zoom</span>
                   <input type="range" min="0.6" max="2.6" step="0.05" value={cropZoom} onChange={e => setCropZoom(Number(e.target.value))} className="w-full accent-[#f3df9b] transition hover:brightness-105" />

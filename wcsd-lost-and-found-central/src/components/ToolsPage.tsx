@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Camera, Bot, Shield, Lock, FileText, Users, Phone, ListChecks, Plus, X, Sparkles, Loader2, Wand2 } from 'lucide-react';
+import { Camera, Bot, Shield, Lock, FileText, Package, Phone, ListChecks, Plus, X, Sparkles, Loader2, Wand2 } from 'lucide-react';
 import { View, LostItem, User, WishlistItem } from '../types';
 import { CATEGORIES } from '../constants';
 
@@ -203,7 +203,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
     { id: 'chatbot', label: 'Fawkes Bot', icon: Bot, gradient: 'linear-gradient(135deg, #f3df9b 0%, #e7a39b 100%)', action: () => window.dispatchEvent(new CustomEvent('open-fawkes-bot', { detail: { source: 'tools-chatbot' } })) },
     { id: 'admin', label: isAdmin ? 'Admin Panel' : 'Staff Login', icon: isAdmin ? Shield : Lock, gradient: isAdmin ? 'linear-gradient(135deg, #b45309 0%, #d97706 100%)' : 'linear-gradient(135deg, #374151 0%, #4b5563 100%)', action: () => isAdmin ? onNavigate('BULLETIN_BOARD') : onOpenAdminLogin() },
     { id: 'claim', label: 'File a Claim', icon: FileText, gradient: 'linear-gradient(135deg, #f3df9b 0%, #f6e9b8 100%)', action: () => onNavigate('BULLETIN_BOARD') },
-    { id: 'schools', label: 'Item Board', icon: Users, gradient: 'linear-gradient(135deg, #f3df9b 0%, #f6e9b8 100%)', action: () => onNavigate('BULLETIN_BOARD') },
+    { id: 'schools', label: 'Item Board', icon: Package, gradient: 'linear-gradient(135deg, #f3df9b 0%, #f6e9b8 100%)', action: () => onNavigate('BULLETIN_BOARD') },
     { id: 'contacts', label: 'Contacts', icon: Phone, gradient: 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)', action: () => onNavigate('CONTACTS') }
   ];
 
