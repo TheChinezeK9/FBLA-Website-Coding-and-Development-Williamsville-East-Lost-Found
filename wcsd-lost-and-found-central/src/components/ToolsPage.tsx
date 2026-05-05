@@ -204,7 +204,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
     { id: 'admin', label: isAdmin ? 'Admin Panel' : 'Staff Login', icon: isAdmin ? Shield : Lock, gradient: isAdmin ? 'linear-gradient(135deg, #d8eac8 0%, #bfe0a4 100%)' : 'linear-gradient(135deg, #dfb0a7 0%, #e7c1ba 100%)', iconColor: '#2f2a26', action: () => isAdmin ? onNavigate('BULLETIN_BOARD') : onOpenAdminLogin() },
     { id: 'claim', label: 'File a Claim', icon: FileText, gradient: 'linear-gradient(135deg, #f3df9b 0%, #f7ecc7 100%)', iconColor: '#2f2a26', action: () => onNavigate('BULLETIN_BOARD') },
     { id: 'schools', label: 'Item Board', icon: Package, gradient: 'linear-gradient(135deg, #e7a39b 0%, #f2c5ba 100%)', iconColor: '#2f2a26', action: () => onNavigate('BULLETIN_BOARD') },
-    { id: 'contacts', label: 'Contacts', icon: Phone, gradient: 'linear-gradient(135deg, #ecdcc8 0%, #f6ebdc 100%)', iconColor: '#2f2a26', action: () => onNavigate('CONTACTS') }
+    { id: 'contacts', label: 'Contacts', icon: Phone, gradient: 'linear-gradient(135deg, #f3df9b 0%, #f7ecc7 100%)', iconColor: '#2f2a26', action: () => onNavigate('CONTACTS') }
   ];
 
   return (
@@ -214,17 +214,27 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
         <p className="text-slate-500 dark:text-white text-base max-w-lg mx-auto">Everything YOU need to find, report, and track lost items.</p>
       </div>
 
-      <div className="relative z-10 max-w-2xl mx-auto px-6 mb-12">
-        <div className="bg-[#fffaf4]/95 dark:bg-[#2b2b2b] backdrop-blur-xl rounded-[32px] p-6 border border-[#eadccc] dark:border-[#4b5563] shadow-[0_18px_40px_rgba(120,90,72,0.12)]">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {TOOL_APPS.map((app) => (
-              <button key={app.id} onClick={app.action} className="flex flex-col items-center gap-3 group rounded-[24px] px-3 py-4 border border-[#efe2d4] dark:border-[#4b5563] bg-white/70 dark:bg-[#1f1f1f] hover:bg-white dark:hover:bg-[#262626] transition-all duration-200 hover:-translate-y-0.5">
-                <div className="w-16 h-16 rounded-[18px] flex items-center justify-center shadow-[0_10px_24px_rgba(90,67,54,0.16)] transition-all duration-200 group-hover:scale-105 group-active:scale-95" style={{ background: app.gradient }}>
-                  {React.createElement(app.icon, { size: 26, color: app.iconColor })}
-                </div>
-                <p className="text-xs font-bold text-slate-800 dark:text-white leading-tight">{app.label}</p>
-              </button>
-            ))}
+      <div className="relative z-10 max-w-4xl mx-auto px-6 mb-12">
+        <div className="bg-white dark:bg-[#2b2b2b] rounded-[28px] shadow-xl border border-slate-100 dark:border-[#4b5563] overflow-hidden">
+          <div className="px-7 pt-7 pb-5 border-b border-slate-100 dark:border-[#4b5563]">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-[10px] bg-[#e7a39b] flex items-center justify-center shadow-md">
+                <Sparkles size={18} color="#2f2a26" />
+              </div>
+              <h2 className="text-lg font-black text-slate-900 dark:text-white">Quick Actions</h2>
+            </div>
+          </div>
+          <div className="px-7 py-6 bg-slate-50/65 dark:bg-[#1f1f1f]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {TOOL_APPS.map((app) => (
+                <button key={app.id} onClick={app.action} className="flex flex-col items-center gap-3 group rounded-[24px] px-3 py-4 border border-[#efe2d4] dark:border-[#4b5563] bg-white dark:bg-[#262626] hover:bg-[#fffaf4] dark:hover:bg-[#303030] shadow-[0_10px_24px_rgba(120,90,72,0.08)] transition-all duration-200 hover:-translate-y-0.5">
+                  <div className="w-16 h-16 rounded-[18px] flex items-center justify-center shadow-[0_10px_24px_rgba(90,67,54,0.16)] transition-all duration-200 group-hover:scale-105 group-active:scale-95" style={{ background: app.gradient }}>
+                    {React.createElement(app.icon, { size: 26, color: app.iconColor })}
+                  </div>
+                  <p className="text-xs font-bold text-slate-800 dark:text-white leading-tight">{app.label}</p>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
