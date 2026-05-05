@@ -4,6 +4,9 @@ import { Minimize2, Maximize2, Send, X } from 'lucide-react';
 export const FawkesBot: React.FC = () => {
   const FULLSCREEN_TOP_OFFSET = 92;
   const FULLSCREEN_GAP = 8;
+  const EDGE_MARGIN = 20;
+  const DEFAULT_RIGHT_OFFSET = 32;
+  const DEFAULT_BOTTOM_OFFSET = 72;
 
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: 'model' | 'user'; text: string }[]>([
@@ -24,11 +27,11 @@ export const FawkesBot: React.FC = () => {
   const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
   const clampPosition = (x: number, y: number, width: number, height: number) => {
-    const maxX = Math.max(8, window.innerWidth - width - 8);
-    const maxY = Math.max(8, window.innerHeight - height - 8);
+    const maxX = Math.max(EDGE_MARGIN, window.innerWidth - width - EDGE_MARGIN);
+    const maxY = Math.max(EDGE_MARGIN, window.innerHeight - height - EDGE_MARGIN);
     return {
-      x: clamp(x, 8, maxX),
-      y: clamp(y, 8, maxY)
+      x: clamp(x, EDGE_MARGIN, maxX),
+      y: clamp(y, EDGE_MARGIN, maxY)
     };
   };
 
@@ -48,12 +51,13 @@ export const FawkesBot: React.FC = () => {
 
   useEffect(() => {
     if (initialized) return;
-    const w = 384;
-    const h = 500;
-    const x = window.innerWidth - w - 20;
-    const y = window.innerHeight - h - 24;
+    const w = Math.min(384, window.innerWidth - EDGE_MARGIN * 2);
+    const h = Math.min(500, window.innerHeight - EDGE_MARGIN * 2);
+    const x = window.innerWidth - w - DEFAULT_RIGHT_OFFSET;
+    const y = window.innerHeight - h - DEFAULT_BOTTOM_OFFSET;
     const clamped = clampPosition(x, y, w, h);
     setPanelPos(clamped);
+    setPanelSize({ w, h });
     setInitialized(true);
   }, [initialized]);
 

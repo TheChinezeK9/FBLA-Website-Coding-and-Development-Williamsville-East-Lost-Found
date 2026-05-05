@@ -63,11 +63,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[60]" style={{ height: 'calc(1.4 * 64px)' }}>
-      <div className="flex justify-between items-center bg-[#e7a39b] w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-black/20">
-        <div onClick={() => navigateAndClose('HOME')} className="flex items-center gap-2 cursor-pointer px-3 sm:px-4 py-2 hover:scale-105 transition-all min-w-0 flex-1">
-          <img src="/images/east.png" alt="Williamsville East High School logo" className="w-12 h-12 rounded-lg object-cover shadow-sm bg-white p-1" />
-          <span className="font-bold text-sm sm:text-base lg:text-lg xl:text-xl tracking-tight text-black truncate">Williamsville East High School Lost &amp; Found</span>
+    <nav className="fixed top-0 left-0 right-0 z-[60]" style={{ minHeight: '82px' }}>
+      <div className="flex justify-between items-center gap-2 bg-[#e7a39b] w-full min-h-[82px] px-2 sm:px-3 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-black/20">
+        <div onClick={() => navigateAndClose('HOME')} className="flex items-center gap-2 cursor-pointer pl-2 sm:pl-3 pr-1 py-1 hover:scale-105 transition-all min-w-0 flex-1">
+          <img src="/images/east.png" alt="Williamsville East High School logo" className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover shadow-sm bg-white p-1 shrink-0" />
+          <span className="font-bold text-[13px] sm:text-sm md:text-base lg:text-lg xl:text-xl leading-tight tracking-tight text-black min-w-0 max-w-[calc(100vw-150px)] sm:max-w-[calc(100vw-210px)] xl:max-w-none">
+            Williamsville East High School Lost &amp; Found
+          </span>
         </div>
         <div className="hidden xl:flex items-center gap-1">
           <button onClick={() => navigateAndClose('HOME')} className={navBtnClass('HOME')}><HomeIcon size={16} /><span className="text-sm font-bold">Home</span></button>
@@ -92,7 +94,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button onClick={() => navigateAndClose('CONTACTS')} className={navBtnClass('CONTACTS')}><Phone size={16} /><span className="text-sm font-bold">Contacts</span></button>
           <button onClick={() => navigateAndClose('MEET_MAKERS')} className={navBtnClass('MEET_MAKERS')}><Users size={16} /><span className="text-sm font-bold">Team</span></button>
         </div>
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           <div className="relative xl:hidden" ref={mobileMenuRef}>
             <button onClick={() => setShowMobileMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black" title="Menu">
               {showMobileMenu ? <X size={20} /> : <Menu size={20} />}

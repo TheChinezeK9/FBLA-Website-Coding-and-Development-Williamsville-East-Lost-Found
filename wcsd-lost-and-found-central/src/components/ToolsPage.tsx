@@ -210,13 +210,13 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
   return (
     <div className="min-h-screen w-full transition-colors duration-300 pb-24">
       <div className="relative z-10 pt-10 pb-8 px-6 text-center">
-        <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Your Toolkit</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Your Toolkit</h1>
         <p className="text-slate-500 dark:text-white text-base max-w-lg mx-auto">Everything YOU need to find, report, and track lost items.</p>
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto px-6 mb-12">
         <div className="bg-white/70 dark:bg-[#2b2b2b] backdrop-blur-xl rounded-[32px] p-6 border border-white/60 dark:border-[#4b5563] shadow-xl">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {TOOL_APPS.map((app) => (
               <button key={app.id} onClick={app.action} className="flex flex-col items-center gap-2 group">
                 <div className="w-16 h-16 rounded-[18px] flex items-center justify-center shadow-lg transition-all duration-200 group-hover:scale-110 group-active:scale-95" style={{ background: app.gradient }}>
