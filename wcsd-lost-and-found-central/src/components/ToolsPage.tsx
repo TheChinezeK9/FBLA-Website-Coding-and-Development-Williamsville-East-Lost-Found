@@ -199,12 +199,12 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
   };
 
   const TOOL_APPS = [
-    { id: 'tracker', label: 'AI Scanner', icon: Camera, gradient: 'linear-gradient(135deg, #e7a39b 0%, #f1c5bf 100%)', action: () => onNavigate('LIVE_TRACKER') },
-    { id: 'chatbot', label: 'Fawkes Bot', icon: Bot, gradient: 'linear-gradient(135deg, #f3df9b 0%, #e7a39b 100%)', action: () => window.dispatchEvent(new CustomEvent('open-fawkes-bot', { detail: { source: 'tools-chatbot' } })) },
-    { id: 'admin', label: isAdmin ? 'Admin Panel' : 'Staff Login', icon: isAdmin ? Shield : Lock, gradient: isAdmin ? 'linear-gradient(135deg, #b45309 0%, #d97706 100%)' : 'linear-gradient(135deg, #374151 0%, #4b5563 100%)', action: () => isAdmin ? onNavigate('BULLETIN_BOARD') : onOpenAdminLogin() },
-    { id: 'claim', label: 'File a Claim', icon: FileText, gradient: 'linear-gradient(135deg, #f3df9b 0%, #f6e9b8 100%)', action: () => onNavigate('BULLETIN_BOARD') },
-    { id: 'schools', label: 'Item Board', icon: Package, gradient: 'linear-gradient(135deg, #f3df9b 0%, #f6e9b8 100%)', action: () => onNavigate('BULLETIN_BOARD') },
-    { id: 'contacts', label: 'Contacts', icon: Phone, gradient: 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)', action: () => onNavigate('CONTACTS') }
+    { id: 'tracker', label: 'AI Scanner', icon: Camera, gradient: 'linear-gradient(135deg, #e7a39b 0%, #f0beb5 100%)', iconColor: '#2f2a26', action: () => onNavigate('LIVE_TRACKER') },
+    { id: 'chatbot', label: 'Fawkes Bot', icon: Bot, gradient: 'linear-gradient(135deg, #f3df9b 0%, #f6e9bb 100%)', iconColor: '#2f2a26', action: () => window.dispatchEvent(new CustomEvent('open-fawkes-bot', { detail: { source: 'tools-chatbot' } })) },
+    { id: 'admin', label: isAdmin ? 'Admin Panel' : 'Staff Login', icon: isAdmin ? Shield : Lock, gradient: isAdmin ? 'linear-gradient(135deg, #d8eac8 0%, #bfe0a4 100%)' : 'linear-gradient(135deg, #dfb0a7 0%, #e7c1ba 100%)', iconColor: '#2f2a26', action: () => isAdmin ? onNavigate('BULLETIN_BOARD') : onOpenAdminLogin() },
+    { id: 'claim', label: 'File a Claim', icon: FileText, gradient: 'linear-gradient(135deg, #f3df9b 0%, #f7ecc7 100%)', iconColor: '#2f2a26', action: () => onNavigate('BULLETIN_BOARD') },
+    { id: 'schools', label: 'Item Board', icon: Package, gradient: 'linear-gradient(135deg, #e7a39b 0%, #f2c5ba 100%)', iconColor: '#2f2a26', action: () => onNavigate('BULLETIN_BOARD') },
+    { id: 'contacts', label: 'Contacts', icon: Phone, gradient: 'linear-gradient(135deg, #ecdcc8 0%, #f6ebdc 100%)', iconColor: '#2f2a26', action: () => onNavigate('CONTACTS') }
   ];
 
   return (
@@ -215,12 +215,12 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto px-6 mb-12">
-        <div className="bg-white/70 dark:bg-[#2b2b2b] backdrop-blur-xl rounded-[32px] p-6 border border-white/60 dark:border-[#4b5563] shadow-xl">
+        <div className="bg-[#fffaf4]/95 dark:bg-[#2b2b2b] backdrop-blur-xl rounded-[32px] p-6 border border-[#eadccc] dark:border-[#4b5563] shadow-[0_18px_40px_rgba(120,90,72,0.12)]">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {TOOL_APPS.map((app) => (
-              <button key={app.id} onClick={app.action} className="flex flex-col items-center gap-2 group">
-                <div className="w-16 h-16 rounded-[18px] flex items-center justify-center shadow-lg transition-all duration-200 group-hover:scale-110 group-active:scale-95" style={{ background: app.gradient }}>
-                  {React.createElement(app.icon, { size: 26, color: '#fff' })}
+              <button key={app.id} onClick={app.action} className="flex flex-col items-center gap-3 group rounded-[24px] px-3 py-4 border border-[#efe2d4] dark:border-[#4b5563] bg-white/70 dark:bg-[#1f1f1f] hover:bg-white dark:hover:bg-[#262626] transition-all duration-200 hover:-translate-y-0.5">
+                <div className="w-16 h-16 rounded-[18px] flex items-center justify-center shadow-[0_10px_24px_rgba(90,67,54,0.16)] transition-all duration-200 group-hover:scale-105 group-active:scale-95" style={{ background: app.gradient }}>
+                  {React.createElement(app.icon, { size: 26, color: app.iconColor })}
                 </div>
                 <p className="text-xs font-bold text-slate-800 dark:text-white leading-tight">{app.label}</p>
               </button>
