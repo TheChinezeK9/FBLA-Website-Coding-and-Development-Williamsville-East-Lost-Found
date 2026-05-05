@@ -600,7 +600,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, items, claimLogs
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             <FlipperStat label="Items Posted" value={postedCount} accentClass="bg-[#e7a39b]" />
             <FlipperStat label="Items Claimed" value={claimedCount} accentClass="bg-emerald-500" />
-            <FlipperStat label="Pending Review" value={pendingReviewCount} accentClass="bg-[#f3df9b]" />
+            <FlipperStat label="Posts Pending" value={pendingReviewCount} accentClass="bg-[#f3df9b]" />
             <FlipperStat label="Claims Pending" value={pendingClaimCount} accentClass="bg-sky-500" />
           </div>
         </div>
