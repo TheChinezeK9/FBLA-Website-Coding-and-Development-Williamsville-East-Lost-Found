@@ -215,27 +215,21 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 mb-12">
-        <div className="bg-white dark:bg-[#2b2b2b] rounded-[28px] shadow-xl border border-slate-100 dark:border-[#4b5563] overflow-hidden">
-          <div className="px-7 pt-7 pb-5 border-b border-slate-100 dark:border-[#4b5563]">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-[10px] bg-[#e7a39b] flex items-center justify-center shadow-md">
-                <Sparkles size={18} color="#2f2a26" />
+        <div className="mb-4 flex items-center gap-3">
+          <div className="w-9 h-9 rounded-[10px] bg-[#e7a39b] flex items-center justify-center shadow-md">
+            <Sparkles size={18} color="#2f2a26" />
+          </div>
+          <h2 className="text-lg font-black text-slate-900 dark:text-white">Quick Links</h2>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {TOOL_APPS.map((app) => (
+            <button key={app.id} onClick={app.action} className="flex flex-col items-center gap-3 group rounded-[24px] px-3 py-4 border border-slate-200 dark:border-[#4b5563] bg-[#f4f6f8] dark:bg-[#1f1f1f] hover:bg-[#eef2f5] dark:hover:bg-[#262626] shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition-all duration-200 hover:-translate-y-0.5">
+              <div className="w-16 h-16 rounded-[18px] flex items-center justify-center shadow-[0_10px_24px_rgba(90,67,54,0.16)] transition-all duration-200 group-hover:scale-105 group-active:scale-95" style={{ background: app.gradient }}>
+                {React.createElement(app.icon, { size: 26, color: app.iconColor })}
               </div>
-              <h2 className="text-lg font-black text-slate-900 dark:text-white">Quick Actions</h2>
-            </div>
-          </div>
-          <div className="px-7 py-6 bg-slate-50/65 dark:bg-[#1f1f1f]">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-              {TOOL_APPS.map((app) => (
-                <button key={app.id} onClick={app.action} className="flex flex-col items-center gap-3 group rounded-[24px] px-3 py-4 border border-[#efe2d4] dark:border-[#4b5563] bg-white dark:bg-[#262626] hover:bg-[#fffaf4] dark:hover:bg-[#303030] shadow-[0_10px_24px_rgba(120,90,72,0.08)] transition-all duration-200 hover:-translate-y-0.5">
-                  <div className="w-16 h-16 rounded-[18px] flex items-center justify-center shadow-[0_10px_24px_rgba(90,67,54,0.16)] transition-all duration-200 group-hover:scale-105 group-active:scale-95" style={{ background: app.gradient }}>
-                    {React.createElement(app.icon, { size: 26, color: app.iconColor })}
-                  </div>
-                  <p className="text-xs font-bold text-slate-800 dark:text-white leading-tight">{app.label}</p>
-                </button>
-              ))}
-            </div>
-          </div>
+              <p className="text-xs font-bold text-slate-800 dark:text-white leading-tight">{app.label}</p>
+            </button>
+          ))}
         </div>
       </div>
 
