@@ -391,7 +391,16 @@ export default function App() {
                 onOpenMatchedItem={handleOpenMatchedItem}
               />
             )}
-            {currentView === 'ACCOUNT' && user && <ProfilePage user={user} onLogout={handleLogout} onNavigate={navigate} onUserUpdated={handleLogin} />}
+            {currentView === 'ACCOUNT' && user && (
+              <ProfilePage
+                user={user}
+                items={items}
+                claimLogs={claimLogs}
+                onLogout={handleLogout}
+                onNavigate={navigate}
+                onUserUpdated={handleLogin}
+              />
+            )}
           </div>
         </main>
       )}

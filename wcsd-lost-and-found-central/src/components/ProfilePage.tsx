@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, GraduationCap, Hash, Calendar, LogOut, Settings, X, Camera, RefreshCcw, Trash2, Globe, ChevronDown } from 'lucide-react';
-import { User as UserType, WishlistItem, View } from '../types';
+import { Mail, GraduationCap, Hash, Calendar, LogOut, Settings, X, Camera, RefreshCcw, Trash2, Globe, ChevronDown, Activity } from 'lucide-react';
+import { User as UserType, WishlistItem, View, LostItem, ClaimedLog } from '../types';
 import { ProfileOverview } from './profile/ProfileOverview';
 import { ProfileNotifications } from './profile/ProfileNotifications';
 import { ProfileWishlist } from './profile/ProfileWishlist';
@@ -9,10 +9,44 @@ import { useTranslationSettings } from '../translation/TranslationProvider';
 
 interface ProfilePageProps {
   user: UserType;
+  items: LostItem[];
+  claimLogs: ClaimedLog[];
   onLogout: () => void;
   onNavigate: (view: View) => void;
   onUserUpdated: (user: UserType) => void;
 }
+
+const FlipperDigits: React.FC<{ value: number; accentClass: string }> = ({ value, accentClass }) => {
+  const digits = String(Math.max(0, value)).padStart(2, '0').split('');
+
+  return (
+    <div className="flex items-center justify-center gap-1.5">
+      {digits.map((digit, index) => (
+        <div
+          key={`${digit}-${index}`}
+          className="relative w-11 h-14 rounded-[14px] overflow-hidden border border-black/10 dark:border-white/10 bg-[#2f2f2f] shadow-[0_10px_20px_rgba(0,0,0,0.16)]"
+        >
+          <div className={`absolute inset-x-0 top-0 h-1.5 ${accentClass}`} />
+          <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-[#4e4e4e] to-[#393939]" />
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-[#2f2f2f] to-[#1f1f1f]" />
+          <div className="absolute inset-x-2 top-1/2 h-px -translate-y-1/2 bg-white/15" />
+          <div className="absolute inset-0 flex items-center justify-center text-[1.6rem] font-black tracking-tight text-white [text-shadow:0_2px_6px_rgba(0,0,0,0.35)]">
+            {digit}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const FlipperStat: React.FC<{ label: string; value: number; accentClass: string }> = ({ label, value, accentClass }) => (
+  <div className="rounded-[24px] border border-slate-200 dark:border-[#4b5563] bg-slate-50 dark:bg-[#1f1f1f] px-4 py-5 text-center shadow-sm">
+    <FlipperDigits value={value} accentClass={accentClass} />
+    <p className="mt-3 text-[11px] font-black uppercase tracking-[0.22em] text-slate-500 dark:text-white">
+      {label}
+    </p>
+  </div>
+);
 
 const createCroppedProfileImage = async (src: string, zoom: number, offsetX: number, offsetY: number) => {
   const image = await new Promise<HTMLImageElement>((resolve, reject) => {
@@ -44,7 +78,7 @@ const createCroppedProfileImage = async (src: string, zoom: number, offsetX: num
   return canvas.toDataURL('image/jpeg', 0.92);
 };
 
-export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavigate, onUserUpdated }) => {
+export const ProfilePage: React.FC<ProfilePageProps> = ({ user, items, claimLogs, onLogout, onNavigate, onUserUpdated }) => {
   const [activeSection, setActiveSection] = useState<'OVERVIEW' | 'NOTIFICATIONS' | 'WISHLIST' | 'EDIT'>('OVERVIEW');
   const [profileUser, setProfileUser] = useState<UserType>(user);
   const [profileImage, setProfileImage] = useState('');
@@ -73,6 +107,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
   const [passwordError, setPasswordError] = useState('');
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const { languageCode, setLanguageCode, supportedLanguages, isLoadingLanguages, isTranslating, translationError } = useTranslationSettings();
+  const normalizedUserEmail = user.email.toLowerCase();
+  const postedCount = items.filter(item => item.reporterUserId === user.id || item.reporterEmail?.toLowerCase() === normalizedUserEmail).length;
+  const pendingReviewCount = items.filter(item =>
+    (item.reporterUserId === user.id || item.reporterEmail?.toLowerCase() === normalizedUserEmail) &&
+    item.status === 'lost'
+  ).length;
+  const pendingClaimCount = items.filter(item => item.claimantUserId === user.id || item.claimantEmail?.toLowerCase() === normalizedUserEmail).length;
+  const claimedCount = claimLogs.filter(log => log.claimedEmail?.toLowerCase() === normalizedUserEmail).length;
   const notificationsSeenStorageKey = `wcsd_seen_notification_ts_${user.id}`;
   const notificationsPopupStorageKey = `wcsd_popped_notification_id_${user.id}`;
   const wishlistSeenStorageKey = `wcsd_seen_wishlist_ts_${user.id}`;
@@ -519,28 +561,49 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onLogout, onNavi
             </div>
           </div>
 
-          <div className="max-w-sm space-y-3">
-            <div data-no-translate className="relative">
-              <select
-                value={languageCode}
-                onChange={e => setLanguageCode(e.target.value)}
-                className="w-full appearance-none rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] pl-4 pr-12 py-3 text-sm font-semibold text-slate-900 dark:text-white outline-none"
-              >
-                {supportedLanguages.map(language => (
-                  <option key={language.code} value={language.code}>
-                    {language.name}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                size={18}
-                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-white"
-              />
+          <div className="space-y-5">
+            <div className="max-w-sm space-y-3">
+              <div data-no-translate className="relative">
+                <select
+                  value={languageCode}
+                  onChange={e => setLanguageCode(e.target.value)}
+                  className="w-full appearance-none rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] pl-4 pr-12 py-3 text-sm font-semibold text-slate-900 dark:text-white outline-none"
+                >
+                  {supportedLanguages.map(language => (
+                    <option key={language.code} value={language.code}>
+                      {language.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  size={18}
+                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-white"
+                />
+              </div>
+              <p className="text-xs text-slate-500 dark:text-white">
+                {isLoadingLanguages ? 'Loading languages...' : isTranslating ? 'Translating the site...' : 'Language preference is saved automatically.'}
+              </p>
+              {translationError && <p className="text-xs font-semibold text-red-500">{translationError}</p>}
             </div>
-            <p className="text-xs text-slate-500 dark:text-white">
-              {isLoadingLanguages ? 'Loading languages...' : isTranslating ? 'Translating the site...' : 'Language preference is saved automatically.'}
-            </p>
-            {translationError && <p className="text-xs font-semibold text-red-500">{translationError}</p>}
+
+            <div className="rounded-[24px] border border-slate-200 dark:border-[#4b5563] bg-slate-50 dark:bg-[#1f1f1f] p-5">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-[#f3df9b] text-black flex items-center justify-center">
+                  <Activity size={20} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-slate-900 dark:text-white">Item Activity Tracker</h2>
+                  <p className="text-sm text-slate-500 dark:text-white">A flipper-style snapshot of your lost and found activity.</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                <FlipperStat label="Items Posted" value={postedCount} accentClass="bg-[#e7a39b]" />
+                <FlipperStat label="Items Claimed" value={claimedCount} accentClass="bg-emerald-500" />
+                <FlipperStat label="Pending Review" value={pendingReviewCount} accentClass="bg-[#f3df9b]" />
+                <FlipperStat label="Claims Pending" value={pendingClaimCount} accentClass="bg-sky-500" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
