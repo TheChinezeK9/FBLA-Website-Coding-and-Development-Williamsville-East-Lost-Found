@@ -67,13 +67,13 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="flex justify-between items-center gap-2 bg-[#e7a39b] w-full min-h-[82px] px-2 sm:px-3 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-black/20">
         <div onClick={() => navigateAndClose('HOME')} className="flex items-center gap-2 cursor-pointer pl-2 sm:pl-3 pr-2 py-1 hover:scale-105 transition-all min-w-0 flex-1">
           <img src="/images/east.png" alt="Williamsville East High School logo" className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover shadow-sm bg-white p-1 shrink-0" />
-          <span className="font-bold text-[13px] sm:text-sm md:text-base lg:text-lg xl:text-xl leading-tight tracking-tight text-black min-w-0 max-w-[calc(100vw-150px)] sm:max-w-[calc(100vw-210px)] xl:max-w-none">
+          <span className="font-bold text-[13px] sm:text-sm md:text-base lg:text-lg xl:text-xl leading-tight tracking-tight text-black min-w-0 max-w-[calc(100vw-150px)] sm:max-w-[calc(100vw-210px)] xl:max-w-none whitespace-nowrap overflow-hidden text-ellipsis">
             Williamsville East High School Lost &amp; Found
           </span>
         </div>
         <div className="hidden xl:flex items-center justify-center gap-1 flex-1 px-4">
           <button onClick={() => navigateAndClose('HOME')} className={navBtnClass('HOME')}><HomeIcon size={16} /><span className="text-sm font-bold">Home</span></button>
-          <button onClick={() => navigateAndClose('BULLETIN_BOARD')} className={navBtnClass('BULLETIN_BOARD')}><Package size={18} strokeWidth={2.25} /><span className="text-sm font-bold">Item Board</span></button>
+          <button onClick={() => navigateAndClose('BULLETIN_BOARD')} className={navBtnClass('BULLETIN_BOARD')}><Package size={18} strokeWidth={2.25} /><span className="text-sm font-bold whitespace-nowrap">Item Board</span></button>
           <div className="w-px h-6 bg-black/20 mx-2" />
           <div className="relative">
             <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:text-black"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
