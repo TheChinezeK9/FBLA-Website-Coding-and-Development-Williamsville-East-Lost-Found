@@ -108,13 +108,29 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, items, claimLogs
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const { languageCode, setLanguageCode, supportedLanguages, isLoadingLanguages, isTranslating, translationError } = useTranslationSettings();
   const normalizedUserEmail = user.email.toLowerCase();
-  const postedCount = items.filter(item => item.reporterUserId === user.id || item.reporterEmail?.toLowerCase() === normalizedUserEmail).length;
+  const currentYear = new Date().getFullYear();
+  const isCurrentYearDate = (value?: string) => {
+    if (!value) return false;
+    const parsed = new Date(value);
+    return !Number.isNaN(parsed.getTime()) && parsed.getFullYear() === currentYear;
+  };
+  const postedCount = items.filter(item =>
+    (item.reporterUserId === user.id || item.reporterEmail?.toLowerCase() === normalizedUserEmail) &&
+    isCurrentYearDate(item.date)
+  ).length;
   const pendingReviewCount = items.filter(item =>
     (item.reporterUserId === user.id || item.reporterEmail?.toLowerCase() === normalizedUserEmail) &&
-    item.status === 'lost'
+    item.status === 'lost' &&
+    isCurrentYearDate(item.date)
   ).length;
-  const pendingClaimCount = items.filter(item => item.claimantUserId === user.id || item.claimantEmail?.toLowerCase() === normalizedUserEmail).length;
-  const claimedCount = claimLogs.filter(log => log.claimedEmail?.toLowerCase() === normalizedUserEmail).length;
+  const pendingClaimCount = items.filter(item =>
+    (item.claimantUserId === user.id || item.claimantEmail?.toLowerCase() === normalizedUserEmail) &&
+    isCurrentYearDate(item.date)
+  ).length;
+  const claimedCount = claimLogs.filter(log =>
+    log.claimedEmail?.toLowerCase() === normalizedUserEmail &&
+    isCurrentYearDate(log.claimedAt)
+  ).length;
   const notificationsSeenStorageKey = `wcsd_seen_notification_ts_${user.id}`;
   const notificationsPopupStorageKey = `wcsd_popped_notification_id_${user.id}`;
   const wishlistSeenStorageKey = `wcsd_seen_wishlist_ts_${user.id}`;
@@ -588,14 +604,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, items, claimLogs
 
         <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563]">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 rounded-xl bg-[#f3df9b] text-black flex items-center justify-center">
-              <Activity size={20} />
-            </div>
-            <div>
-              <h2 className="text-xl font-black text-slate-900 dark:text-white">Item Activity Tracker</h2>
-              <p className="text-sm text-slate-500 dark:text-white">A flipper-style snapshot of your lost and found activity.</p>
-            </div>
-          </div>
+                <div className="w-10 h-10 rounded-xl bg-[#f3df9b] text-black flex items-center justify-center">
+                  <Activity size={20} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-slate-900 dark:text-white">Item Activity Tracker</h2>
+                  <p className="text-sm text-slate-500 dark:text-white">A snapshot of your lost and found activity this year.</p>
+                </div>
+              </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             <FlipperStat label="Items Posted" value={postedCount} accentClass="bg-[#e7a39b]" />
