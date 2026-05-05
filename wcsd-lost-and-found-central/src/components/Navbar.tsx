@@ -67,11 +67,11 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="flex justify-between items-center gap-2 bg-[#e7a39b] w-full min-h-[82px] px-2 sm:px-3 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-black/20">
         <div onClick={() => navigateAndClose('HOME')} className="flex items-center gap-2 cursor-pointer pl-2 sm:pl-3 pr-2 py-1 hover:scale-105 transition-all flex-1 min-w-0">
           <img src="/images/east.png" alt="Williamsville East High School logo" className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover shadow-sm bg-white p-1 shrink-0" />
-          <span className="font-bold text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg 2xl:text-xl leading-tight tracking-tight text-black whitespace-nowrap">
+          <span className="font-bold text-[10px] sm:text-xs md:text-sm lg:text-[15px] xl:text-[16px] 2xl:text-xl leading-tight tracking-tight text-black whitespace-nowrap">
             Williamsville East High School Lost &amp; Found
           </span>
         </div>
-        <div className="hidden 2xl:flex items-center justify-center gap-1 flex-1 px-4">
+        <div className="hidden xl:flex items-center justify-center gap-1 flex-1 px-4">
           <button onClick={() => navigateAndClose('HOME')} className={navBtnClass('HOME')}><HomeIcon size={16} /><span className="text-sm font-bold">Home</span></button>
           <button onClick={() => navigateAndClose('BULLETIN_BOARD')} className={navBtnClass('BULLETIN_BOARD')}><Package size={18} strokeWidth={2.25} /><span className="text-sm font-bold whitespace-nowrap">Item Board</span></button>
           <div className="w-px h-6 bg-black/20 mx-2" />
@@ -95,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button onClick={() => navigateAndClose('MEET_MAKERS')} className={navBtnClass('MEET_MAKERS')}><Users size={16} /><span className="text-sm font-bold">Team</span></button>
         </div>
         <div className="flex items-center justify-end gap-1 sm:gap-2 shrink-0 flex-1 ml-2">
-          <div className="relative 2xl:hidden" ref={mobileMenuRef}>
+          <div className="relative xl:hidden" ref={mobileMenuRef}>
             <button onClick={() => setShowMobileMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black" title="Menu">
               {showMobileMenu ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -137,13 +137,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           {user && (
             <button
               onClick={() => navigateAndClose('ACCOUNT')}
-              className={`hidden 2xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}
+              className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}
             >
               <UserIcon size={18} />
               <span className="hidden md:inline font-bold text-sm">{user.name.split(' ')[0]}</span>
             </button>
           )}
-          <button onClick={() => navigateAndClose('TOOLS')} className={`hidden 2xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
+          <button onClick={() => navigateAndClose('TOOLS')} className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
 
           <div className="relative" ref={settingsRef}>
             <button onClick={() => setShowSettingsMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black" title="Settings"><Settings size={20} /></button>

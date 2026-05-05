@@ -561,49 +561,47 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, items, claimLogs
             </div>
           </div>
 
-          <div className="space-y-5">
-            <div className="max-w-sm space-y-3">
-              <div data-no-translate className="relative">
-                <select
-                  value={languageCode}
-                  onChange={e => setLanguageCode(e.target.value)}
-                  className="w-full appearance-none rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] pl-4 pr-12 py-3 text-sm font-semibold text-slate-900 dark:text-white outline-none"
-                >
-                  {supportedLanguages.map(language => (
-                    <option key={language.code} value={language.code}>
-                      {language.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown
-                  size={18}
-                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-white"
-                />
-              </div>
-              <p className="text-xs text-slate-500 dark:text-white">
-                {isLoadingLanguages ? 'Loading languages...' : isTranslating ? 'Translating the site...' : 'Language preference is saved automatically.'}
-              </p>
-              {translationError && <p className="text-xs font-semibold text-red-500">{translationError}</p>}
+          <div className="max-w-sm space-y-3">
+            <div data-no-translate className="relative">
+              <select
+                value={languageCode}
+                onChange={e => setLanguageCode(e.target.value)}
+                className="w-full appearance-none rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] pl-4 pr-12 py-3 text-sm font-semibold text-slate-900 dark:text-white outline-none"
+              >
+                {supportedLanguages.map(language => (
+                  <option key={language.code} value={language.code}>
+                    {language.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                size={18}
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-white"
+              />
             </div>
+            <p className="text-xs text-slate-500 dark:text-white">
+              {isLoadingLanguages ? 'Loading languages...' : isTranslating ? 'Translating the site...' : 'Language preference is saved automatically.'}
+            </p>
+            {translationError && <p className="text-xs font-semibold text-red-500">{translationError}</p>}
+          </div>
+        </div>
 
-            <div className="rounded-[24px] border border-slate-200 dark:border-[#4b5563] bg-slate-50 dark:bg-[#1f1f1f] p-5">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-xl bg-[#f3df9b] text-black flex items-center justify-center">
-                  <Activity size={20} />
-                </div>
-                <div>
-                  <h2 className="text-xl font-black text-slate-900 dark:text-white">Item Activity Tracker</h2>
-                  <p className="text-sm text-slate-500 dark:text-white">A flipper-style snapshot of your lost and found activity.</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-                <FlipperStat label="Items Posted" value={postedCount} accentClass="bg-[#e7a39b]" />
-                <FlipperStat label="Items Claimed" value={claimedCount} accentClass="bg-emerald-500" />
-                <FlipperStat label="Pending Review" value={pendingReviewCount} accentClass="bg-[#f3df9b]" />
-                <FlipperStat label="Claims Pending" value={pendingClaimCount} accentClass="bg-sky-500" />
-              </div>
+        <div className="bg-white dark:bg-[#2b2b2b] rounded-[32px] p-8 shadow-xl border border-slate-100 dark:border-[#4b5563]">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-10 h-10 rounded-xl bg-[#f3df9b] text-black flex items-center justify-center">
+              <Activity size={20} />
             </div>
+            <div>
+              <h2 className="text-xl font-black text-slate-900 dark:text-white">Item Activity Tracker</h2>
+              <p className="text-sm text-slate-500 dark:text-white">A flipper-style snapshot of your lost and found activity.</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <FlipperStat label="Items Posted" value={postedCount} accentClass="bg-[#e7a39b]" />
+            <FlipperStat label="Items Claimed" value={claimedCount} accentClass="bg-emerald-500" />
+            <FlipperStat label="Pending Review" value={pendingReviewCount} accentClass="bg-[#f3df9b]" />
+            <FlipperStat label="Claims Pending" value={pendingClaimCount} accentClass="bg-sky-500" />
           </div>
         </div>
       </div>
