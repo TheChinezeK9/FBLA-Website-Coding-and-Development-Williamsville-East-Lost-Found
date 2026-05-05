@@ -65,13 +65,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <nav className="fixed top-0 left-0 right-0 z-[60]" style={{ height: 'calc(1.4 * 64px)' }}>
       <div className="flex justify-between items-center bg-[#e7a39b] w-full h-full p-3 shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 border-b border-black/20">
-        <div onClick={() => navigateAndClose('HOME')} className="flex items-center gap-2 cursor-pointer px-4 py-2 hover:scale-105 transition-all min-w-0">
+        <div onClick={() => navigateAndClose('HOME')} className="flex items-center gap-2 cursor-pointer px-3 sm:px-4 py-2 hover:scale-105 transition-all min-w-0 flex-1">
           <img src="/images/east.png" alt="Williamsville East High School logo" className="w-12 h-12 rounded-lg object-cover shadow-sm bg-white p-1" />
-          <span className="font-bold text-base md:text-xl tracking-tight text-black truncate">Williamsville East High School Lost &amp; Found</span>
+          <span className="font-bold text-sm sm:text-base lg:text-lg xl:text-xl tracking-tight text-black truncate">Williamsville East High School Lost &amp; Found</span>
         </div>
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="hidden xl:flex items-center gap-1">
           <button onClick={() => navigateAndClose('HOME')} className={navBtnClass('HOME')}><HomeIcon size={16} /><span className="text-sm font-bold">Home</span></button>
-          <button onClick={() => navigateAndClose('BULLETIN_BOARD')} className={navBtnClass('BULLETIN_BOARD')}><Package size={16} /><span className="text-sm font-bold">Item Board</span></button>
+          <button onClick={() => navigateAndClose('BULLETIN_BOARD')} className={navBtnClass('BULLETIN_BOARD')}><Package size={18} strokeWidth={2.25} /><span className="text-sm font-bold">Item Board</span></button>
           <div className="w-px h-6 bg-black/20 mx-2" />
           <div className="relative">
             <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:text-black"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
@@ -92,8 +92,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button onClick={() => navigateAndClose('CONTACTS')} className={navBtnClass('CONTACTS')}><Phone size={16} /><span className="text-sm font-bold">Contacts</span></button>
           <button onClick={() => navigateAndClose('MEET_MAKERS')} className={navBtnClass('MEET_MAKERS')}><Users size={16} /><span className="text-sm font-bold">Team</span></button>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="relative lg:hidden" ref={mobileMenuRef}>
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="relative xl:hidden" ref={mobileMenuRef}>
             <button onClick={() => setShowMobileMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black" title="Menu">
               {showMobileMenu ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -101,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="absolute top-full right-0 mt-2 w-[260px] max-w-[calc(100vw-24px)] bg-[#e7a39b] border border-black/20 rounded-2xl p-2 shadow-2xl animate-fade-in z-[75]">
                 {[
                   { id: 'HOME' as View, label: 'Home', icon: <HomeIcon size={16} /> },
-                  { id: 'BULLETIN_BOARD' as View, label: 'Item Board', icon: <Package size={16} /> },
+                  { id: 'BULLETIN_BOARD' as View, label: 'Item Board', icon: <Package size={18} strokeWidth={2.25} /> },
                   { id: 'CONTACTS' as View, label: 'Contacts', icon: <Phone size={16} /> },
                   { id: 'MEET_MAKERS' as View, label: 'Team', icon: <Users size={16} /> },
                   { id: 'TOOLS' as View, label: 'Tools', icon: <Wrench size={16} /> },
@@ -135,13 +135,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           {user && (
             <button
               onClick={() => navigateAndClose('ACCOUNT')}
-              className={`hidden lg:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}
+              className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}
             >
               <UserIcon size={18} />
               <span className="hidden md:inline font-bold text-sm">{user.name.split(' ')[0]}</span>
             </button>
           )}
-          <button onClick={() => navigateAndClose('TOOLS')} className={`hidden lg:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
+          <button onClick={() => navigateAndClose('TOOLS')} className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
 
           <div className="relative" ref={settingsRef}>
             <button onClick={() => setShowSettingsMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black" title="Settings"><Settings size={20} /></button>
