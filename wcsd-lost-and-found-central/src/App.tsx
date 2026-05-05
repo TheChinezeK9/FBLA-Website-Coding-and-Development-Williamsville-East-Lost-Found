@@ -24,6 +24,53 @@ const pruneExpiredClaimLogs = (logs: ClaimedLog[]) => {
   return logs.filter(log => new Date(log.expiresAt).getTime() > now);
 };
 
+const PAGE_METADATA: Record<View, { title: string; heading: string }> = {
+  HOME: {
+    title: 'Williamsville East High School Lost & Found',
+    heading: 'Williamsville East High School Lost & Found Home'
+  },
+  SCHOOL_SELECT: {
+    title: 'Item Board | Williamsville East High School Lost & Found',
+    heading: 'Item Board'
+  },
+  BULLETIN_BOARD: {
+    title: 'Item Board | Williamsville East High School Lost & Found',
+    heading: 'Item Board'
+  },
+  CONTACTS: {
+    title: 'Contacts | Williamsville East High School Lost & Found',
+    heading: 'Contact Information'
+  },
+  MEET_MAKERS: {
+    title: 'Team | Williamsville East High School Lost & Found',
+    heading: 'Meet the Team'
+  },
+  ABOUT: {
+    title: 'About Project | Williamsville East High School Lost & Found',
+    heading: 'About the Project'
+  },
+  RULES: {
+    title: 'Safety Rules | Williamsville East High School Lost & Found',
+    heading: 'Safety Rules'
+  },
+  GUIDE: {
+    title: 'Help Guide | Williamsville East High School Lost & Found',
+    heading: 'Help Guide'
+  },
+  TOOLS: {
+    title: 'Toolkit | Williamsville East High School Lost & Found',
+    heading: 'Toolkit'
+  },
+  LIVE_TRACKER: {
+    title: 'AI Scanner | Williamsville East High School Lost & Found',
+    heading: 'AI Scanner'
+  },
+  ACCOUNT: {
+    title: 'Profile | Williamsville East High School Lost & Found',
+    heading: 'Profile'
+  }
+};
+
 export default function App() {
   const eastSchool = SCHOOL_THEMES.will_east;
   const { isTranslating, languageCode } = useTranslationSettings();
@@ -207,6 +254,13 @@ export default function App() {
     }
   }, [showAdminModal]);
 
+  useEffect(() => {
+    const meta = isLoggedIn
+      ? PAGE_METADATA[currentView]
+      : { title: 'Login | Williamsville East High School Lost & Found', heading: 'Login' };
+    document.title = meta.title;
+  }, [currentView, isLoggedIn]);
+
   const handleLogin = (loggedInUser: User) => {
     const normalizedUser: User = {
       ...loggedInUser,
@@ -316,13 +370,18 @@ export default function App() {
   if (!isLoggedIn) {
     return (
       <div className={isDarkMode ? 'dark' : ''}>
-        <Login onLogin={handleLogin} />
+        <a href="#main-content" className="skip-link">Skip to main content</a>
+        <main id="main-content">
+          <h1 className="sr-only">Login</h1>
+          <Login onLogin={handleLogin} />
+        </main>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-transparent text-black dark:text-white font-sans transition-colors duration-300 relative">
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       {showLoaderOverlay && (
         <div data-no-translate className="fixed inset-0 z-[280] flex items-center justify-center bg-[#fffaf4]/82 dark:bg-[#181818]/82 backdrop-blur-sm">
           <div className="flex flex-col items-center gap-4 px-8 py-7 rounded-[28px] bg-white/92 dark:bg-[#2b2b2b]/94 border border-slate-200 dark:border-[#4b5563] shadow-2xl">
@@ -361,7 +420,8 @@ export default function App() {
       {showDoodles && <DoodleBackground />}
 
       {currentView !== 'LIVE_TRACKER' && (
-        <main className="relative pt-24 z-10">
+        <main id="main-content" className="relative pt-24 z-10">
+          <h1 className="sr-only">{PAGE_METADATA[currentView].heading}</h1>
           <div key={currentView} className="animate-fade-in-up w-full">
             {currentView === 'HOME' && <Home onNavigate={navigate} onStartClaim={startClaimProcess} />}
             {currentView === 'BULLETIN_BOARD' && selectedSchool && (
@@ -405,7 +465,12 @@ export default function App() {
         </main>
       )}
 
-      {currentView === 'LIVE_TRACKER' && <LiveTracker onItemFound={handleTrackerItemFound} onCancel={() => navigate('HOME')} />}
+      {currentView === 'LIVE_TRACKER' && (
+        <main id="main-content" className="relative z-10">
+          <h1 className="sr-only">{PAGE_METADATA[currentView].heading}</h1>
+          <LiveTracker onItemFound={handleTrackerItemFound} onCancel={() => navigate('HOME')} />
+        </main>
+      )}
       {currentView !== 'LIVE_TRACKER' && <Footer onNavigate={navigate} />}
       <FawkesBot />
 
