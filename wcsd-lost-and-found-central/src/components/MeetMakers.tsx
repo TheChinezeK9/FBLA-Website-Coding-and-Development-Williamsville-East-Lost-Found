@@ -9,11 +9,11 @@ export const MeetMakers: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen w-full neon-page-bg pt-24 px-6 transition-colors duration-300">
+    <div className="min-h-screen w-full neon-page-bg pt-24 pb-24 px-4 sm:px-6 transition-colors duration-300">
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        <h1 className="text-4xl font-bold text-black dark:text-white mb-4"><span>Meet the Makers</span></h1>
-        <p className="text-xl text-black dark:text-white mb-12"><span>The creative minds behind the Williamsville East High School Lost &amp; Found.</span></p>
-        <div className="grid md:grid-cols-3 gap-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-4"><span>Meet the Makers</span></h1>
+        <p className="text-lg sm:text-xl text-black dark:text-white mb-10 sm:mb-12"><span>The creative minds behind the Williamsville East High School Lost &amp; Found.</span></p>
+        <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
           {team.map((member) => {
             const Icon = member.icon;
 

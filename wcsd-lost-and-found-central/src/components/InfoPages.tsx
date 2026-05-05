@@ -40,22 +40,22 @@ export const InfoPages: React.FC<InfoPagesProps> = ({ type }) => {
   if (!data) return null;
   
   return (
-    <div className="min-h-screen w-full neon-page-bg pt-24 px-6 transition-colors duration-300">
+    <div className="min-h-screen w-full neon-page-bg pt-24 pb-24 px-4 sm:px-6 transition-colors duration-300">
       <div className="max-w-5xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-transparent border border-black dark:border-white mb-8">{data.icon}</div>
-          <h1 className="text-5xl font-bold text-black dark:text-white mb-4 tracking-tight">{data.title}</h1>
-          <p className="text-2xl text-black dark:text-white font-light max-w-2xl mx-auto">{data.subtitle}</p>
+        <div className="text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center justify-center w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-transparent border border-black dark:border-white mb-6 sm:mb-8">{data.icon}</div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-white mb-4 tracking-tight">{data.title}</h1>
+          <p className="text-lg sm:text-xl md:text-2xl text-black dark:text-white font-light max-w-2xl mx-auto">{data.subtitle}</p>
         </div>
-        <div className="bg-white dark:bg-[#666666] rounded-[18px] p-8 md:p-16 shadow-xl">
-          <div className="grid md:grid-cols-2 gap-12">
+        <div className="bg-white dark:bg-[#666666] rounded-[18px] p-6 sm:p-8 md:p-12 shadow-xl">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {data.sections.map((section, i) => (
               <div key={i}>
                 <div className="flex items-center gap-4 mb-4">
                   <div className="p-3 rounded-full bg-transparent border border-black dark:border-white">{section.icon}</div>
-                  <h3 className="text-2xl font-bold text-black dark:text-white">{section.title}</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-black dark:text-white">{section.title}</h3>
                 </div>
-                <p className="text-black dark:text-white text-lg leading-relaxed">{section.text}</p>
+                <p className="text-black dark:text-white text-base sm:text-lg leading-relaxed">{section.text}</p>
               </div>
             ))}
           </div>

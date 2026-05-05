@@ -128,12 +128,13 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
   color: var(--color-ink);
   background-color: var(--color-cream);
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .background-gradient {
@@ -277,6 +278,82 @@ h1 {
 .content-panel::-webkit-scrollbar-thumb:hover {
   box-shadow: var(--scrollbar-glow);
   background: #ff3b4f;
+}
+
+@media (max-width: 900px) {
+  body {
+    align-items: flex-start;
+    padding: 20px 0;
+  }
+
+  .main-container {
+    width: calc(100% - 24px);
+    max-height: none;
+    gap: 14px;
+  }
+
+  .main-header {
+    height: auto;
+    padding: 16px 18px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .header-link {
+    width: 100%;
+    min-width: 0;
+    gap: 10px;
+  }
+
+  .logo-large {
+    height: 30px;
+    flex-shrink: 0;
+  }
+
+  .ps-icon {
+    font-size: 0.95rem;
+    white-space: normal;
+    line-height: 1.2;
+  }
+
+  .typewriter-header,
+  .typewriter-title {
+    width: auto;
+    animation: none;
+    border-right: none;
+  }
+
+  .header-nav {
+    width: 100%;
+  }
+
+  .nav-button {
+    display: inline-flex;
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .content-panel {
+    padding: 28px 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    margin-bottom: 24px;
+  }
+
+  .panel-footer {
+    padding-top: 28px;
+  }
 }
 </style>
 </html>

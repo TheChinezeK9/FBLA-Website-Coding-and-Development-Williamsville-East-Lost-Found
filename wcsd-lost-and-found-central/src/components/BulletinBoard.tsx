@@ -288,19 +288,19 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
             <button onClick={goBack} className="flex items-center gap-2 font-bold mb-6 opacity-90 hover:opacity-100 transition-all text-sm uppercase tracking-widest text-black">
               <ArrowUp className="-rotate-90" size={18} /> <span>Back to Home</span>
             </button>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 leading-none text-black drop-shadow-sm">{school.name}</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-4 leading-none text-black drop-shadow-sm">{school.name}</h1>
           </div>
-          <div className="flex gap-3 flex-wrap">
-            <button onClick={() => setActiveTab('SUBMIT')} className="flex items-center gap-2 px-5 py-3 rounded-[25px] font-bold text-sm uppercase tracking-wider bg-white/20 backdrop-blur-xl border border-black/15 hover:bg-white/30 text-black transition-all shadow-lg hover:-translate-y-0.5">
+          <div className="flex gap-3 flex-wrap w-full md:w-auto">
+            <button onClick={() => setActiveTab('SUBMIT')} className="flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-[25px] font-bold text-xs sm:text-sm uppercase tracking-wider bg-white/20 backdrop-blur-xl border border-black/15 hover:bg-white/30 text-black transition-all shadow-lg hover:-translate-y-0.5 min-w-[170px]">
               <Camera size={16} /> <span>Report Lost Item</span>
             </button>
             {activeTab !== 'BOARD' && (
-              <button onClick={() => setActiveTab('BOARD')} className="flex items-center gap-2 px-5 py-3 bg-white/30 text-black border border-black/15 rounded-[25px] font-bold text-sm uppercase tracking-wider hover:bg-white/40 transition-all">
+              <button onClick={() => setActiveTab('BOARD')} className="flex items-center justify-center gap-2 px-4 sm:px-5 py-3 bg-white/30 text-black border border-black/15 rounded-[25px] font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-white/40 transition-all min-w-[150px]">
                 Item Board
               </button>
             )}
             {isAdmin && (
-              <button onClick={() => setActiveTab('ADMIN')} className="flex items-center gap-2 px-5 py-3 rounded-[25px] font-bold text-sm uppercase tracking-wider bg-yellow-400/25 border border-black/15 hover:bg-yellow-400/35 text-black transition-all shadow-lg">
+              <button onClick={() => setActiveTab('ADMIN')} className="flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-[25px] font-bold text-xs sm:text-sm uppercase tracking-wider bg-yellow-400/25 border border-black/15 hover:bg-yellow-400/35 text-black transition-all shadow-lg min-w-[150px]">
                 <Shield size={16} /> <span>Admin Panel</span>
               </button>
             )}

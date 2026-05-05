@@ -32,7 +32,7 @@ export const ContactsPage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen w-full neon-page-bg pt-28 pb-20 px-6 transition-colors duration-300 relative">
+    <div className="min-h-screen w-full neon-page-bg pt-28 pb-24 px-4 sm:px-6 transition-colors duration-300 relative">
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="mb-12">
           {view !== 'ROOT' && (
@@ -40,7 +40,7 @@ export const ContactsPage: React.FC = () => {
               <ArrowLeft size={20} /> <span>Back</span>
             </button>
           )}
-          <h1 className="text-4xl md:text-6xl font-black text-black dark:text-white mb-4 drop-shadow-sm">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-black dark:text-white mb-4 drop-shadow-sm">
             {view === 'ROOT' && 'Contact Directory'}{view === 'ADMIN' && 'Website Creators'}{view === 'FACILITIES_MENU' && 'Facilities & Services'}{view === 'SPORTS' && 'Athletics Department'}{view === 'BUS' && 'Transportation'}{view === 'MAIN_OFFICE_SELECT' && 'Select School Office'}{view === 'SCHOOL_DETAIL' && selectedSchool?.name}
           </h1>
         </div>
