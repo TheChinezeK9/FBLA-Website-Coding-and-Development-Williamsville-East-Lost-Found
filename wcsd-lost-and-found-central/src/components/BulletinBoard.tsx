@@ -53,6 +53,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   const [viewingImage, setViewingImage] = useState<{ src: string; alt: string } | null>(null);
   const [imageZoom, setImageZoom] = useState(1);
   const photoInputRef = useRef<HTMLInputElement>(null);
+  const boardRootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (initialTab) setActiveTab(initialTab);
@@ -61,6 +62,15 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   useEffect(() => {
     if (isAdmin) setActiveTab('ADMIN');
   }, [isAdmin]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (sessionStorage.getItem('wcsd_focus_item_board') !== 'true') return;
+    sessionStorage.removeItem('wcsd_focus_item_board');
+    window.requestAnimationFrame(() => {
+      boardRootRef.current?.focus();
+    });
+  }, []);
 
   const filteredItems = items.filter(item => {
     if (item.schoolId !== school.id) return false;
@@ -273,7 +283,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   };
 
   return (
-    <div id="item-board-main" tabIndex={-1} className="min-h-screen w-full text-slate-900 dark:text-white pb-20 transition-colors duration-300">
+    <div ref={boardRootRef} id="item-board-main" tabIndex={-1} className="min-h-screen w-full text-slate-900 dark:text-white pb-20 transition-colors duration-300">
       <header
         className="pt-32 pb-16 px-6 rounded-b-[40px] shadow-lg relative overflow-hidden mb-12 text-black"
         style={{

@@ -9,9 +9,9 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
   <div className="neon-page-bg min-h-screen font-sans pb-20 transition-colors duration-300 relative overflow-hidden">
-    <div className="text-center px-4 sm:px-6 max-w-4xl mx-auto relative z-10 pt-16 sm:pt-20">
+    <div className="text-center px-4 sm:px-6 max-w-4xl mx-auto relative z-10 pt-10 sm:pt-12">
 
-      <div className="mx-auto mt-2 sm:mt-5 mb-6 sm:mb-10 w-[78%] max-w-[230px] sm:w-2/3 sm:max-w-[360px] md:w-1/2 md:max-w-[460px] p-2 bg-transparent rounded-lg animate-fade-in-up">
+      <div className="mx-auto mt-1 sm:mt-2 mb-5 sm:mb-7 w-[78%] max-w-[230px] sm:w-2/3 sm:max-w-[360px] md:w-1/2 md:max-w-[460px] p-2 bg-transparent rounded-lg animate-fade-in-up">
         <img
           src="/images/east.png"
           alt="Williamsville East High School Logo"
@@ -23,27 +23,29 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
         />
       </div>
 
-      <h1 className="text-black dark:text-white text-2xl sm:text-3xl md:text-4xl font-bold my-3 sm:my-4 leading-tight px-2">
+      <h1 className="text-black dark:text-white text-2xl sm:text-3xl md:text-4xl font-bold my-2 sm:my-3 leading-tight px-2">
         <span>Williamsville East High School Lost &amp; Found</span>
       </h1>
 
-      <p className="text-black dark:text-white text-base sm:text-lg italic my-3 sm:my-4 font-serif px-2">
+      <p className="text-black dark:text-white text-base sm:text-lg italic my-2 sm:my-3 font-serif px-2">
         "Nothing is ever really lost to us as long as we remember it" - L.M. Montgomery
       </p>
 
-      <a
-        href="#item-board-main"
-        onClick={(e) => {
-          e.preventDefault();
+      <button
+        type="button"
+        onClick={() => {
+          if (typeof window !== 'undefined') {
+            sessionStorage.setItem('wcsd_focus_item_board', 'true');
+          }
           onNavigate('BULLETIN_BOARD');
         }}
-        className="bg-[#f3df9b] text-black border-2 border-[#f3df9b] w-full max-w-[250px] mt-6 sm:mt-8 py-3 rounded-[25px] text-base sm:text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
+        className="inline-flex items-center justify-center bg-[#f3df9b] text-black border-2 border-[#f3df9b] w-full max-w-[250px] mt-5 sm:mt-6 py-3 rounded-[25px] text-base sm:text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
         aria-label="Skip to the item board"
       >
         <span>View Lost Items →</span>
-      </a>
+      </button>
 
-      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-5 sm:mt-6 mx-auto">
+      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-7 sm:mt-8 mx-auto">
         <button
           onClick={onStartClaim}
           className="flex items-center justify-center gap-2 bg-[#e7a39b] text-black border-2 border-[#e7a39b] dark:border-[#e7a39b] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"

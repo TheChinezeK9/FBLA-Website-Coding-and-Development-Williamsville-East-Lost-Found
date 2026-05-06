@@ -225,7 +225,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
             </div>
           </div>
           <div className="px-7 py-6 bg-slate-50/50 dark:bg-[#1f1f1f]">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5">
               {TOOL_APPS.map((app) => (
                 <button key={app.id} onClick={app.action} className="flex flex-col items-center gap-3 group px-2 py-3 transition-all duration-200 hover:-translate-y-0.5">
                   <div className="w-16 h-16 rounded-[18px] flex items-center justify-center shadow-[0_10px_24px_rgba(90,67,54,0.16)] transition-all duration-200 group-hover:scale-105 group-active:scale-95" style={{ background: app.gradient }}>
