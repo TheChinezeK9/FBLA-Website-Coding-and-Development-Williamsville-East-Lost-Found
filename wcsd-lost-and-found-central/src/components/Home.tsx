@@ -45,7 +45,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
         <span>View Lost Items →</span>
       </button>
 
-      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-7 sm:mt-8 mx-auto">
+      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-4 sm:mt-5 mx-auto">
         <button
           onClick={onStartClaim}
           className="flex items-center justify-center gap-2 bg-[#e7a39b] text-black border-2 border-[#e7a39b] dark:border-[#e7a39b] py-3 px-6 rounded-[25px] text-sm font-bold hover:scale-105 transition-transform shadow-md"

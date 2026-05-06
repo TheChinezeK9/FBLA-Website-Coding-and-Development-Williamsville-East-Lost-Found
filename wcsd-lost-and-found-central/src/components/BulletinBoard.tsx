@@ -64,6 +64,13 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   }, [isAdmin]);
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const cleanUrl = `${window.location.pathname}${window.location.search}`;
+      window.history.replaceState(null, '', cleanUrl);
+    }
+  }, []);
+
+  useEffect(() => {
     if (typeof window === 'undefined') return;
     if (sessionStorage.getItem('wcsd_focus_item_board') !== 'true') return;
     sessionStorage.removeItem('wcsd_focus_item_board');
