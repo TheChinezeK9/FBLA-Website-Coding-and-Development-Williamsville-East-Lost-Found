@@ -104,7 +104,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="text-sm font-bold">Resources</span>
             </button>
             {showInfoMenu && (
-              <div id="resources-menu" role="menu" aria-label="Resources" className="absolute top-full right-0 mt-2 w-max min-w-[220px] bg-[#e7a39b] border border-black/20 rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
+              <div id="resources-menu" role="menu" aria-label="Resources" className="absolute top-full right-0 pt-2 w-max min-w-[220px] z-[70]">
+                <div className="bg-[#e7a39b] border border-black/20 rounded-2xl p-2 shadow-xl animate-fade-in">
                 {[
                   { id: 'ABOUT' as View, label: 'About Project', icon: <Info size={16} /> },
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
@@ -114,6 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     {item.icon} {item.label}
                   </button>
                 ))}
+                </div>
               </div>
             )}
           </div>
