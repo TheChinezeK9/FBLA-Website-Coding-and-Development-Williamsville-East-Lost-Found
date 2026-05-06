@@ -45,7 +45,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div>
           <h4 className="text-black text-[11px] font-black tracking-[0.2em] uppercase mb-4">Search Items</h4>
           <div className="flex rounded-lg overflow-hidden border border-black">
-            <input placeholder="Search..." className="flex-1 bg-black/5 border-none px-3 py-2 text-black text-xs outline-none focus:bg-black/10" />
+            <label htmlFor="footer-item-search" className="sr-only">Search items</label>
+            <input id="footer-item-search" placeholder="Search..." className="flex-1 bg-black/5 border-none px-3 py-2 text-black text-xs outline-none focus:bg-black/10" />
             <button onClick={() => onNavigate('BULLETIN_BOARD')} className="bg-[#f3df9b] px-3 py-2 text-black font-bold text-[11px] tracking-wider hover:bg-[#f6e9b8]">Search</button>
           </div>
         </div>

@@ -290,8 +290,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           {showForgot ? (
             <form onSubmit={handleForgotPassword} className="space-y-3">
               <div className="relative">
+                <label htmlFor="forgot-email" className="sr-only">Email address</label>
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
                 <input
+                  id="forgot-email"
                   className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
                   type="email"
                   placeholder="Email address"
@@ -302,8 +304,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </div>
 
               <div className="relative">
+                <label htmlFor="forgot-student-id" className="sr-only">Student ID</label>
                 <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
                 <input
+                  id="forgot-student-id"
                   className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
                   type="text"
                   placeholder="Student ID"
@@ -340,8 +344,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <form onSubmit={handleSubmit} className="space-y-3">
               {isSignup && (
                 <div className="relative">
+                  <label htmlFor="signup-name" className="sr-only">Full Name</label>
                   <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
                   <input
+                    id="signup-name"
                     className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
                     type="text"
                     placeholder="Full Name"
@@ -353,8 +359,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               )}
 
               <div className="relative">
+                <label htmlFor="auth-email" className="sr-only">Email address</label>
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
                 <input
+                  id="auth-email"
                   className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
                   type="email"
                   placeholder="Email address"
@@ -367,8 +375,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               {isSignup && (
                 <div className="flex gap-2">
                   <div className="relative flex-1">
+                    <label htmlFor="signup-grade" className="sr-only">Grade</label>
                     <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
                     <input
+                      id="signup-grade"
                       className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
                       type="text"
                       placeholder="Grade"
@@ -377,8 +387,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     />
                   </div>
                   <div className="relative flex-1">
+                    <label htmlFor="signup-student-id" className="sr-only">Student ID</label>
                     <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
                     <input
+                      id="signup-student-id"
                       className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
                       type="text"
                       placeholder="ID #"
@@ -390,8 +402,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               )}
 
               <div className="relative">
+                <label htmlFor="auth-password" className="sr-only">Password</label>
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
                 <input
+                  id="auth-password"
                   className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
                   type="password"
                   placeholder="Password"

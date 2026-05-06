@@ -243,8 +243,10 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
           </div>
           <div className="px-7 py-5 bg-slate-50/50 dark:bg-[#1f1f1f]">
             <div className="flex gap-2 mb-3">
-              <input value={wishInput} onChange={e => setWishInput(e.target.value)} placeholder="What did you lose?" className="flex-1 bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] px-4 py-2.5 text-sm text-slate-900 dark:text-white" />
-              <select value={wishCat} onChange={e => setWishCat(e.target.value)} className="bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] px-3 py-2.5 text-sm text-slate-900 dark:text-white">
+              <label htmlFor="wishlist-input" className="sr-only">What did you lose?</label>
+              <input id="wishlist-input" value={wishInput} onChange={e => setWishInput(e.target.value)} placeholder="What did you lose?" className="flex-1 bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] px-4 py-2.5 text-sm text-slate-900 dark:text-white" />
+              <label htmlFor="wishlist-category" className="sr-only">Wishlist category</label>
+              <select id="wishlist-category" value={wishCat} onChange={e => setWishCat(e.target.value)} className="bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] px-3 py-2.5 text-sm text-slate-900 dark:text-white">
                 {['Any', ...CATEGORIES].map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>

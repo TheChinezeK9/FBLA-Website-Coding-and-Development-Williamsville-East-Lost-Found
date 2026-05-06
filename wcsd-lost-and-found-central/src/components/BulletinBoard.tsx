@@ -313,8 +313,9 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
           <div className="space-y-8">
             <div className="flex flex-col md:flex-row gap-4 items-center bg-white dark:bg-[#2b2b2b] p-4 rounded-[25px] shadow-sm border border-slate-200 dark:border-[#4b5563]">
               <div className="relative flex-1 w-full md:w-auto">
+                <label htmlFor="item-search" className="sr-only">Search items</label>
                 <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 opacity-50" size={20} />
-                <input type="text" placeholder="Search items..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#f3df9b] py-3 pl-12 pr-6 rounded-[18px] outline-none font-medium text-slate-900 dark:text-white" />
+                <input id="item-search" type="text" placeholder="Search items..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#f3df9b] py-3 pl-12 pr-6 rounded-[18px] outline-none font-medium text-slate-900 dark:text-white" />
               </div>
               <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-1 no-scrollbar">
                 {['All', ...CATEGORIES].map(cat => (
@@ -662,21 +663,27 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
                 <p className="text-sm text-slate-900 dark:text-white"><span className="font-bold">School ID:</span> {currentUser.studentId || 'N/A'}</p>
                 <p className="text-sm text-slate-900 dark:text-white"><span className="font-bold">School Email:</span> {currentUser.email || 'N/A'}</p>
               </div>
+              <label htmlFor="claim-lost-location" className="sr-only">Where was the item lost?</label>
               <input
+                id="claim-lost-location"
                 required
                 value={claimLostLocation}
                 onChange={e => setClaimLostLocation(e.target.value)}
                 className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] text-slate-900 dark:text-white"
                 placeholder="Where was the item lost?"
               />
+              <label htmlFor="claim-lost-time" className="sr-only">About what time was it lost?</label>
               <input
+                id="claim-lost-time"
                 required
                 value={claimLostTime}
                 onChange={e => setClaimLostTime(e.target.value)}
                 className="w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#4b5563] rounded-[12px] text-slate-900 dark:text-white"
                 placeholder="About what time was it lost?"
               />
+              <label htmlFor="claim-proof" className="sr-only">Proof of Ownership (i.e., information that can verify ownership, such as distinctive characteristics, contents, or identifying markings)</label>
               <textarea
+                id="claim-proof"
                 required
                 value={claimProof}
                 onChange={e => setClaimProof(e.target.value)}
@@ -702,7 +709,8 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
             <button onClick={() => setRejectingClaimItem(null)} className="absolute top-5 right-5 text-slate-300 dark:text-white"><X size={22} /></button>
             <h3 className="text-2xl font-bold text-center mb-2 text-slate-900 dark:text-white">Reject Claim</h3>
             <p className="text-sm text-slate-500 dark:text-white text-center mb-6">Reason is required before rejecting this claim.</p>
-            <textarea value={rejectReason} onChange={e => { setRejectReason(e.target.value); if (rejectReasonError) setRejectReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border rounded-[12px] text-slate-900 dark:text-white ${rejectReasonError ? 'border-red-400' : 'border-slate-200 dark:border-[#4b5563]'}`} placeholder="Enter rejection reason" />
+            <label htmlFor="reject-claim-reason" className="sr-only">Enter rejection reason</label>
+            <textarea id="reject-claim-reason" value={rejectReason} onChange={e => { setRejectReason(e.target.value); if (rejectReasonError) setRejectReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border rounded-[12px] text-slate-900 dark:text-white ${rejectReasonError ? 'border-red-400' : 'border-slate-200 dark:border-[#4b5563]'}`} placeholder="Enter rejection reason" />
             {rejectReasonError && <p className="text-red-500 text-xs font-bold mt-2">Please enter a reason to reject this claim.</p>}
             <div className="flex gap-3 mt-5">
               <button type="button" onClick={() => setRejectingClaimItem(null)} className="flex-1 py-3 rounded-[14px] font-bold text-slate-600 dark:text-white bg-slate-100 dark:bg-[#1f1f1f]">Cancel</button>
@@ -718,7 +726,8 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
             <button onClick={() => setRejectingFoundItem(null)} className="absolute top-5 right-5 text-slate-300 dark:text-white"><X size={22} /></button>
             <h3 className="text-2xl font-bold text-center mb-2 text-slate-900 dark:text-white">Reject Found Item Inquiry</h3>
             <p className="text-sm text-slate-500 dark:text-white text-center mb-6">Reason is required before rejecting this inquiry.</p>
-            <textarea value={rejectFoundReason} onChange={e => { setRejectFoundReason(e.target.value); if (rejectFoundReasonError) setRejectFoundReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border rounded-[12px] text-slate-900 dark:text-white ${rejectFoundReasonError ? 'border-red-400' : 'border-slate-200 dark:border-[#4b5563]'}`} placeholder="Enter rejection reason" />
+            <label htmlFor="reject-found-reason" className="sr-only">Enter rejection reason</label>
+            <textarea id="reject-found-reason" value={rejectFoundReason} onChange={e => { setRejectFoundReason(e.target.value); if (rejectFoundReasonError) setRejectFoundReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border rounded-[12px] text-slate-900 dark:text-white ${rejectFoundReasonError ? 'border-red-400' : 'border-slate-200 dark:border-[#4b5563]'}`} placeholder="Enter rejection reason" />
             {rejectFoundReasonError && <p className="text-red-500 text-xs font-bold mt-2">Please enter a reason to reject this inquiry.</p>}
             <div className="flex gap-3 mt-5">
               <button type="button" onClick={() => setRejectingFoundItem(null)} className="flex-1 py-3 rounded-[14px] font-bold text-slate-600 dark:text-white bg-slate-100 dark:bg-[#1f1f1f]">Cancel</button>

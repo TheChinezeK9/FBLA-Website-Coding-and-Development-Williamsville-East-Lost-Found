@@ -64,25 +64,33 @@ export const ProfileEdit: React.FC<ProfileEditProps> = ({
         className="p-5 rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-slate-50/70 dark:bg-[#1f1f1f] space-y-3"
       >
         <p className="text-sm font-bold text-slate-900 dark:text-white">Basic Information</p>
+        <label htmlFor="profile-edit-name" className="sr-only">Full name</label>
         <input
+          id="profile-edit-name"
           value={editName}
           onChange={e => onEditNameChange(e.target.value)}
           placeholder="Full name"
           className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
         />
+        <label htmlFor="profile-edit-email" className="sr-only">Email</label>
         <input
+          id="profile-edit-email"
           value={editEmail}
           onChange={e => onEditEmailChange(e.target.value)}
           placeholder="Email"
           className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
         />
+        <label htmlFor="profile-edit-grade" className="sr-only">Grade</label>
         <input
+          id="profile-edit-grade"
           value={editGrade}
           onChange={e => onEditGradeChange(e.target.value)}
           placeholder="Grade"
           className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
         />
+        <label htmlFor="profile-edit-student-id" className="sr-only">School ID</label>
         <input
+          id="profile-edit-student-id"
           value={editStudentId}
           onChange={e => onEditStudentIdChange(e.target.value)}
           placeholder="School ID"
@@ -108,21 +116,27 @@ export const ProfileEdit: React.FC<ProfileEditProps> = ({
           <p className="text-sm font-bold">Change Password</p>
         </div>
         <p className="text-xs text-slate-500 dark:text-white">Update your password right from your profile.</p>
+        <label htmlFor="profile-current-password" className="sr-only">Current password</label>
         <input
+          id="profile-current-password"
           type="password"
           value={currentPassword}
           onChange={e => onCurrentPasswordChange(e.target.value)}
           placeholder="Current password"
           className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
         />
+        <label htmlFor="profile-new-password" className="sr-only">New password</label>
         <input
+          id="profile-new-password"
           type="password"
           value={newPassword}
           onChange={e => onNewPasswordChange(e.target.value)}
           placeholder="New password"
           className="w-full rounded-xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#1f1f1f] px-4 py-3 text-sm outline-none text-slate-900 dark:text-slate-50"
         />
+        <label htmlFor="profile-confirm-password" className="sr-only">Confirm new password</label>
         <input
+          id="profile-confirm-password"
           type="password"
           value={confirmPassword}
           onChange={e => onConfirmPasswordChange(e.target.value)}

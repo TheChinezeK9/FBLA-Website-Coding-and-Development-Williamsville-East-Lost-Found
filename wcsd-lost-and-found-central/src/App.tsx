@@ -488,7 +488,9 @@ export default function App() {
               <p className="text-slate-500 dark:text-white text-sm mt-1">Enter your staff access code</p>
             </div>
             <form onSubmit={handleAdminSubmit} className="space-y-4">
+              <label htmlFor="admin-password" className="sr-only">Staff access code</label>
               <input
+                id="admin-password"
                 autoFocus
                 type="password"
                 value={adminPassword}

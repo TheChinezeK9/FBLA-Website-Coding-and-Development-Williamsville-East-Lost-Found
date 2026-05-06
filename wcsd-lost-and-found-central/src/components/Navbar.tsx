@@ -38,11 +38,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [showInfoMenu, setShowInfoMenu] = useState(false);
   const [showSettingsMenu, setShowSettingsMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const infoMenuRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
+      if (infoMenuRef.current && !infoMenuRef.current.contains(e.target as Node)) setShowInfoMenu(false);
       if (settingsRef.current && !settingsRef.current.contains(e.target as Node)) setShowSettingsMenu(false);
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target as Node)) setShowMobileMenu(false);
     };
@@ -75,16 +77,40 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button onClick={() => navigateAndClose('HOME')} className={navBtnClass('HOME')}><HomeIcon size={16} /><span className="text-sm font-bold">Home</span></button>
           <button onClick={() => navigateAndClose('BULLETIN_BOARD')} className={navBtnClass('BULLETIN_BOARD')}><Package size={18} strokeWidth={2.25} /><span className="text-sm font-bold whitespace-nowrap">Item Board</span></button>
           <div className="w-px h-6 bg-black/20 mx-2" />
-          <div className="relative">
-            <button onMouseEnter={() => setShowInfoMenu(true)} className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:text-black"><Info size={16} /><span className="text-sm font-bold">Resources</span></button>
+          <div
+            className="relative"
+            ref={infoMenuRef}
+            onMouseEnter={() => setShowInfoMenu(true)}
+            onMouseLeave={() => setShowInfoMenu(false)}
+          >
+            <button
+              onClick={() => setShowInfoMenu(v => !v)}
+              onKeyDown={e => {
+                if (e.key === 'Escape') {
+                  setShowInfoMenu(false);
+                  return;
+                }
+                if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setShowInfoMenu(true);
+                }
+              }}
+              aria-haspopup="menu"
+              aria-expanded={showInfoMenu}
+              aria-controls="resources-menu"
+              className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:text-black"
+            >
+              <Info size={16} />
+              <span className="text-sm font-bold">Resources</span>
+            </button>
             {showInfoMenu && (
-              <div onMouseLeave={() => setShowInfoMenu(false)} className="absolute top-full right-0 mt-2 w-max min-w-[220px] bg-[#e7a39b] border border-black/20 rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
+              <div id="resources-menu" role="menu" aria-label="Resources" className="absolute top-full right-0 mt-2 w-max min-w-[220px] bg-[#e7a39b] border border-black/20 rounded-2xl p-2 shadow-xl animate-fade-in z-[70]">
                 {[
                   { id: 'ABOUT' as View, label: 'About Project', icon: <Info size={16} /> },
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
                   { id: 'GUIDE' as View, label: 'Help Guide', icon: <BookOpen size={16} /> }
                 ].map(item => (
-                  <button key={item.id} onClick={() => navigateAndClose(item.id)} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black hover:bg-[#f3df9b] hover:text-black text-sm font-bold transition-colors">
+                  <button key={item.id} role="menuitem" onClick={() => navigateAndClose(item.id)} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black hover:bg-[#f3df9b] hover:text-black text-sm font-bold transition-colors">
                     {item.icon} {item.label}
                   </button>
                 ))}

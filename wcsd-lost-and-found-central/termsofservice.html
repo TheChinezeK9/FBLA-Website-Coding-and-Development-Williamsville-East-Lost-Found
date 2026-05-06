@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - East High School Lost &amp; Found</title>
+    <title>Terms of Service | Williamsville East High School Lost &amp; Found</title>
     <link rel="icon" href="/images/roundedlogo.png" type="image/x-image">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="background-gradient"></div>
     
     <div class="bg-icons">
@@ -35,7 +36,7 @@
             </nav>
         </header>
 
-        <main class="content-panel glass-effect fade-up" style="animation-delay: 0.3s;">
+        <main id="main-content" class="content-panel glass-effect fade-up" style="animation-delay: 0.3s;">
             <h1 class="typewriter-title">Terms of Service</h1>
             <p class="intro-text">Please review these terms before using Williamsville East High School Lost &amp; Found to post, claim, or manage missing items.</p>
             
@@ -135,6 +136,24 @@ body {
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -64px;
+  z-index: 999;
+  background: #111827;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 16px;
 }
 
 .background-gradient {
