@@ -214,7 +214,7 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
         <p className="text-slate-500 dark:text-white text-base max-w-lg mx-auto">Everything YOU need to find, report, and track lost items.</p>
       </div>
 
-      <div className="relative z-10 max-w-3xl mx-auto px-6 mb-12">
+      <div className="relative z-10 max-w-2xl mx-auto px-6 mb-12">
         <div className="bg-white dark:bg-[#2b2b2b] rounded-[28px] shadow-xl border border-slate-100 dark:border-[#4b5563] overflow-hidden">
           <div className="px-7 pt-7 pb-5 border-b border-slate-100 dark:border-[#4b5563]">
             <div className="flex items-center gap-3">
@@ -224,10 +224,10 @@ export const ToolsPage: React.FC<ToolsPageProps> = ({ onNavigate, items, isAdmin
               <h2 className="text-lg font-black text-slate-900 dark:text-white">Quick Links</h2>
             </div>
           </div>
-          <div className="px-5 sm:px-6 py-6 bg-slate-50/50 dark:bg-[#1f1f1f]">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-1 sm:gap-x-2 gap-y-4 justify-items-center">
+          <div className="px-4 sm:px-5 py-6 bg-slate-50/50 dark:bg-[#1f1f1f]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-0 sm:gap-x-1 gap-y-4 justify-items-center">
               {TOOL_APPS.map((app) => (
-                <button key={app.id} onClick={app.action} className="flex w-full max-w-[108px] flex-col items-center gap-2.5 group px-1 py-2.5 transition-all duration-200 hover:-translate-y-0.5">
+                <button key={app.id} onClick={app.action} className="flex w-full max-w-[96px] flex-col items-center gap-2 group px-0.5 py-2 transition-all duration-200 hover:-translate-y-0.5">
                   <div className="w-16 h-16 rounded-[18px] flex items-center justify-center shadow-[0_10px_24px_rgba(90,67,54,0.16)] transition-all duration-200 group-hover:scale-105 group-active:scale-95" style={{ background: app.gradient }}>
                     {React.createElement(app.icon, { size: 26, color: app.iconColor })}
                   </div>
