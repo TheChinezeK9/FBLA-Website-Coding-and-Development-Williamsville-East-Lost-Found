@@ -31,12 +31,17 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
         "Nothing is ever really lost to us as long as we remember it" - L.M. Montgomery
       </p>
 
-      <button
-        onClick={() => onNavigate('BULLETIN_BOARD')}
+      <a
+        href="#item-board-main"
+        onClick={(e) => {
+          e.preventDefault();
+          onNavigate('BULLETIN_BOARD');
+        }}
         className="bg-[#f3df9b] text-black border-2 border-[#f3df9b] w-full max-w-[250px] mt-6 sm:mt-8 py-3 rounded-[25px] text-base sm:text-lg cursor-pointer hover:scale-105 transition-transform duration-200 font-bold shadow-lg hover:shadow-xl"
+        aria-label="Skip to the item board"
       >
         <span>View Lost Items →</span>
-      </button>
+      </a>
 
       <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-5 sm:mt-6 mx-auto">
         <button

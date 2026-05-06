@@ -273,7 +273,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
   };
 
   return (
-    <div className="min-h-screen w-full text-slate-900 dark:text-white pb-20 transition-colors duration-300">
+    <div id="item-board-main" tabIndex={-1} className="min-h-screen w-full text-slate-900 dark:text-white pb-20 transition-colors duration-300">
       <header
         className="pt-32 pb-16 px-6 rounded-b-[40px] shadow-lg relative overflow-hidden mb-12 text-black"
         style={{

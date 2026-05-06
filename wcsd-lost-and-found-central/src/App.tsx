@@ -370,7 +370,6 @@ export default function App() {
   if (!isLoggedIn) {
     return (
       <div className={isDarkMode ? 'dark' : ''}>
-        <a href="#main-content" className="skip-link">Skip to main content</a>
         <main id="main-content">
           <h1 className="sr-only">Login</h1>
           <Login onLogin={handleLogin} />
@@ -381,7 +380,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-transparent text-black dark:text-white font-sans transition-colors duration-300 relative">
-      <a href="#main-content" className="skip-link">Skip to main content</a>
       {showLoaderOverlay && (
         <div data-no-translate className="fixed inset-0 z-[280] flex items-center justify-center bg-[#fffaf4]/82 dark:bg-[#181818]/82 backdrop-blur-sm">
           <div className="flex flex-col items-center gap-4 px-8 py-7 rounded-[28px] bg-white/92 dark:bg-[#2b2b2b]/94 border border-slate-200 dark:border-[#4b5563] shadow-2xl">
