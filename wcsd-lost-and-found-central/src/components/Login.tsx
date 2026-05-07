@@ -36,16 +36,22 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    renderer.setClearColor(0x050508, 1);
+    renderer.setClearColor(0x140f10, 1);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    camera.position.z = 3.5;
+    camera.position.set(0, 0, 3.8);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.4);
-    dirLight.position.set(6, 4, 6);
-    scene.add(dirLight);
+    scene.add(new THREE.AmbientLight(0xf7e7cf, 0.75));
+    const warmKeyLight = new THREE.DirectionalLight(0xe7a39b, 1.45);
+    warmKeyLight.position.set(6, 4, 6);
+    scene.add(warmKeyLight);
+    const fillLight = new THREE.PointLight(0xf3df9b, 1.2, 24);
+    fillLight.position.set(-5, -2, 5);
+    scene.add(fillLight);
+    const rimLight = new THREE.PointLight(0xfffaf4, 0.9, 18);
+    rimLight.position.set(0, 5, -4);
+    scene.add(rimLight);
 
     const loader = new THREE.TextureLoader();
     loader.crossOrigin = 'anonymous';
@@ -60,34 +66,73 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       new THREE.SphereGeometry(2, 64, 64),
       new THREE.MeshStandardMaterial({
         map: earthTex,
-        emissive: new THREE.Color('#112244'),
-        emissiveIntensity: 0.2,
-        roughness: 0.7,
-        metalness: 0.2,
+        emissive: new THREE.Color('#7a2f34'),
+        emissiveIntensity: 0.12,
+        roughness: 0.78,
+        metalness: 0.16,
       })
     );
     globeGroup.add(earthMesh);
 
-    globeGroup.add(new THREE.Mesh(
+    const glowShell = new THREE.Mesh(
       new THREE.SphereGeometry(2.05, 64, 64),
       new THREE.MeshBasicMaterial({
-        color: 0x4488ff,
+        color: 0xf3df9b,
         transparent: true,
-        opacity: 0.10,
+        opacity: 0.08,
         side: THREE.BackSide,
       })
-    ));
+    );
+    globeGroup.add(glowShell);
 
-    const PALETTE = ['#60a5fa', '#f87171', '#fbbf24', '#34d399', '#a78bfa', '#fb923c', '#e879f9'];
+    const orbitRing = new THREE.Mesh(
+      new THREE.TorusGeometry(2.6, 0.018, 18, 180),
+      new THREE.MeshBasicMaterial({
+        color: 0xf3df9b,
+        transparent: true,
+        opacity: 0.24
+      })
+    );
+    orbitRing.rotation.x = Math.PI / 2.7;
+    orbitRing.rotation.y = Math.PI / 5;
+    globeGroup.add(orbitRing);
+
+    const particleCount = 160;
+    const particlePositions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      const radius = 6 + Math.random() * 8;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      particlePositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      particlePositions[i * 3 + 1] = radius * Math.cos(phi) * 0.8;
+      particlePositions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+    }
+
+    const particlesGeometry = new THREE.BufferGeometry();
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    const particles = new THREE.Points(
+      particlesGeometry,
+      new THREE.PointsMaterial({
+        color: 0xfff4dc,
+        size: 0.045,
+        transparent: true,
+        opacity: 0.55,
+        depthWrite: false
+      })
+    );
+    scene.add(particles);
+
+    const PALETTE = ['#e7a39b', '#f3df9b', '#fffbf2', '#d98d86', '#f0c96a'];
     const ICON_COUNT = 18;
     const iconGroup = new THREE.Group();
     globeGroup.add(iconGroup);
 
     const iconSprites: THREE.Sprite[] = [];
+    const timeoutIds: number[] = [];
     for (let i = 0; i < ICON_COUNT; i++) {
       const phi = Math.acos(1 - 2 * (i + 0.5) / ICON_COUNT);
       const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-      const r = 2.1;
+      const r = 2.24;
       const x = r * Math.sin(phi) * Math.cos(theta);
       const y = r * Math.cos(phi);
       const z = r * Math.sin(phi) * Math.sin(theta);
@@ -108,21 +153,26 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
       const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0, depthTest: false });
       const sprite = new THREE.Sprite(mat);
-      sprite.scale.set(0.22, 0.22, 1);
+      sprite.scale.set(0.2, 0.2, 1);
       sprite.position.set(x, y, z);
       sprite.userData.originPos = new THREE.Vector3(x, y, z);
+      sprite.userData.floatOffset = Math.random() * Math.PI * 2;
+      sprite.userData.depthOffset = (Math.random() - 0.5) * 0.2;
       iconGroup.add(sprite);
 
       const blink = () => {
-        const showDelay = Math.random() * 5000;
-        const hideDelay = 2000 + Math.random() * 3000;
-        setTimeout(() => {
+        const showDelay = 700 + Math.random() * 2600;
+        const hideDelay = 1800 + Math.random() * 2200;
+        const showId = window.setTimeout(() => {
           sprite.userData.targetOpacity = 1;
-          setTimeout(() => {
+          const hideId = window.setTimeout(() => {
             sprite.userData.targetOpacity = 0;
-            setTimeout(blink, Math.random() * 2000 + 500);
+            const restartId = window.setTimeout(blink, 400 + Math.random() * 1600);
+            timeoutIds.push(restartId);
           }, hideDelay);
+          timeoutIds.push(hideId);
         }, showDelay);
+        timeoutIds.push(showId);
       };
       sprite.userData.targetOpacity = 0;
       blink();
@@ -145,10 +195,19 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const animate = () => {
       animId = requestAnimationFrame(animate);
       const dt = clock.getDelta();
+      const elapsed = clock.elapsedTime;
       const { isWarping } = stateRef.current;
 
-      const speed = isWarping ? 25 : 1;
-      globeGroup.rotation.y += 0.003 * speed * dt * 60;
+      const speed = isWarping ? 20 : 1;
+      globeGroup.rotation.y += 0.0022 * speed * dt * 60;
+      globeGroup.rotation.x = Math.sin(elapsed * 0.28) * 0.06;
+      globeGroup.position.y = Math.sin(elapsed * 0.55) * 0.08;
+      orbitRing.rotation.z += 0.0012 * dt * 60;
+      particles.rotation.y += 0.0008 * dt * 60;
+      particles.rotation.x = Math.sin(elapsed * 0.12) * 0.08;
+      camera.position.x = Math.sin(elapsed * 0.18) * 0.08;
+      camera.position.y = Math.cos(elapsed * 0.22) * 0.06;
+      camera.lookAt(0, 0, 0);
 
       if (isWarping) {
         warpElapsed += dt;
@@ -161,6 +220,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           sprite.position.set(orig.x, orig.y, orig.z + disperseZ);
           sprite.material.opacity = Math.max(0, 1 - warpElapsed * 1.5);
         });
+        glowShell.material.opacity = Math.max(0.04, 0.08 - warpElapsed * 0.02);
 
         if (warpElapsed > 1.2 && !stateRef.current.wooshTriggered) {
           stateRef.current.wooshTriggered = true;
@@ -169,8 +229,17 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       } else {
         iconSprites.forEach(sprite => {
           const target = sprite.userData.targetOpacity ?? 0;
+          const base = sprite.userData.originPos as THREE.Vector3;
+          const offset = sprite.userData.floatOffset as number;
+          const depthOffset = sprite.userData.depthOffset as number;
+          sprite.position.set(
+            base.x + Math.cos(elapsed * 0.8 + offset) * 0.03,
+            base.y + Math.sin(elapsed * 0.9 + offset) * 0.04,
+            base.z + depthOffset + Math.sin(elapsed * 0.7 + offset) * 0.05
+          );
           sprite.material.opacity = THREE.MathUtils.lerp(sprite.material.opacity, target, 0.06);
         });
+        glowShell.material.opacity = 0.08 + Math.sin(elapsed * 0.7) * 0.015;
       }
 
       renderer.render(scene, camera);
@@ -180,6 +249,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', onResize);
+      timeoutIds.forEach(id => window.clearTimeout(id));
+      particlesGeometry.dispose();
       renderer.dispose();
     };
   }, []);
