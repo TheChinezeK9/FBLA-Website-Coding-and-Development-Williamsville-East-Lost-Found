@@ -36,14 +36,14 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    renderer.setClearColor(0x140f10, 1);
+    renderer.setClearColor(0x070707, 1);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
     camera.position.set(0, 0, 3.8);
 
-    scene.add(new THREE.AmbientLight(0xf7e7cf, 0.75));
-    const warmKeyLight = new THREE.DirectionalLight(0xe7a39b, 1.45);
+    scene.add(new THREE.AmbientLight(0xfff5de, 0.72));
+    const warmKeyLight = new THREE.DirectionalLight(0xfff3ca, 1.38);
     warmKeyLight.position.set(6, 4, 6);
     scene.add(warmKeyLight);
     const fillLight = new THREE.PointLight(0xf3df9b, 1.2, 24);
@@ -55,23 +55,45 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     const loader = new THREE.TextureLoader();
     loader.crossOrigin = 'anonymous';
-    const logoTex = loader.load('/images/east.png');
+    const logoTex = loader.load('/images/WElogo.png');
 
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
+    const logoGroup = new THREE.Group();
+    globeGroup.add(logoGroup);
+
     const logoPlate = new THREE.Mesh(
-      new THREE.PlaneGeometry(3.3, 3.3),
+      new THREE.PlaneGeometry(2.85, 2.85),
       new THREE.MeshStandardMaterial({
         map: logoTex,
         transparent: true,
-        emissive: new THREE.Color('#7a2f34'),
-        emissiveIntensity: 0.16,
-        roughness: 0.72,
-        metalness: 0.08,
+        emissive: new THREE.Color('#fff1b8'),
+        emissiveIntensity: 0.08,
+        roughness: 0.62,
+        metalness: 0.2,
       })
     );
-    globeGroup.add(logoPlate);
+    const logoDepthLayers: THREE.Mesh[] = [];
+    for (let i = 1; i <= 7; i++) {
+      const layer = new THREE.Mesh(
+        new THREE.PlaneGeometry(2.85, 2.85),
+        new THREE.MeshBasicMaterial({
+          map: logoTex,
+          transparent: true,
+          color: i % 2 === 0 ? 0xf3df9b : 0x2c2925,
+          opacity: i % 2 === 0 ? 0.16 : 0.22,
+          depthWrite: false
+        })
+      );
+      layer.position.z = -i * 0.018;
+      layer.position.x = -i * 0.006;
+      layer.position.y = i * 0.003;
+      logoDepthLayers.push(layer);
+      logoGroup.add(layer);
+    }
+    logoPlate.position.z = 0.04;
+    logoGroup.add(logoPlate);
 
     const glowShell = new THREE.Mesh(
       new THREE.CircleGeometry(1.9, 64),
@@ -82,31 +104,31 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
         side: THREE.DoubleSide,
       })
     );
-    glowShell.position.z = -0.08;
+    glowShell.position.z = -0.16;
     globeGroup.add(glowShell);
 
     const logoHalo = new THREE.Mesh(
       new THREE.RingGeometry(1.88, 2.14, 72),
       new THREE.MeshBasicMaterial({
-        color: 0xe7a39b,
+        color: 0xf3df9b,
         transparent: true,
-        opacity: 0.22,
+        opacity: 0.26,
         side: THREE.DoubleSide
       })
     );
-    logoHalo.position.z = -0.05;
+    logoHalo.position.z = -0.1;
     globeGroup.add(logoHalo);
 
     const orbitRing = new THREE.Mesh(
-      new THREE.TorusGeometry(2.6, 0.018, 18, 180),
+      new THREE.TorusGeometry(2.55, 0.018, 18, 180),
       new THREE.MeshBasicMaterial({
         color: 0xf3df9b,
         transparent: true,
-        opacity: 0.24
+        opacity: 0.34
       })
     );
-    orbitRing.rotation.x = Math.PI / 2.7;
-    orbitRing.rotation.y = Math.PI / 5;
+    orbitRing.rotation.x = Math.PI / 2;
+    orbitRing.rotation.y = 0;
     globeGroup.add(orbitRing);
 
     const particleCount = 160;
@@ -210,11 +232,12 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       const elapsed = clock.elapsedTime;
       const { isWarping } = stateRef.current;
 
-      const speed = isWarping ? 20 : 1;
-      globeGroup.rotation.y += 0.0022 * speed * dt * 60;
-      globeGroup.rotation.x = Math.sin(elapsed * 0.22) * 0.04;
+      const speed = isWarping ? 18 : 1;
+      globeGroup.rotation.y = Math.sin(elapsed * 0.22) * 0.12;
+      globeGroup.rotation.x = Math.sin(elapsed * 0.2) * 0.035;
       globeGroup.position.y = Math.sin(elapsed * 0.55) * 0.08;
-      orbitRing.rotation.z += 0.0012 * dt * 60;
+      orbitRing.rotation.y += 0.018 * speed * dt * 60;
+      orbitRing.rotation.z = Math.sin(elapsed * 0.35) * 0.08;
       logoHalo.rotation.z -= 0.0016 * dt * 60;
       particles.rotation.y += 0.0008 * dt * 60;
       particles.rotation.x = Math.sin(elapsed * 0.12) * 0.08;
@@ -234,9 +257,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           sprite.material.opacity = Math.max(0, 1 - warpElapsed * 1.5);
         });
         glowShell.material.opacity = Math.max(0.04, 0.08 - warpElapsed * 0.02);
-        logoHalo.material.opacity = Math.max(0.08, 0.22 - warpElapsed * 0.05);
-        logoPlate.rotation.z = THREE.MathUtils.lerp(logoPlate.rotation.z, 0.08, 0.05);
-        logoPlate.scale.setScalar(1 + warpElapsed * 0.08);
+        logoHalo.material.opacity = Math.max(0.08, 0.26 - warpElapsed * 0.05);
+        logoGroup.rotation.z = THREE.MathUtils.lerp(logoGroup.rotation.z, 0.08, 0.05);
+        logoGroup.rotation.y = THREE.MathUtils.lerp(logoGroup.rotation.y, 0.22, 0.05);
+        logoGroup.scale.setScalar(1 + warpElapsed * 0.08);
 
         if (warpElapsed > 1.2 && !stateRef.current.wooshTriggered) {
           stateRef.current.wooshTriggered = true;
@@ -256,9 +280,13 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           sprite.material.opacity = THREE.MathUtils.lerp(sprite.material.opacity, target, 0.06);
         });
         glowShell.material.opacity = 0.08 + Math.sin(elapsed * 0.7) * 0.015;
-        logoHalo.material.opacity = 0.2 + Math.sin(elapsed * 0.9) * 0.04;
-        logoPlate.rotation.z = Math.sin(elapsed * 0.45) * 0.035;
-        logoPlate.scale.setScalar(1 + Math.sin(elapsed * 0.8) * 0.025);
+        logoHalo.material.opacity = 0.24 + Math.sin(elapsed * 0.9) * 0.04;
+        logoGroup.rotation.z = Math.sin(elapsed * 0.45) * 0.03;
+        logoGroup.rotation.y = Math.sin(elapsed * 0.38) * 0.16;
+        logoGroup.scale.setScalar(1 + Math.sin(elapsed * 0.8) * 0.025);
+        logoDepthLayers.forEach((layer, i) => {
+          layer.position.z = -((i + 1) * 0.018) - Math.abs(Math.sin(elapsed * 0.5)) * 0.01;
+        });
       }
 
       renderer.render(scene, camera);
