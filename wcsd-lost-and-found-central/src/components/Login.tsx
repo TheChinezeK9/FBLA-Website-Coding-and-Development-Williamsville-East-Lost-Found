@@ -55,35 +55,47 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     const loader = new THREE.TextureLoader();
     loader.crossOrigin = 'anonymous';
-    const earthTex = loader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg');
-    earthTex.wrapS = THREE.RepeatWrapping;
-    earthTex.wrapT = THREE.ClampToEdgeWrapping;
+    const logoTex = loader.load('/images/east.png');
 
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
-    const earthMesh = new THREE.Mesh(
-      new THREE.SphereGeometry(2, 64, 64),
+    const logoPlate = new THREE.Mesh(
+      new THREE.PlaneGeometry(3.3, 3.3),
       new THREE.MeshStandardMaterial({
-        map: earthTex,
+        map: logoTex,
+        transparent: true,
         emissive: new THREE.Color('#7a2f34'),
-        emissiveIntensity: 0.12,
-        roughness: 0.78,
-        metalness: 0.16,
+        emissiveIntensity: 0.16,
+        roughness: 0.72,
+        metalness: 0.08,
       })
     );
-    globeGroup.add(earthMesh);
+    globeGroup.add(logoPlate);
 
     const glowShell = new THREE.Mesh(
-      new THREE.SphereGeometry(2.05, 64, 64),
+      new THREE.CircleGeometry(1.9, 64),
       new THREE.MeshBasicMaterial({
         color: 0xf3df9b,
         transparent: true,
         opacity: 0.08,
-        side: THREE.BackSide,
+        side: THREE.DoubleSide,
       })
     );
+    glowShell.position.z = -0.08;
     globeGroup.add(glowShell);
+
+    const logoHalo = new THREE.Mesh(
+      new THREE.RingGeometry(1.88, 2.14, 72),
+      new THREE.MeshBasicMaterial({
+        color: 0xe7a39b,
+        transparent: true,
+        opacity: 0.22,
+        side: THREE.DoubleSide
+      })
+    );
+    logoHalo.position.z = -0.05;
+    globeGroup.add(logoHalo);
 
     const orbitRing = new THREE.Mesh(
       new THREE.TorusGeometry(2.6, 0.018, 18, 180),
@@ -132,7 +144,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     for (let i = 0; i < ICON_COUNT; i++) {
       const phi = Math.acos(1 - 2 * (i + 0.5) / ICON_COUNT);
       const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-      const r = 2.24;
+      const r = 2.34;
       const x = r * Math.sin(phi) * Math.cos(theta);
       const y = r * Math.cos(phi);
       const z = r * Math.sin(phi) * Math.sin(theta);
@@ -200,9 +212,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
       const speed = isWarping ? 20 : 1;
       globeGroup.rotation.y += 0.0022 * speed * dt * 60;
-      globeGroup.rotation.x = Math.sin(elapsed * 0.28) * 0.06;
+      globeGroup.rotation.x = Math.sin(elapsed * 0.22) * 0.04;
       globeGroup.position.y = Math.sin(elapsed * 0.55) * 0.08;
       orbitRing.rotation.z += 0.0012 * dt * 60;
+      logoHalo.rotation.z -= 0.0016 * dt * 60;
       particles.rotation.y += 0.0008 * dt * 60;
       particles.rotation.x = Math.sin(elapsed * 0.12) * 0.08;
       camera.position.x = Math.sin(elapsed * 0.18) * 0.08;
@@ -221,6 +234,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           sprite.material.opacity = Math.max(0, 1 - warpElapsed * 1.5);
         });
         glowShell.material.opacity = Math.max(0.04, 0.08 - warpElapsed * 0.02);
+        logoHalo.material.opacity = Math.max(0.08, 0.22 - warpElapsed * 0.05);
+        logoPlate.rotation.z = THREE.MathUtils.lerp(logoPlate.rotation.z, 0.08, 0.05);
+        logoPlate.scale.setScalar(1 + warpElapsed * 0.08);
 
         if (warpElapsed > 1.2 && !stateRef.current.wooshTriggered) {
           stateRef.current.wooshTriggered = true;
@@ -240,6 +256,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           sprite.material.opacity = THREE.MathUtils.lerp(sprite.material.opacity, target, 0.06);
         });
         glowShell.material.opacity = 0.08 + Math.sin(elapsed * 0.7) * 0.015;
+        logoHalo.material.opacity = 0.2 + Math.sin(elapsed * 0.9) * 0.04;
+        logoPlate.rotation.z = Math.sin(elapsed * 0.45) * 0.035;
+        logoPlate.scale.setScalar(1 + Math.sin(elapsed * 0.8) * 0.025);
       }
 
       renderer.render(scene, camera);
