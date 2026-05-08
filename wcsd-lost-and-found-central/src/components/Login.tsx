@@ -111,41 +111,41 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   return (
     <div
       className="fixed inset-0 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/Fire.jpg)' }}
+      style={{ backgroundImage: 'url(/images/bg.png)' }}
     >
       <div className="absolute inset-0 bg-black/55" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.62)_62%,rgba(0,0,0,0.88)_100%)]" />
-      <div className={`absolute inset-0 z-10 overflow-y-auto px-5 py-8 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-5">
+      <div className={`absolute inset-0 z-10 overflow-hidden px-5 py-5 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-3">
           <div className="text-center">
-            <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-[24px] border border-[#ff4f45]/50 bg-black/35 shadow-[0_0_34px_rgba(255,79,69,0.32)]">
+            <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-[20px] border border-[#ff4f45]/50 bg-black/35 shadow-[0_0_34px_rgba(255,79,69,0.32)]">
               <img
                 src="/images/WElogo.png"
                 alt="Williamsville East logo"
-                className="h-16 w-16 object-contain"
+                className="h-12 w-12 object-contain"
                 style={{ filter: 'contrast(1.14) saturate(1.2)' }}
               />
             </div>
-            <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.52em] text-white/80">Williamsville East</p>
-            <h1 className="text-4xl font-light uppercase tracking-[0.22em] text-white sm:text-5xl">
+            <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.52em] text-white/80">Williamsville East</p>
+            <h1 className="text-3xl font-light uppercase tracking-[0.22em] text-white sm:text-5xl">
               Lost <span className="text-white/80">&amp;</span> <span className="font-medium text-[#ff4f45]">Found</span>
             </h1>
-            <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white/70">
+            <div className="mt-2 flex items-center justify-center gap-3 text-sm text-white/70">
               <span className="h-px w-20 bg-gradient-to-r from-transparent to-[#ff7a2f]" />
-              <span>Lost it. We'll help you get it back.</span>
+              <span>Lost something? Start your search here.</span>
               <span className="h-px w-20 bg-gradient-to-l from-transparent to-[#ff7a2f]" />
             </div>
           </div>
 
-          <div className={`relative z-20 w-full max-w-[460px] rounded-[22px] border border-[#ff4f45]/55 bg-black/42 p-7 shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
-          <div className="mb-5 flex flex-col items-center text-center">
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-[#ff4f45]/60 bg-black/35 text-[#ff4f45] shadow-[0_0_24px_rgba(255,79,69,0.2)]">
-              <UserIcon size={28} />
+          <div className={`relative z-20 w-full max-w-[460px] rounded-[22px] border border-[#ff4f45]/55 bg-black/42 p-5 shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 sm:p-6 ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
+          <div className="mb-4 flex flex-col items-center text-center">
+            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full border border-[#ff4f45]/60 bg-black/35 shadow-[0_0_24px_rgba(255,79,69,0.2)]">
+              <img src="/images/roundedlogo.png" alt="Williamsville East High School Lost & Found favicon" className="h-9 w-9 rounded-full object-cover" />
             </div>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-xl font-bold text-white sm:text-2xl">
               {showForgot ? 'Recover password' : isSignup ? 'Create account' : 'Welcome back'}
             </h2>
-            <p className="mt-2 text-sm text-white/62">
+            <p className="mt-1 text-sm text-white/62">
               {showForgot ? 'Use your email and student ID' : isSignup ? 'Join the community today' : 'Sign in to continue'}
             </p>
           </div>
@@ -157,7 +157,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                 <input
                   id="forgot-email"
-                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
+                className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                   type="email"
                   placeholder="Email address"
                   value={forgotEmail}
@@ -171,7 +171,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                 <input
                   id="forgot-student-id"
-                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
+                className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                   type="text"
                   placeholder="Student ID"
                   value={forgotStudentId}
@@ -186,7 +186,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <button
                 type="submit"
                 disabled={isForgotLoading}
-                className="mt-2 flex w-full items-center justify-center gap-2 rounded-[8px] bg-[linear-gradient(90deg,#e51635,#ff7a2f)] py-3.5 text-sm font-bold text-white shadow-[0_0_24px_rgba(229,22,53,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50"
+                className="mt-2 flex w-full items-center justify-center gap-2 rounded-[8px] bg-[linear-gradient(90deg,#e51635,#ff7a2f)] py-3 text-sm font-bold text-white shadow-[0_0_24px_rgba(229,22,53,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50"
               >
                 {isForgotLoading ? 'Checking...' : 'Recover Password'}
                 <ArrowRight size={16} />
@@ -212,7 +212,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                   <input
                     id="signup-name"
-                    className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
+                    className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                     type="text"
                     placeholder="Full Name"
                     value={name}
@@ -227,7 +227,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                 <input
                   id="auth-email"
-                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
+                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                   type="email"
                   placeholder="Email address"
                   value={email}
@@ -243,7 +243,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     <GraduationCap className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                     <input
                       id="signup-grade"
-                      className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
+                      className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                       type="text"
                       placeholder="Grade"
                       value={grade}
@@ -255,7 +255,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                     <input
                       id="signup-student-id"
-                      className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
+                      className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                       type="text"
                       placeholder="ID #"
                       value={studentId}
@@ -270,7 +270,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                 <input
                   id="auth-password"
-                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
+                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                   type="password"
                   placeholder="Password"
                   value={password}
@@ -300,7 +300,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex w-full items-center justify-center gap-2 rounded-[8px] bg-[linear-gradient(90deg,#e51635,#ff7a2f)] py-3.5 text-sm font-bold text-white shadow-[0_0_24px_rgba(229,22,53,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2 rounded-[8px] bg-[linear-gradient(90deg,#e51635,#ff7a2f)] py-3 text-sm font-bold text-white shadow-[0_0_24px_rgba(229,22,53,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50"
               >
                 {isLoading ? (
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -328,16 +328,16 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </div>
 
           <div className="text-center">
-            <div className="mb-2 flex items-center justify-center gap-2 text-xl text-white">
+            <div className="mb-1 flex items-center justify-center gap-2 text-lg text-white sm:text-xl">
               <Flame size={22} className="text-[#ff4f45]" />
               <span>Find it.</span>
               <span className="text-[#ff4f45]">Claim it.</span>
-              <span className="text-[#ff7a2f]">Move on.</span>
+              <span className="text-[#ff7a2f]">Reobtain it.</span>
             </div>
-            <p className="mb-4 text-sm text-white/62">We help our community reconnect.</p>
+            <p className="mb-2 text-sm text-white/62">Turning lost into found, because lost shouldn’t stay lost.</p>
             <p className="flex items-center justify-center gap-2 text-xs text-white/64">
               <ShieldCheck size={16} />
-              <span>Secure. Private. Only for Williamsville East High School students.</span>
+              <span>Secure. Private. For Williamsville East High School students.</span>
             </p>
           </div>
         </div>
