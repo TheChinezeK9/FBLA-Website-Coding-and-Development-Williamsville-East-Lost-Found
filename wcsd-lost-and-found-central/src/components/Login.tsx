@@ -113,16 +113,16 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       className="fixed inset-0 overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: 'url(/images/bg.png)' }}
     >
-      <div className="absolute inset-0 bg-black/55" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.62)_62%,rgba(0,0,0,0.88)_100%)]" />
-      <div className={`absolute inset-0 z-10 overflow-hidden px-5 py-5 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-3">
+      <div className="absolute inset-0 bg-black/28" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.34)_62%,rgba(0,0,0,0.62)_100%)]" />
+      <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-5 py-5 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-4 py-3">
           <div className="text-center">
             <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-[20px] border border-[#ff4f45]/50 bg-black/35 shadow-[0_0_34px_rgba(255,79,69,0.32)]">
               <img
                 src="/images/WElogo.png"
                 alt="Williamsville East logo"
-                className="h-12 w-12 object-contain"
+                className="h-10 w-10 object-contain"
                 style={{ filter: 'contrast(1.14) saturate(1.2)' }}
               />
             </div>
@@ -137,9 +137,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             </div>
           </div>
 
-          <div className={`relative z-20 w-full max-w-[460px] rounded-[22px] border border-[#ff4f45]/55 bg-black/42 p-5 shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 sm:p-6 ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
-          <div className="mb-4 flex flex-col items-center text-center">
-            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full border border-[#ff4f45]/60 bg-black/35 shadow-[0_0_24px_rgba(255,79,69,0.2)]">
+          <div className={`relative z-20 w-full max-w-[460px] rounded-[22px] border border-[#ff4f45]/55 bg-black/38 p-6 shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 sm:p-7 ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
+          <div className="mb-5 flex flex-col items-center text-center">
+            <div className="mb-3 flex h-14 w-14 items-center justify-center bg-transparent">
               <img src="/images/roundedlogo.png" alt="Williamsville East High School Lost & Found favicon" className="h-9 w-9 rounded-full object-cover" />
             </div>
             <h2 className="text-xl font-bold text-white sm:text-2xl">
