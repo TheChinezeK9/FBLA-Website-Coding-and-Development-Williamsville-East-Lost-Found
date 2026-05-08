@@ -113,8 +113,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       className="fixed inset-0 overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: 'url(/images/bg.png)' }}
     >
-      <div className="absolute inset-0 bg-black/18" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.22)_62%,rgba(0,0,0,0.48)_100%)]" />
+      <div className="absolute inset-0 bg-black/8" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.12)_62%,rgba(0,0,0,0.34)_100%)]" />
       <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-5 py-5 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-4 py-3">
           <div className="text-center">
