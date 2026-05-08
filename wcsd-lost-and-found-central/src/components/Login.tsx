@@ -113,8 +113,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       className="fixed inset-0 overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: 'url(/images/bg.png)' }}
     >
-      <div className="absolute inset-0 bg-black/28" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.34)_62%,rgba(0,0,0,0.62)_100%)]" />
+      <div className="absolute inset-0 bg-black/18" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.22)_62%,rgba(0,0,0,0.48)_100%)]" />
       <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-5 py-5 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-4 py-3">
           <div className="text-center">
@@ -126,11 +126,11 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 style={{ filter: 'contrast(1.14) saturate(1.2)' }}
               />
             </div>
-            <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.52em] text-white/80">Williamsville East</p>
+            <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.52em] text-white/80">Williamsville East</p>
             <h1 className="text-3xl font-light uppercase tracking-[0.22em] text-white sm:text-5xl">
               Lost <span className="text-white/80">&amp;</span> <span className="font-medium text-[#ff4f45]">Found</span>
             </h1>
-            <div className="mt-2 flex items-center justify-center gap-3 text-sm text-white/70">
+            <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white/70">
               <span className="h-px w-20 bg-gradient-to-r from-transparent to-[#ff7a2f]" />
               <span>Lost something? Start your search here.</span>
               <span className="h-px w-20 bg-gradient-to-l from-transparent to-[#ff7a2f]" />
@@ -145,7 +145,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <h2 className="text-xl font-bold text-white sm:text-2xl">
               {showForgot ? 'Recover password' : isSignup ? 'Create account' : 'Welcome back'}
             </h2>
-            <p className="mt-1 text-sm text-white/62">
+            <p className="mt-2 text-sm text-white/62">
               {showForgot ? 'Use your email and student ID' : isSignup ? 'Join the community today' : 'Sign in to continue'}
             </p>
           </div>
@@ -328,13 +328,13 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </div>
 
           <div className="text-center">
-            <div className="mb-1 flex items-center justify-center gap-2 text-lg text-white sm:text-xl">
+            <div className="mb-2 flex items-center justify-center gap-2 text-lg text-white sm:text-xl">
               <Flame size={22} className="text-[#ff4f45]" />
               <span>Find it.</span>
               <span className="text-[#ff4f45]">Claim it.</span>
               <span className="text-[#ff7a2f]">Reobtain it.</span>
             </div>
-            <p className="mb-2 text-sm text-white/62">Turning lost into found, because lost shouldn’t stay lost.</p>
+            <p className="mb-3 text-sm text-white/62">Turning lost into found, because lost shouldn’t stay lost.</p>
             <p className="flex items-center justify-center gap-2 text-xs text-white/64">
               <ShieldCheck size={16} />
               <span>Secure. Private. For Williamsville East High School students.</span>
