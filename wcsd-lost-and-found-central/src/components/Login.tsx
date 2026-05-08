@@ -1,11 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import React, { useState, useEffect } from 'react';
 import { User as UserIcon, Lock, LogIn, UserPlus, Mail, GraduationCap, Hash } from 'lucide-react';
 import { User } from '../types';
 
 interface LoginProps {
   onLogin: (user: User) => void;
 }
+
+const BRAND_STARS = [
+  { top: '10%', left: '12%', size: 5, color: '#fffaf4', opacity: 0.84, delay: '0s' },
+  { top: '18%', left: '72%', size: 4, color: '#f3df9b', opacity: 0.78, delay: '0.6s' },
+  { top: '24%', left: '35%', size: 3, color: '#e7a39b', opacity: 0.74, delay: '1.1s' },
+  { top: '32%', left: '82%', size: 6, color: '#fffaf4', opacity: 0.68, delay: '1.7s' },
+  { top: '43%', left: '18%', size: 4, color: '#f3df9b', opacity: 0.82, delay: '0.3s' },
+  { top: '52%', left: '68%', size: 3, color: '#e7a39b', opacity: 0.78, delay: '1.4s' },
+  { top: '62%', left: '28%', size: 6, color: '#fffaf4', opacity: 0.72, delay: '0.9s' },
+  { top: '72%', left: '78%', size: 4, color: '#f3df9b', opacity: 0.76, delay: '2s' },
+  { top: '82%', left: '44%', size: 3, color: '#e7a39b', opacity: 0.7, delay: '1.2s' },
+  { top: '88%', left: '14%', size: 4, color: '#fffaf4', opacity: 0.72, delay: '1.9s' },
+  { top: '12%', left: '47%', size: 3, color: '#e7a39b', opacity: 0.62, delay: '2.3s' },
+  { top: '38%', left: '52%', size: 5, color: '#fffaf4', opacity: 0.8, delay: '0.2s' },
+  { top: '68%', left: '57%', size: 4, color: '#f3df9b', opacity: 0.7, delay: '1.6s' },
+  { top: '80%', left: '88%', size: 3, color: '#fffaf4', opacity: 0.62, delay: '2.5s' }
+];
 
 export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [isSignup, setIsSignup] = useState(false);
@@ -26,262 +42,11 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [wooshProgress, setWooshProgress] = useState(0);
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const stateRef = useRef({ isWarping: false, warpStartTime: 0, wooshTriggered: false });
-
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    renderer.setClearColor(0x070707, 1);
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    camera.position.set(0, 0, 3.8);
-
-    scene.add(new THREE.AmbientLight(0xfff5de, 0.72));
-    const warmKeyLight = new THREE.DirectionalLight(0xfff3ca, 1.38);
-    warmKeyLight.position.set(6, 4, 6);
-    scene.add(warmKeyLight);
-    const fillLight = new THREE.PointLight(0xf3df9b, 1.2, 24);
-    fillLight.position.set(-5, -2, 5);
-    scene.add(fillLight);
-    const rimLight = new THREE.PointLight(0xfffaf4, 0.9, 18);
-    rimLight.position.set(0, 5, -4);
-    scene.add(rimLight);
-
-    const loader = new THREE.TextureLoader();
-    loader.crossOrigin = 'anonymous';
-    const logoTex = loader.load('/images/WElogo.png');
-
-    const globeGroup = new THREE.Group();
-    scene.add(globeGroup);
-
-    const logoGroup = new THREE.Group();
-    globeGroup.add(logoGroup);
-
-    const logoPlate = new THREE.Mesh(
-      new THREE.PlaneGeometry(4.15, 4.15),
-      new THREE.MeshStandardMaterial({
-        map: logoTex,
-        transparent: true,
-        emissive: new THREE.Color('#fff1b8'),
-        emissiveIntensity: 0.1,
-        roughness: 0.58,
-        metalness: 0.24,
-      })
-    );
-    logoPlate.position.z = 0.08;
-    logoGroup.add(logoPlate);
-
-    const glowShell = new THREE.Mesh(
-      new THREE.CircleGeometry(1.9, 64),
-      new THREE.MeshBasicMaterial({
-        color: 0xf3df9b,
-        transparent: true,
-        opacity: 0.08,
-        side: THREE.DoubleSide,
-      })
-    );
-    glowShell.position.z = -0.16;
-    globeGroup.add(glowShell);
-
-    const logoHalo = new THREE.Mesh(
-      new THREE.RingGeometry(1.88, 2.14, 72),
-      new THREE.MeshBasicMaterial({
-        color: 0xf3df9b,
-        transparent: true,
-        opacity: 0.26,
-        side: THREE.DoubleSide
-      })
-    );
-    logoHalo.position.z = -0.1;
-    globeGroup.add(logoHalo);
-
-    const orbitRing = new THREE.Mesh(
-      new THREE.TorusGeometry(2.72, 0.014, 18, 180),
-      new THREE.MeshBasicMaterial({
-        color: 0xf3df9b,
-        transparent: true,
-        opacity: 0.26
-      })
-    );
-    orbitRing.rotation.x = Math.PI / 2;
-    orbitRing.rotation.y = 0;
-    globeGroup.add(orbitRing);
-
-    const particleCount = 160;
-    const particlePositions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-      const radius = 6 + Math.random() * 8;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      particlePositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      particlePositions[i * 3 + 1] = radius * Math.cos(phi) * 0.8;
-      particlePositions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+    if (phase === 'warping') {
+      const timer = window.setTimeout(() => setPhase('woosh'), 420);
+      return () => window.clearTimeout(timer);
     }
-
-    const particlesGeometry = new THREE.BufferGeometry();
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    const particles = new THREE.Points(
-      particlesGeometry,
-      new THREE.PointsMaterial({
-        color: 0xfff4dc,
-        size: 0.045,
-        transparent: true,
-        opacity: 0.55,
-        depthWrite: false
-      })
-    );
-    scene.add(particles);
-
-    const PALETTE = ['#e7a39b', '#f3df9b', '#fffbf2', '#d98d86', '#f0c96a'];
-    const ICON_COUNT = 18;
-    const iconGroup = new THREE.Group();
-    globeGroup.add(iconGroup);
-
-    const iconSprites: THREE.Sprite[] = [];
-    const timeoutIds: number[] = [];
-    for (let i = 0; i < ICON_COUNT; i++) {
-      const phi = Math.acos(1 - 2 * (i + 0.5) / ICON_COUNT);
-      const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-      const r = 2.34;
-      const x = r * Math.sin(phi) * Math.cos(theta);
-      const y = r * Math.cos(phi);
-      const z = r * Math.sin(phi) * Math.sin(theta);
-
-      const color = PALETTE[i % PALETTE.length];
-
-      const off = document.createElement('canvas');
-      off.width = 128;
-      off.height = 128;
-      const ctx = off.getContext('2d')!;
-      ctx.shadowColor = color;
-      ctx.shadowBlur = 32;
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(64, 64, 32, 0, Math.PI * 2);
-      ctx.fill();
-      const tex = new THREE.CanvasTexture(off);
-
-      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0, depthTest: false });
-      const sprite = new THREE.Sprite(mat);
-      sprite.scale.set(0.2, 0.2, 1);
-      sprite.position.set(x, y, z);
-      sprite.userData.originPos = new THREE.Vector3(x, y, z);
-      sprite.userData.floatOffset = Math.random() * Math.PI * 2;
-      sprite.userData.depthOffset = (Math.random() - 0.5) * 0.2;
-      iconGroup.add(sprite);
-
-      const blink = () => {
-        const showDelay = 700 + Math.random() * 2600;
-        const hideDelay = 1800 + Math.random() * 2200;
-        const showId = window.setTimeout(() => {
-          sprite.userData.targetOpacity = 1;
-          const hideId = window.setTimeout(() => {
-            sprite.userData.targetOpacity = 0;
-            const restartId = window.setTimeout(blink, 400 + Math.random() * 1600);
-            timeoutIds.push(restartId);
-          }, hideDelay);
-          timeoutIds.push(hideId);
-        }, showDelay);
-        timeoutIds.push(showId);
-      };
-      sprite.userData.targetOpacity = 0;
-      blink();
-      iconSprites.push(sprite);
-    }
-
-    const onResize = () => {
-      const w = canvas.clientWidth;
-      const h = canvas.clientHeight;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    };
-    window.addEventListener('resize', onResize);
-
-    let animId: number;
-    let warpElapsed = 0;
-    const clock = new THREE.Clock();
-
-    const animate = () => {
-      animId = requestAnimationFrame(animate);
-      const dt = clock.getDelta();
-      const elapsed = clock.elapsedTime;
-      const { isWarping } = stateRef.current;
-
-      const speed = isWarping ? 18 : 1;
-      globeGroup.rotation.y = Math.sin(elapsed * 0.22) * 0.12;
-      globeGroup.rotation.x = Math.sin(elapsed * 0.2) * 0.035;
-      globeGroup.position.y = Math.sin(elapsed * 0.55) * 0.08;
-      orbitRing.rotation.y += 0.006 * speed * dt * 60;
-      orbitRing.rotation.z = Math.sin(elapsed * 0.28) * 0.045;
-      logoHalo.rotation.z -= 0.0016 * dt * 60;
-      particles.rotation.y += 0.0008 * dt * 60;
-      particles.rotation.x = Math.sin(elapsed * 0.12) * 0.08;
-      camera.position.x = Math.sin(elapsed * 0.18) * 0.08;
-      camera.position.y = Math.cos(elapsed * 0.22) * 0.06;
-      camera.lookAt(0, 0, 0);
-
-      if (isWarping) {
-        warpElapsed += dt;
-        camera.fov = THREE.MathUtils.lerp(camera.fov, 160, 0.08);
-        camera.updateProjectionMatrix();
-
-        iconSprites.forEach((sprite, i) => {
-          const orig = sprite.userData.originPos as THREE.Vector3;
-          const disperseZ = warpElapsed * 4 * (1 + i * 0.05);
-          sprite.position.set(orig.x, orig.y, orig.z + disperseZ);
-          sprite.material.opacity = Math.max(0, 1 - warpElapsed * 1.5);
-        });
-        glowShell.material.opacity = Math.max(0.04, 0.08 - warpElapsed * 0.02);
-        logoHalo.material.opacity = Math.max(0.08, 0.26 - warpElapsed * 0.05);
-        logoGroup.rotation.z = THREE.MathUtils.lerp(logoGroup.rotation.z, 0.08, 0.05);
-        logoGroup.rotation.y = THREE.MathUtils.lerp(logoGroup.rotation.y, 0.22, 0.05);
-        logoGroup.scale.setScalar(1 + warpElapsed * 0.08);
-
-        if (warpElapsed > 1.2 && !stateRef.current.wooshTriggered) {
-          stateRef.current.wooshTriggered = true;
-          setPhase('woosh');
-        }
-      } else {
-        iconSprites.forEach(sprite => {
-          const target = sprite.userData.targetOpacity ?? 0;
-          const base = sprite.userData.originPos as THREE.Vector3;
-          const offset = sprite.userData.floatOffset as number;
-          const depthOffset = sprite.userData.depthOffset as number;
-          sprite.position.set(
-            base.x + Math.cos(elapsed * 0.8 + offset) * 0.03,
-            base.y + Math.sin(elapsed * 0.9 + offset) * 0.04,
-            base.z + depthOffset + Math.sin(elapsed * 0.7 + offset) * 0.05
-          );
-          sprite.material.opacity = THREE.MathUtils.lerp(sprite.material.opacity, target, 0.06);
-        });
-        glowShell.material.opacity = 0.08 + Math.sin(elapsed * 0.7) * 0.015;
-        logoHalo.material.opacity = 0.24 + Math.sin(elapsed * 0.9) * 0.04;
-        logoGroup.rotation.z += 0.0045 * dt * 60;
-        logoGroup.rotation.y = Math.sin(elapsed * 0.36) * 0.14;
-        logoGroup.scale.setScalar(1 + Math.sin(elapsed * 0.8) * 0.025);
-      }
-
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', onResize);
-      timeoutIds.forEach(id => window.clearTimeout(id));
-      particlesGeometry.dispose();
-      renderer.dispose();
-    };
-  }, []);
-
-  useEffect(() => {
     if (phase === 'woosh') {
       let start: number | null = null;
       const DURATION = 600;
@@ -324,8 +89,6 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       }
 
       setLoggedInUser(data.user);
-      stateRef.current.isWarping = true;
-      stateRef.current.warpStartTime = performance.now();
       setPhase('warping');
     } catch (err: any) {
       setError(err.message);
@@ -363,11 +126,37 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-[#050508] overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
+    <div className="fixed inset-0 overflow-hidden bg-[linear-gradient(90deg,#f3df9b_0%,#fffaf4_14%,#e7a39b_34%,#e7a39b_66%,#fffaf4_86%,#f3df9b_100%)]">
+      <div className={`absolute inset-0 z-10 flex items-center justify-center px-5 py-8 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className="grid w-full max-w-[760px] grid-cols-1 items-center gap-5 md:grid-cols-[1.05fr_0.95fr]">
+          <div className="relative hidden aspect-square overflow-hidden rounded-[12px] bg-[#050508] shadow-2xl md:block">
+            <div className="absolute inset-0">
+              {BRAND_STARS.map((star, index) => (
+                <span
+                  key={index}
+                  className="absolute rounded-full animate-pulse"
+                  style={{
+                    top: star.top,
+                    left: star.left,
+                    width: `${star.size}px`,
+                    height: `${star.size}px`,
+                    backgroundColor: star.color,
+                    opacity: star.opacity,
+                    animationDelay: star.delay,
+                    boxShadow: `0 0 ${star.size * 4}px ${star.color}`
+                  }}
+                />
+              ))}
+            </div>
+            <img
+              src="/images/WElogo.png"
+              alt="Williamsville East logo"
+              className="absolute inset-0 m-auto h-[72%] w-[72%] object-contain drop-shadow-[0_18px_32px_rgba(243,223,155,0.22)]"
+              style={{ filter: 'contrast(1.12) saturate(1.22)' }}
+            />
+          </div>
 
-      <div className={`absolute inset-0 z-10 flex items-center justify-center transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className={`w-full max-w-[360px] bg-white/5 backdrop-blur-[28px] border border-white/10 rounded-3xl p-7 shadow-2xl transition-all duration-500 ${isSignup || showForgot ? 'scale-105' : 'scale-100'}`}>
+          <div className={`w-full max-w-[360px] justify-self-center bg-white/5 backdrop-blur-[28px] border border-white/10 rounded-3xl p-7 shadow-2xl transition-all duration-500 ${isSignup || showForgot ? 'scale-105' : 'scale-100'}`}>
           <div className="flex items-center justify-center gap-2 mb-4">
             <img
               src="/images/roundedlogo.png"
@@ -558,12 +347,13 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </button>
             </form>
           )}
+          </div>
         </div>
       </div>
 
       {phase === 'warping' && (
         <div className="absolute inset-0 z-8 flex items-center justify-center pointer-events-none">
-          <div className="w-32 h-32 rounded-full border-2 border-white/15 shadow-[0_0_60px_rgba(96,165,250,0.4),0_0_120px_rgba(96,165,250,0.15)] animate-[warpRing_0.4s_ease-out_infinite]" />
+          <div className="w-32 h-32 rounded-full border-2 border-white/20 shadow-[0_0_60px_rgba(243,223,155,0.35),0_0_120px_rgba(255,250,244,0.16)] animate-[warpRing_0.4s_ease-out_infinite]" />
         </div>
       )}
 
