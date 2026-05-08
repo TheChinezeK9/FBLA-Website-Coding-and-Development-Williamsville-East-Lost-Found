@@ -126,9 +126,13 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="fixed inset-0 overflow-hidden bg-[linear-gradient(90deg,#f3df9b_0%,#fffaf4_14%,#e7a39b_34%,#e7a39b_66%,#fffaf4_86%,#f3df9b_100%)]">
+    <div
+      className="fixed inset-0 overflow-hidden bg-cover bg-center"
+      style={{ backgroundImage: 'url(/images/Fire.jpg)' }}
+    >
+      <div className="absolute inset-0 bg-black/20" />
       <div className={`absolute inset-0 z-10 flex items-center justify-center px-5 py-8 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className="grid w-full max-w-[760px] grid-cols-1 items-center gap-5 md:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid w-full max-w-[820px] grid-cols-1 items-center gap-0 md:grid-cols-[1.12fr_0.88fr]">
           <div className="relative hidden aspect-square overflow-hidden rounded-[12px] bg-[#050508] shadow-2xl md:block">
             <div className="absolute inset-0">
               {BRAND_STARS.map((star, index) => (
@@ -151,12 +155,12 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <img
               src="/images/WElogo.png"
               alt="Williamsville East logo"
-              className="absolute inset-0 m-auto h-[72%] w-[72%] object-contain drop-shadow-[0_18px_32px_rgba(243,223,155,0.22)]"
+              className="absolute inset-0 m-auto h-[88%] w-[88%] object-contain drop-shadow-[0_22px_38px_rgba(243,223,155,0.24)]"
               style={{ filter: 'contrast(1.12) saturate(1.22)' }}
             />
           </div>
 
-          <div className={`w-full max-w-[360px] justify-self-center bg-white/5 backdrop-blur-[28px] border border-white/10 rounded-3xl p-7 shadow-2xl transition-all duration-500 ${isSignup || showForgot ? 'scale-105' : 'scale-100'}`}>
+          <div className={`relative z-20 w-full max-w-[360px] justify-self-center bg-white/5 backdrop-blur-[28px] border border-white/10 rounded-3xl p-7 shadow-2xl transition-all duration-500 md:-ml-16 ${isSignup || showForgot ? 'scale-105' : 'scale-100'}`}>
           <div className="flex items-center justify-center gap-2 mb-4">
             <img
               src="/images/roundedlogo.png"
