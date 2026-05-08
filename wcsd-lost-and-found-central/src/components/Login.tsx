@@ -1,27 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { User as UserIcon, Lock, LogIn, UserPlus, Mail, GraduationCap, Hash } from 'lucide-react';
+import { User as UserIcon, Lock, UserPlus, Mail, GraduationCap, Hash, Flame, ShieldCheck, ArrowRight } from 'lucide-react';
 import { User } from '../types';
 
 interface LoginProps {
   onLogin: (user: User) => void;
 }
-
-const BRAND_STARS = [
-  { top: '10%', left: '12%', size: 5, color: '#fffaf4', opacity: 0.84, delay: '0s' },
-  { top: '18%', left: '72%', size: 4, color: '#f3df9b', opacity: 0.78, delay: '0.6s' },
-  { top: '24%', left: '35%', size: 3, color: '#e7a39b', opacity: 0.74, delay: '1.1s' },
-  { top: '32%', left: '82%', size: 6, color: '#fffaf4', opacity: 0.68, delay: '1.7s' },
-  { top: '43%', left: '18%', size: 4, color: '#f3df9b', opacity: 0.82, delay: '0.3s' },
-  { top: '52%', left: '68%', size: 3, color: '#e7a39b', opacity: 0.78, delay: '1.4s' },
-  { top: '62%', left: '28%', size: 6, color: '#fffaf4', opacity: 0.72, delay: '0.9s' },
-  { top: '72%', left: '78%', size: 4, color: '#f3df9b', opacity: 0.76, delay: '2s' },
-  { top: '82%', left: '44%', size: 3, color: '#e7a39b', opacity: 0.7, delay: '1.2s' },
-  { top: '88%', left: '14%', size: 4, color: '#fffaf4', opacity: 0.72, delay: '1.9s' },
-  { top: '12%', left: '47%', size: 3, color: '#e7a39b', opacity: 0.62, delay: '2.3s' },
-  { top: '38%', left: '52%', size: 5, color: '#fffaf4', opacity: 0.8, delay: '0.2s' },
-  { top: '68%', left: '57%', size: 4, color: '#f3df9b', opacity: 0.7, delay: '1.6s' },
-  { top: '80%', left: '88%', size: 3, color: '#fffaf4', opacity: 0.62, delay: '2.5s' }
-];
 
 export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [isSignup, setIsSignup] = useState(false);
@@ -130,61 +113,51 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       className="fixed inset-0 overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: 'url(/images/Fire.jpg)' }}
     >
-      <div className="absolute inset-0 bg-black/20" />
-      <div className={`absolute inset-0 z-10 flex items-center justify-center px-5 py-8 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className="grid w-full max-w-[820px] grid-cols-1 items-center gap-0 md:grid-cols-[1.12fr_0.88fr]">
-          <div className="relative hidden aspect-square overflow-hidden rounded-[12px] bg-[#050508] shadow-2xl md:block">
-            <div className="absolute inset-0">
-              {BRAND_STARS.map((star, index) => (
-                <span
-                  key={index}
-                  className="absolute rounded-full animate-pulse"
-                  style={{
-                    top: star.top,
-                    left: star.left,
-                    width: `${star.size}px`,
-                    height: `${star.size}px`,
-                    backgroundColor: star.color,
-                    opacity: star.opacity,
-                    animationDelay: star.delay,
-                    boxShadow: `0 0 ${star.size * 4}px ${star.color}`
-                  }}
-                />
-              ))}
+      <div className="absolute inset-0 bg-black/55" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.62)_62%,rgba(0,0,0,0.88)_100%)]" />
+      <div className={`absolute inset-0 z-10 overflow-y-auto px-5 py-8 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-5">
+          <div className="text-center">
+            <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-[24px] border border-[#ff4f45]/50 bg-black/35 shadow-[0_0_34px_rgba(255,79,69,0.32)]">
+              <img
+                src="/images/WElogo.png"
+                alt="Williamsville East logo"
+                className="h-16 w-16 object-contain"
+                style={{ filter: 'contrast(1.14) saturate(1.2)' }}
+              />
             </div>
-            <img
-              src="/images/WElogo.png"
-              alt="Williamsville East logo"
-              className="absolute inset-0 m-auto h-[88%] w-[88%] object-contain drop-shadow-[0_22px_38px_rgba(243,223,155,0.24)]"
-              style={{ filter: 'contrast(1.12) saturate(1.22)' }}
-            />
+            <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.52em] text-white/80">Williamsville East</p>
+            <h1 className="text-4xl font-light uppercase tracking-[0.22em] text-white sm:text-5xl">
+              Lost <span className="text-white/80">&amp;</span> <span className="font-medium text-[#ff4f45]">Found</span>
+            </h1>
+            <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white/70">
+              <span className="h-px w-20 bg-gradient-to-r from-transparent to-[#ff7a2f]" />
+              <span>Lost it. We'll help you get it back.</span>
+              <span className="h-px w-20 bg-gradient-to-l from-transparent to-[#ff7a2f]" />
+            </div>
           </div>
 
-          <div className={`relative z-20 w-full max-w-[360px] justify-self-center bg-white/5 backdrop-blur-[28px] border border-white/10 rounded-3xl p-7 shadow-2xl transition-all duration-500 md:-ml-16 ${isSignup || showForgot ? 'scale-105' : 'scale-100'}`}>
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <img
-              src="/images/roundedlogo.png"
-              alt="Williamsville East High School Lost & Found logo"
-              className="w-10 h-10 rounded-xl object-cover"
-            />
-            <span className="text-white font-extrabold text-sm tracking-tight">EastLost&amp;Found</span>
+          <div className={`relative z-20 w-full max-w-[460px] rounded-[22px] border border-[#ff4f45]/55 bg-black/42 p-7 shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
+          <div className="mb-5 flex flex-col items-center text-center">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-[#ff4f45]/60 bg-black/35 text-[#ff4f45] shadow-[0_0_24px_rgba(255,79,69,0.2)]">
+              <UserIcon size={28} />
+            </div>
+            <h2 className="text-2xl font-bold text-white">
+              {showForgot ? 'Recover password' : isSignup ? 'Create account' : 'Welcome back'}
+            </h2>
+            <p className="mt-2 text-sm text-white/62">
+              {showForgot ? 'Use your email and student ID' : isSignup ? 'Join the community today' : 'Sign in to continue'}
+            </p>
           </div>
-
-          <h1 className="text-white text-xl font-extrabold text-center tracking-tight mb-1">
-            {showForgot ? 'Recover Password' : isSignup ? 'Create Account' : 'Welcome Back'}
-          </h1>
-          <p className="text-white/40 text-xs text-center mb-5">
-            {showForgot ? 'Use your email and student ID' : isSignup ? 'Join the community today' : 'Sign in to continue'}
-          </p>
 
           {showForgot ? (
             <form onSubmit={handleForgotPassword} className="space-y-3">
               <div className="relative">
                 <label htmlFor="forgot-email" className="sr-only">Email address</label>
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                 <input
                   id="forgot-email"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
+                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                   type="email"
                   placeholder="Email address"
                   value={forgotEmail}
@@ -195,10 +168,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
               <div className="relative">
                 <label htmlFor="forgot-student-id" className="sr-only">Student ID</label>
-                <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
+                <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                 <input
                   id="forgot-student-id"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
+                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                   type="text"
                   placeholder="Student ID"
                   value={forgotStudentId}
@@ -213,9 +186,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <button
                 type="submit"
                 disabled={isForgotLoading}
-                className="w-full py-2.5 bg-white text-[#0d0d0d] rounded-xl text-sm font-extrabold flex items-center justify-center gap-2 hover:scale-[1.03] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)] disabled:opacity-50"
+                className="mt-2 flex w-full items-center justify-center gap-2 rounded-[8px] bg-[linear-gradient(90deg,#e51635,#ff7a2f)] py-3.5 text-sm font-bold text-white shadow-[0_0_24px_rgba(229,22,53,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50"
               >
                 {isForgotLoading ? 'Checking...' : 'Recover Password'}
+                <ArrowRight size={16} />
               </button>
 
               <button
@@ -225,7 +199,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   setForgotMessage('');
                   setRecoveredPassword('');
                 }}
-                className="w-full text-white/40 text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors"
+                className="w-full text-white/55 text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors"
               >
                 Back to Login
               </button>
@@ -235,10 +209,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               {isSignup && (
                 <div className="relative">
                   <label htmlFor="signup-name" className="sr-only">Full Name</label>
-                  <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
+                  <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                   <input
                     id="signup-name"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
+                    className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                     type="text"
                     placeholder="Full Name"
                     value={name}
@@ -250,10 +224,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
               <div className="relative">
                 <label htmlFor="auth-email" className="sr-only">Email address</label>
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                 <input
                   id="auth-email"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
+                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                   type="email"
                   placeholder="Email address"
                   value={email}
@@ -266,10 +240,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 <div className="flex gap-2">
                   <div className="relative flex-1">
                     <label htmlFor="signup-grade" className="sr-only">Grade</label>
-                    <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
+                    <GraduationCap className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                     <input
                       id="signup-grade"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
+                      className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                       type="text"
                       placeholder="Grade"
                       value={grade}
@@ -278,10 +252,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   </div>
                   <div className="relative flex-1">
                     <label htmlFor="signup-student-id" className="sr-only">Student ID</label>
-                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
+                    <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                     <input
                       id="signup-student-id"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
+                      className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                       type="text"
                       placeholder="ID #"
                       value={studentId}
@@ -293,10 +267,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
               <div className="relative">
                 <label htmlFor="auth-password" className="sr-only">Password</label>
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={14} />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/85" size={16} />
                 <input
                   id="auth-password"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-4 text-white text-sm outline-none focus:border-white/20 transition-all"
+                  className="w-full rounded-[8px] border border-white/24 bg-black/25 py-3.5 pl-12 pr-4 text-white text-sm outline-none transition-all placeholder:text-white/45 focus:border-[#ff7a2f]"
                   type="password"
                   placeholder="Password"
                   value={password}
@@ -315,7 +289,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     setForgotMessage('');
                     setRecoveredPassword('');
                   }}
-                  className="w-full text-white/50 text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors"
+                  className="w-full text-right text-xs font-semibold text-[#ff4f45] hover:text-[#ff7a2f] transition-colors"
                 >
                   Forgot Password?
                 </button>
@@ -326,14 +300,14 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-2.5 bg-white text-[#0d0d0d] rounded-xl text-sm font-extrabold flex items-center justify-center gap-2 hover:scale-[1.03] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)] disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2 rounded-[8px] bg-[linear-gradient(90deg,#e51635,#ff7a2f)] py-3.5 text-sm font-bold text-white shadow-[0_0_24px_rgba(229,22,53,0.25)] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-50"
               >
                 {isLoading ? (
-                  <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                   <>
-                    {isSignup ? 'Create Account' : 'Launch Portal'}
-                    {isSignup ? <UserPlus size={14} /> : <LogIn size={14} />}
+                    {isSignup ? 'Create Account' : 'Sign In'}
+                    {isSignup ? <UserPlus size={14} /> : <ArrowRight size={16} />}
                   </>
                 )}
               </button>
@@ -345,12 +319,26 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   setShowForgot(false);
                   setError(null);
                 }}
-                className="w-full text-white/40 text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors"
+                className="w-full text-white/55 text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors"
               >
                 {isSignup ? 'Already have an account? Sign In' : 'New here? Create an account'}
               </button>
             </form>
           )}
+          </div>
+
+          <div className="text-center">
+            <div className="mb-2 flex items-center justify-center gap-2 text-xl text-white">
+              <Flame size={22} className="text-[#ff4f45]" />
+              <span>Find it.</span>
+              <span className="text-[#ff4f45]">Claim it.</span>
+              <span className="text-[#ff7a2f]">Move on.</span>
+            </div>
+            <p className="mb-4 text-sm text-white/62">We help our community reconnect.</p>
+            <p className="flex items-center justify-center gap-2 text-xs text-white/64">
+              <ShieldCheck size={16} />
+              <span>Secure. Private. Only for Williamsville East High School students.</span>
+            </p>
           </div>
         </div>
       </div>
