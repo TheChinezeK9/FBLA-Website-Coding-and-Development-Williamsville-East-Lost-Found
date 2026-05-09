@@ -110,14 +110,17 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   return (
     <div
-      className="fixed inset-0 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/Background.png)' }}
+      className="fixed inset-0 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-black/0" />
+      <div
+        className="absolute -inset-3 bg-cover bg-center blur-[5px] scale-105"
+        style={{ backgroundImage: 'url(/images/Background.png)' }}
+      />
+      <div className="absolute inset-0 bg-black/10" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.02)_62%,rgba(0,0,0,0.14)_100%)]" />
       <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-5 py-5 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-4 py-3">
-          <div className="rounded-[18px] bg-black/28 px-6 py-4 text-center shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-[3px]">
+          <div className="text-center">
             <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-[20px] border border-[#ff4f45]/50 bg-black/35 shadow-[0_0_34px_rgba(255,79,69,0.32)]">
               <img
                 src="/images/WElogo.png"
@@ -327,7 +330,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           )}
           </div>
 
-          <div className="rounded-[18px] bg-black/28 px-5 py-3 text-center shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-[3px]">
+          <div className="text-center">
             <div className="mb-2 flex items-center justify-center gap-2 text-lg text-white sm:text-xl">
               <Flame size={22} className="text-[#ff4f45]" />
               <span>Find it.</span>
