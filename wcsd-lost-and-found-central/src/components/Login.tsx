@@ -157,7 +157,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               {showForgot ? 'Recover password' : isSignup ? 'Create account' : 'Welcome back'}
             </h2>
             <p className="mt-2 text-sm text-white/62">
-              {showForgot ? 'Use your email and student ID' : isSignup ? 'Join the community today' : 'Sign in to continue'}
+              {showForgot ? 'Use your email and student ID' : isSignup ? 'Create your account to begin' : 'Sign in to continue'}
             </p>
           </div>
 
