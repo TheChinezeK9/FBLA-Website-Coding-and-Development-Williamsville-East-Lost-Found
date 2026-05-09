@@ -118,6 +118,14 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       />
       <div className="absolute inset-0 bg-black/10" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.02)_62%,rgba(0,0,0,0.14)_100%)]" />
+      <svg aria-hidden="true" focusable="false" className="absolute h-0 w-0">
+        <defs>
+          <linearGradient id="login-red-orange-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#e51635" />
+            <stop offset="100%" stopColor="#ff7a2f" />
+          </linearGradient>
+        </defs>
+      </svg>
       <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-5 py-5 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-4 py-3">
           <div className="text-center">
@@ -125,18 +133,18 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <img
                 src="/images/WElogo.png"
                 alt="Williamsville East logo"
-                className="h-10 w-10 object-contain"
+                className="h-10 w-10 -translate-x-0.5 object-contain"
                 style={{ filter: 'contrast(1.14) saturate(1.2)' }}
               />
             </div>
             <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.52em] text-white/80">Williamsville East</p>
-            <h1 className="text-3xl font-light uppercase tracking-[0.22em] text-white sm:text-5xl">
-              Lost <span className="text-white/80">&amp;</span> <span className="font-medium text-[#ff4f45]">Found</span>
+            <h1 className="text-3xl font-semibold uppercase tracking-[0.14em] text-white sm:text-5xl">
+              Lost <span className="text-white">&amp;</span> <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text font-medium text-transparent">Found</span>
             </h1>
             <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white/70">
-              <span className="h-px w-20 bg-gradient-to-r from-transparent to-[#ff7a2f]" />
-              <span>Lost something? Start your search here.</span>
-              <span className="h-px w-20 bg-gradient-to-l from-transparent to-[#ff7a2f]" />
+              <span className="h-px w-20 bg-gradient-to-r from-transparent to-white/70" />
+              <span className="text-white">Lost something? Start your search here.</span>
+              <span className="h-px w-20 bg-gradient-to-l from-transparent to-white/70" />
             </div>
           </div>
 
@@ -332,14 +340,14 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
           <div className="text-center">
             <div className="mb-2 flex items-center justify-center gap-2 text-lg text-white sm:text-xl">
-              <Flame size={22} className="text-[#ff4f45]" />
+              <Flame size={22} color="url(#login-red-orange-gradient)" />
               <span>Find it.</span>
-              <span className="text-[#ff4f45]">Claim it.</span>
-              <span className="text-[#ff7a2f]">Reobtain it.</span>
+              <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text text-transparent">Claim it.</span>
+              <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text text-transparent">Reobtain it.</span>
             </div>
-            <p className="mb-3 text-sm text-white/62">Turning lost into found, because lost shouldn’t stay lost.</p>
-            <p className="flex items-center justify-center gap-2 text-xs text-white/64">
-              <ShieldCheck size={16} />
+            <p className="mb-3 text-sm text-white">Turning lost into found, because lost shouldn’t stay lost.</p>
+            <p className="flex items-center justify-center gap-2 text-xs text-white">
+              <ShieldCheck size={16} color="url(#login-red-orange-gradient)" />
               <span>Secure. Private. For Williamsville East High School students.</span>
             </p>
           </div>
