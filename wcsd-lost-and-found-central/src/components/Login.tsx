@@ -113,7 +113,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       className="fixed inset-0 overflow-hidden"
     >
       <div
-        className="absolute -inset-3 bg-cover bg-center blur-[3px] scale-105"
+        className="absolute -inset-3 bg-cover bg-center blur-[3.8px] scale-105"
         style={{ backgroundImage: 'url(/images/Background.png)' }}
       />
       <div className="absolute inset-0 bg-black/10" />
