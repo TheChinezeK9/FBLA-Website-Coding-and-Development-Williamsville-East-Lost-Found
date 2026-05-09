@@ -111,7 +111,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   return (
     <div
       className="fixed inset-0 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: 'url(/images/bg.png)' }}
+      style={{ backgroundImage: 'url(/images/Background.png)' }}
     >
       <div className="absolute inset-0 bg-black/0" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.02)_62%,rgba(0,0,0,0.14)_100%)]" />
