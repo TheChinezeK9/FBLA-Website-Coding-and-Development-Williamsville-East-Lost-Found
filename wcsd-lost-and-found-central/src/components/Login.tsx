@@ -142,16 +142,16 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               Lost <span className="text-white">&amp;</span> <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text font-medium text-transparent">Found</span>
             </h1>
             <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white/70">
-              <span className="h-px w-20 bg-gradient-to-r from-transparent to-white/70" />
+              <span className="h-px w-20 bg-gradient-to-r from-transparent via-[#ff7a2f] to-[#e51635]" />
               <span className="text-white">Lost something? Start your search here.</span>
-              <span className="h-px w-20 bg-gradient-to-l from-transparent to-white/70" />
+              <span className="h-px w-20 bg-gradient-to-r from-[#e51635] via-[#ff7a2f] to-transparent" />
             </div>
           </div>
 
           <div className={`relative z-20 w-full max-w-[460px] rounded-[22px] border border-[#ff4f45]/55 bg-black/38 px-6 pb-6 pt-5 shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 sm:px-7 sm:pb-7 sm:pt-6 ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
           <div className="mb-4 flex flex-col items-center text-center">
-            <div className="mb-2 flex h-16 w-16 items-center justify-center bg-transparent">
-              <img src="/images/roundedlogo.png" alt="Williamsville East High School Lost & Found favicon" className="h-14 w-14 rounded-full object-cover" />
+            <div className="mb-1 flex h-16 w-16 items-center justify-center bg-transparent">
+              <img src="/images/roundedlogo.png" alt="Williamsville East High School Lost & Found favicon" className="h-[62px] w-[62px] rounded-full object-cover" />
             </div>
             <h2 className="text-xl font-bold text-white sm:text-2xl">
               {showForgot ? 'Recover password' : isSignup ? 'Create account' : 'Welcome back'}
