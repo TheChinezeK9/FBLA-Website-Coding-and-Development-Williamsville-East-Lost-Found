@@ -32,7 +32,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     }
     if (phase === 'woosh') {
       let start: number | null = null;
-      const DURATION = 600;
+      const DURATION = 850;
       const tick = (now: number) => {
         if (!start) start = now;
         const p = Math.min((now - start) / DURATION, 1);
@@ -342,8 +342,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <div className="mb-2 flex items-center justify-center gap-2 text-lg text-white sm:text-xl">
               <Flame size={22} color="url(#login-red-orange-gradient)" />
               <span>Find it.</span>
-              <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text text-transparent">Claim it.</span>
-              <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text text-transparent">Reobtain it.</span>
+              <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text text-transparent">
+                Claim it. Reobtain it.
+              </span>
             </div>
             <p className="mb-3 text-sm text-white">Turning lost into found, because lost shouldn’t stay lost.</p>
             <p className="flex items-center justify-center gap-2 text-xs text-white">
@@ -362,11 +363,11 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
       {(phase === 'woosh' || phase === 'done') && (
         <div
-          className="absolute inset-0 z-50 bg-white pointer-events-none"
+          className="absolute inset-0 z-50 bg-[#fffaf4] pointer-events-none"
           style={{
             opacity: wooshProgress,
-            transform: `scaleY(${wooshProgress})`,
-            filter: `blur(${(1 - wooshProgress) * 12}px)`
+            transform: `scale(${0.985 + wooshProgress * 0.015})`,
+            filter: `blur(${(1 - wooshProgress) * 8}px)`
           }}
         />
       )}
