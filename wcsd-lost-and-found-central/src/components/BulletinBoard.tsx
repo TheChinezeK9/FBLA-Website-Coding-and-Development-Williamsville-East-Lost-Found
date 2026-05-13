@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Calendar, Camera, CheckCircle, X, Shield, Check, Trash2, ArrowUp, Plus, Minus } from 'lucide-react';
+import { Search, Calendar, Camera, CheckCircle, X, Shield, Check, Trash2, ArrowUp } from 'lucide-react';
 import { LostItem, SchoolTheme, Category, User, ClaimedLog } from '../types';
 import { CATEGORIES } from '../constants';
+import { createId } from '../utils/id';
+import { ImageLightbox } from './bulletin/ImageLightbox';
+import { RejectReasonModal } from './bulletin/RejectReasonModal';
 
 interface BulletinBoardProps {
   school: SchoolTheme;
@@ -263,7 +266,7 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
     ) return;
 
     const newItem: LostItem = {
-      id: Math.random().toString(36).slice(2, 11),
+      id: createId(),
       name: newItemName.trim(),
       description: newItemDesc.trim(),
       category: newItemCat,
@@ -721,98 +724,47 @@ export const BulletinBoard: React.FC<BulletinBoardProps> = ({
       )}
 
       {rejectingClaimItem && (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm">
-          <div className="bg-white dark:bg-[#2b2b2b] rounded-[25px] p-8 w-full max-w-lg shadow-2xl relative border border-slate-200 dark:border-[#4b5563]">
-            <button onClick={() => setRejectingClaimItem(null)} className="absolute top-5 right-5 text-slate-300 dark:text-white"><X size={22} /></button>
-            <h3 className="text-2xl font-bold text-center mb-2 text-slate-900 dark:text-white">Reject Claim</h3>
-            <p className="text-sm text-slate-500 dark:text-white text-center mb-6">Reason is required before rejecting this claim.</p>
-            <label htmlFor="reject-claim-reason" className="sr-only">Enter rejection reason</label>
-            <textarea id="reject-claim-reason" value={rejectReason} onChange={e => { setRejectReason(e.target.value); if (rejectReasonError) setRejectReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border rounded-[12px] text-slate-900 dark:text-white ${rejectReasonError ? 'border-red-400' : 'border-slate-200 dark:border-[#4b5563]'}`} placeholder="Enter rejection reason" />
-            {rejectReasonError && <p className="text-red-500 text-xs font-bold mt-2">Please enter a reason to reject this claim.</p>}
-            <div className="flex gap-3 mt-5">
-              <button type="button" onClick={() => setRejectingClaimItem(null)} className="flex-1 py-3 rounded-[14px] font-bold text-slate-600 dark:text-white bg-slate-100 dark:bg-[#1f1f1f]">Cancel</button>
-              <button type="button" onClick={rejectClaim} className="flex-1 py-3 rounded-[14px] font-bold text-white bg-red-500">Reject Claim</button>
-            </div>
-          </div>
-        </div>
+        <RejectReasonModal
+          title="Reject Claim"
+          description="Reason is required before rejecting this claim."
+          textareaId="reject-claim-reason"
+          value={rejectReason}
+          hasError={rejectReasonError}
+          errorMessage="Please enter a reason to reject this claim."
+          confirmLabel="Reject Claim"
+          onValueChange={value => { setRejectReason(value); if (rejectReasonError) setRejectReasonError(false); }}
+          onClose={() => setRejectingClaimItem(null)}
+          onConfirm={rejectClaim}
+          zIndexClass="z-[110]"
+        />
       )}
 
       {rejectingFoundItem && (
-        <div className="fixed inset-0 z-[115] flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm">
-          <div className="bg-white dark:bg-[#2b2b2b] rounded-[25px] p-8 w-full max-w-lg shadow-2xl relative border border-slate-200 dark:border-[#4b5563]">
-            <button onClick={() => setRejectingFoundItem(null)} className="absolute top-5 right-5 text-slate-300 dark:text-white"><X size={22} /></button>
-            <h3 className="text-2xl font-bold text-center mb-2 text-slate-900 dark:text-white">Reject Found Item Inquiry</h3>
-            <p className="text-sm text-slate-500 dark:text-white text-center mb-6">Reason is required before rejecting this inquiry.</p>
-            <label htmlFor="reject-found-reason" className="sr-only">Enter rejection reason</label>
-            <textarea id="reject-found-reason" value={rejectFoundReason} onChange={e => { setRejectFoundReason(e.target.value); if (rejectFoundReasonError) setRejectFoundReasonError(false); }} rows={4} className={`w-full p-3.5 bg-[#f4f6f8] dark:bg-[#1f1f1f] border rounded-[12px] text-slate-900 dark:text-white ${rejectFoundReasonError ? 'border-red-400' : 'border-slate-200 dark:border-[#4b5563]'}`} placeholder="Enter rejection reason" />
-            {rejectFoundReasonError && <p className="text-red-500 text-xs font-bold mt-2">Please enter a reason to reject this inquiry.</p>}
-            <div className="flex gap-3 mt-5">
-              <button type="button" onClick={() => setRejectingFoundItem(null)} className="flex-1 py-3 rounded-[14px] font-bold text-slate-600 dark:text-white bg-slate-100 dark:bg-[#1f1f1f]">Cancel</button>
-              <button type="button" onClick={rejectFound} className="flex-1 py-3 rounded-[14px] font-bold text-white bg-red-500">Reject Inquiry</button>
-            </div>
-          </div>
-        </div>
+        <RejectReasonModal
+          title="Reject Found Item Inquiry"
+          description="Reason is required before rejecting this inquiry."
+          textareaId="reject-found-reason"
+          value={rejectFoundReason}
+          hasError={rejectFoundReasonError}
+          errorMessage="Please enter a reason to reject this inquiry."
+          confirmLabel="Reject Inquiry"
+          onValueChange={value => { setRejectFoundReason(value); if (rejectFoundReasonError) setRejectFoundReasonError(false); }}
+          onClose={() => setRejectingFoundItem(null)}
+          onConfirm={rejectFound}
+          zIndexClass="z-[115]"
+        />
       )}
 
       {viewingImage && (
-        <div
-          className="fixed inset-0 z-[130] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={() => {
+        <ImageLightbox
+          image={viewingImage}
+          zoom={imageZoom}
+          onZoomChange={setImageZoom}
+          onClose={() => {
             setViewingImage(null);
             setImageZoom(1);
           }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-full h-full flex flex-col items-center justify-center"
-          >
-            <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setImageZoom((z) => Math.max(0.5, z - 0.25))}
-                className="w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center"
-              >
-                <Minus size={18} />
-              </button>
-              <button
-                type="button"
-                onClick={() => setImageZoom((z) => Math.min(4, z + 0.25))}
-                className="w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center"
-              >
-                <Plus size={18} />
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setViewingImage(null);
-                  setImageZoom(1);
-                }}
-                className="w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center"
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            <div className="absolute top-4 left-4 z-10 text-white/80 text-sm font-bold">
-              Zoom: {Math.round(imageZoom * 100)}%
-            </div>
-
-            <div className="w-full h-full overflow-auto flex items-center justify-center">
-              <img
-                src={viewingImage.src}
-                alt={viewingImage.alt}
-                onClick={(e) => e.stopPropagation()}
-                className="rounded-lg shadow-2xl"
-                style={{
-                  transform: `scale(${imageZoom})`,
-                  transformOrigin: 'center center',
-                  maxWidth: imageZoom <= 1 ? '90vw' : 'none',
-                  maxHeight: imageZoom <= 1 ? '85vh' : 'none'
-                }}
-              />
-            </div>
-          </div>
-        </div>
+        />
       )}
     </div>
   );

@@ -3,6 +3,7 @@ import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import Database from "better-sqlite3";
+import { createId } from "./src/utils/id";
 
 dotenv.config();
 
@@ -130,6 +131,7 @@ const resolveUserId = (requestedId?: string, email?: string) => {
 async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
+  const isProduction = process.env.NODE_ENV === "production" || process.argv.includes("--production");
   const geminiSupportedLanguages = [
     { code: "en", name: "English" },
     { code: "ar", name: "Arabic" },
@@ -244,7 +246,7 @@ async function startServer() {
       const { name, email, password, grade, studentId } = req.body;
       const normalizedEmail = String(email || "").trim().toLowerCase();
       if (!normalizedEmail) return res.status(400).json({ error: "Email is required" });
-      const id = Math.random().toString(36).slice(2, 11);
+      const id = createId();
       const joinedAt = new Date().toISOString();
       db.prepare("INSERT INTO users (id, name, email, password, grade, studentId, joinedAt) VALUES (?, ?, ?, ?, ?, ?, ?)")
         .run(id, name, normalizedEmail, password, grade, studentId, joinedAt);
@@ -372,7 +374,7 @@ async function startServer() {
       if (!text || !String(text).trim()) return res.status(400).json({ error: "Notification text is required" });
       const resolvedId = resolveUserId(req.params.id, String(email || ""));
       if (!resolvedId) return res.status(404).json({ error: "User not found" });
-      const id = Math.random().toString(36).slice(2, 11);
+      const id = createId();
       const date = new Date().toISOString();
       db.prepare("INSERT INTO notifications (id, userId, text, date, read) VALUES (?, ?, ?, ?, 0)").run(id, resolvedId, String(text).trim(), date);
       res.json({ ok: true });
@@ -387,7 +389,7 @@ async function startServer() {
       if (!text || !String(text).trim()) return res.status(400).json({ error: "Notification text is required" });
       const targetUserId = resolveUserId(userId, email);
       if (!targetUserId) return res.status(404).json({ error: "Notification recipient not found" });
-      const id = Math.random().toString(36).slice(2, 11);
+      const id = createId();
       const date = new Date().toISOString();
       db.prepare("INSERT INTO notifications (id, userId, text, date, read) VALUES (?, ?, ?, ?, 0)").run(id, targetUserId, String(text).trim(), date);
       res.json({ ok: true });
@@ -424,7 +426,7 @@ async function startServer() {
       if (!text || !String(text).trim()) return res.status(400).json({ error: "Wishlist text is required" });
       const resolvedId = resolveUserId(req.params.id, String(email || ""));
       if (!resolvedId) return res.status(404).json({ error: "User not found" });
-      const id = Math.random().toString(36).slice(2, 11);
+      const id = createId();
       const addedAt = new Date().toISOString();
       const row = {
         id,
@@ -504,7 +506,7 @@ async function startServer() {
         del.run();
         for (const log of logs) {
           const expiresAt = log?.expiresAt || new Date(Date.now() + ONE_WEEK_MS).toISOString();
-          const id = log?.id || Math.random().toString(36).slice(2, 11);
+          const id = log?.id || createId();
           ins.run(String(id), JSON.stringify({ ...log, id, expiresAt }), expiresAt, now);
         }
       });
@@ -547,7 +549,7 @@ async function startServer() {
     }
   });
 
-  if (process.env.NODE_ENV !== "production") {
+  if (!isProduction) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa"

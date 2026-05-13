@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, X, Camera, Loader2, ArrowRight } from 'lucide-react';
 import { LostItem, Category } from '../types';
 import { SCHOOL_THEMES } from '../constants';
+import { createId } from '../utils/id';
 
 interface LiveTrackerProps {
   onItemFound: (item: LostItem) => void;
@@ -111,7 +112,7 @@ export const LiveTracker: React.FC<LiveTrackerProps> = ({ onItemFound, onCancel 
   const finalizePost = () => {
     if (!analysisResult || !selectedSchool || !capturedImage || !foundLocation.trim() || !finderName.trim()) return;
     onItemFound({
-      id: Math.random().toString(36).substr(2, 9),
+      id: createId(),
       name: analysisResult.name || 'Unknown Item',
       description: analysisResult.description || '',
       category: analysisResult.category || 'Other',

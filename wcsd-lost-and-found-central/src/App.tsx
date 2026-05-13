@@ -16,6 +16,7 @@ import { View, LostItem, SchoolTheme, User, ClaimedLog } from './types';
 import { INITIAL_ITEMS, ADMIN_PASSWORD, SCHOOL_THEMES } from './constants';
 import { X, Lock, LoaderCircle } from 'lucide-react';
 import { useTranslationSettings } from './translation/TranslationProvider';
+import { createId } from './utils/id';
 
 const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -292,11 +293,6 @@ export default function App() {
     setCurrentView('BULLETIN_BOARD');
   };
 
-  const handleSchoolSelect = (_school: SchoolTheme) => {
-    setSelectedSchool(eastSchool);
-    setCurrentView('BULLETIN_BOARD');
-  };
-
   const handleTrackerItemFound = (newItem: LostItem) => {
     setItems(prev => [newItem, ...prev]);
     setCurrentView('HOME');
@@ -316,7 +312,7 @@ export default function App() {
 
       const now = new Date();
       const claimedLog: ClaimedLog = {
-        id: Math.random().toString(36).slice(2, 11),
+        id: createId(),
         itemId: item.id,
         itemName: item.name,
         schoolId: item.schoolId,
@@ -415,7 +411,7 @@ export default function App() {
         setGlassMode={setGlassMode}
       />
 
-      {showDoodles && <DoodleBackground />}
+      {showDoodles && <DoodleBackground isDarkMode={isDarkMode} />}
 
       {currentView !== 'LIVE_TRACKER' && (
         <main id="main-content" className="relative pt-24 z-10">
