@@ -148,21 +148,21 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
         </defs>
       </svg>
       <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-0 pb-0 pt-8 transition-opacity duration-300 sm:px-5 sm:py-5 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-between gap-8 py-4 sm:justify-center sm:gap-4 sm:py-3">
-          <div className="px-5 pb-2 text-center sm:pb-0">
-            <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-[20px] border border-[#ff4f45]/50 bg-black/35 shadow-[0_0_34px_rgba(255,79,69,0.32)]">
+        <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-between gap-10 py-5 sm:justify-center sm:gap-4 sm:py-3">
+          <div className="px-5 pb-4 text-center sm:pb-0">
+            <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-[24px] border border-[#ff4f45]/50 bg-black/35 shadow-[0_0_34px_rgba(255,79,69,0.32)] sm:h-16 sm:w-16 sm:rounded-[20px]">
               <img
                 src="/images/WElogo.png"
                 alt="Williamsville East logo"
-                className="h-10 w-10 -translate-x-0.5 object-contain"
+                className="h-12 w-12 -translate-x-0.5 object-contain sm:h-10 sm:w-10"
                 style={{ filter: 'contrast(1.14) saturate(1.2)' }}
               />
             </div>
-            <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.52em] text-white/80">Williamsville East</p>
-            <h1 className="text-3xl font-normal uppercase tracking-[0.14em] text-white sm:text-5xl">
+            <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.52em] text-white/80 sm:mb-2 sm:text-[10px]">Williamsville East</p>
+            <h1 className="text-4xl font-normal uppercase tracking-[0.14em] text-white sm:text-5xl">
               Lost <span className="text-white">&amp;</span> <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text font-normal text-transparent">Found</span>
             </h1>
-            <div className="mt-3 flex items-center justify-center gap-2 text-xs text-white/70 sm:gap-3 sm:text-sm">
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-white/70 sm:mt-3 sm:gap-3 sm:text-sm">
               <span className="h-px w-8 bg-gradient-to-r from-transparent via-[#ff7a2f] to-[#e51635] sm:w-20" />
               <span className="text-white">Lost something? Start your search here.</span>
               <span className="h-px w-8 bg-gradient-to-r from-[#e51635] via-[#ff7a2f] to-transparent sm:w-20" />
@@ -363,15 +363,15 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             </form>
           )}
 
-          <div className="mt-7 border-t border-white/12 pt-5 sm:hidden">
-            <SloganBlock compact />
-          </div>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-white/12 pt-5 text-[10px] font-bold uppercase tracking-widest text-white/75 sm:mt-4 sm:gap-x-3 sm:gap-y-1 sm:pt-3">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[10px] font-bold uppercase tracking-widest text-white/75 sm:mt-4 sm:gap-x-3 sm:gap-y-1">
             <a href="/privacypolicy.html" className="transition-colors hover:text-white">Privacy Policy</a>
             <span aria-hidden="true" className="text-white/25">•</span>
             <a href="/termsofservice.html" className="transition-colors hover:text-white">Terms of Use</a>
             <span aria-hidden="true" className="text-white/25">•</span>
             <a href="/accessibility.html" className="transition-colors hover:text-white">Accessibility</a>
+          </div>
+          <div className="mt-7 border-t border-white/12 pt-5 sm:hidden">
+            <SloganBlock compact />
           </div>
           </div>
 
