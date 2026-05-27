@@ -27,19 +27,19 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const SloganBlock = ({ compact = false }: { compact?: boolean }) => (
     <div className="text-center">
-      <div className={`mb-2 flex items-center justify-center gap-2 text-white ${compact ? 'text-base' : 'text-lg sm:text-xl'}`}>
+      <div className={`mb-2 flex items-center justify-center gap-2 whitespace-nowrap text-white ${compact ? 'text-sm' : 'text-lg sm:text-xl'}`}>
         <Flame size={compact ? 18 : 22} color="url(#login-red-orange-gradient)" />
-        <div className={compact ? 'flex flex-col leading-snug' : 'flex flex-wrap items-center justify-center gap-x-2'}>
+        <div className="flex items-center justify-center gap-x-2">
           <span>Find it.</span>
           <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text text-transparent">
             Claim it. Reobtain it.
           </span>
         </div>
       </div>
-      <p className={`${compact ? 'mb-2 text-xs' : 'mb-3 text-sm'} text-white`}>
+      <p className={`${compact ? 'mb-2 text-sm' : 'mb-3 text-sm'} text-white`}>
         Turning lost into found, because lost shouldn’t stay lost.
       </p>
-      <p className={`flex items-center justify-center gap-2 text-white ${compact ? 'text-[11px]' : 'text-xs'}`}>
+      <p className={`flex items-center justify-center gap-2 text-white ${compact ? 'text-xs' : 'text-xs'}`}>
         <ShieldCheck size={compact ? 14 : 16} color="url(#login-red-orange-gradient)" />
         <span>Secure. Private. For Williamsville East High School students.</span>
       </p>
@@ -158,13 +158,13 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 style={{ filter: 'contrast(1.14) saturate(1.2)' }}
               />
             </div>
-            <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.52em] text-white/80 sm:mb-2 sm:text-[10px]">Williamsville East</p>
-            <h1 className="text-4xl font-normal uppercase tracking-[0.14em] text-white sm:text-5xl">
+            <p className="mb-3 whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.52em] text-white/80 sm:mb-2 sm:text-[10px]">Williamsville East</p>
+            <h1 className="whitespace-nowrap text-[2.65rem] font-normal uppercase tracking-[0.12em] text-white sm:text-5xl sm:tracking-[0.14em]">
               Lost <span className="text-white">&amp;</span> <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text font-normal text-transparent">Found</span>
             </h1>
             <div className="mt-4 flex items-center justify-center gap-2 text-xs text-white/70 sm:mt-3 sm:gap-3 sm:text-sm">
               <span className="h-px w-8 bg-gradient-to-r from-transparent via-[#ff7a2f] to-[#e51635] sm:w-20" />
-              <span className="text-white">Lost something? Start your search here.</span>
+              <span className="whitespace-nowrap text-white">Lost something? Start your search here.</span>
               <span className="h-px w-8 bg-gradient-to-r from-[#e51635] via-[#ff7a2f] to-transparent sm:w-20" />
             </div>
           </div>
@@ -236,7 +236,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   setForgotMessage('');
                   setRecoveredPassword('');
                 }}
-                className="w-full text-white/55 text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors"
+                  className="w-full text-white/55 text-xs font-bold uppercase tracking-widest hover:text-white transition-colors"
               >
                 Back to Login
               </button>
@@ -326,7 +326,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     setForgotMessage('');
                     setRecoveredPassword('');
                   }}
-                  className="w-full text-right text-xs font-semibold text-[#ff4f45] hover:text-[#ff7a2f] transition-colors"
+                className="w-full text-right text-sm font-semibold text-[#ff4f45] hover:text-[#ff7a2f] transition-colors"
                 >
                   Forgot Password?
                 </button>
@@ -356,14 +356,14 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   setShowForgot(false);
                   setError(null);
                 }}
-                className="w-full text-white/55 text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors"
+                className="w-full text-white/55 text-xs font-bold uppercase tracking-widest hover:text-white transition-colors"
               >
                 {isSignup ? 'Already have an account? Sign In' : 'New here? Create an account'}
               </button>
             </form>
           )}
 
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[10px] font-bold uppercase tracking-widest text-white/75 sm:mt-4 sm:gap-x-3 sm:gap-y-1">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-white/12 pt-4 text-[9px] font-bold uppercase tracking-widest text-white/75 sm:mt-4 sm:gap-x-3 sm:gap-y-1 sm:pt-3">
             <a href="/privacypolicy.html" className="transition-colors hover:text-white">Privacy Policy</a>
             <span aria-hidden="true" className="text-white/25">•</span>
             <a href="/termsofservice.html" className="transition-colors hover:text-white">Terms of Use</a>

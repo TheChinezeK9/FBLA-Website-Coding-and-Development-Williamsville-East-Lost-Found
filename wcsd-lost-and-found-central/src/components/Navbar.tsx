@@ -185,7 +185,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-blue-400/20 text-blue-400' : 'bg-[#e7a39b]/25 text-[#c7776f]'}`}>{isDarkMode ? <Moon size={16} /> : <Sun size={16} />}</div>
                       <span className="flex-1 text-center text-sm font-bold text-black/80 dark:text-white group-hover:text-black dark:group-hover:text-white">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
                     </div>
-                    <div className={`w-8 h-4 rounded-full relative transition-colors ${isDarkMode ? 'bg-[#142e53]' : 'bg-slate-600'}`}>
+                    <div className={`w-8 h-4 rounded-full relative transition-colors ${isDarkMode ? 'bg-blue-400' : 'bg-slate-600'}`}>
                       <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${isDarkMode ? 'left-5' : 'left-1'}`} />
                     </div>
                   </button>
