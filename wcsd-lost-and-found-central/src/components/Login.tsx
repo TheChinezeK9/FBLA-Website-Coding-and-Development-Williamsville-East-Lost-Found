@@ -147,9 +147,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </linearGradient>
         </defs>
       </svg>
-      <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-5 pb-4 pt-6 transition-opacity duration-300 sm:py-5 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+      <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-0 pb-0 pt-6 transition-opacity duration-300 sm:px-5 sm:py-5 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-between gap-4 py-2 sm:justify-center sm:py-3">
-          <div className="text-center">
+          <div className="px-5 text-center">
             <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-[20px] border border-[#ff4f45]/50 bg-black/35 shadow-[0_0_34px_rgba(255,79,69,0.32)]">
               <img
                 src="/images/WElogo.png"
@@ -169,14 +169,13 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             </div>
           </div>
 
-          <div className={`relative z-20 w-full max-w-[460px] rounded-[22px] border border-[#ff4f45]/55 bg-black/82 px-6 pb-5 pt-5 shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 sm:bg-black/38 sm:px-7 sm:pb-7 sm:pt-6 ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
+          <div className={`relative z-20 flex w-full max-w-none flex-col rounded-t-[28px] border-x-0 border-b-0 border-t border-[#ff4f45]/55 bg-black/88 px-6 pb-5 pt-5 shadow-[0_-18px_55px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 sm:block sm:max-w-[460px] sm:rounded-[22px] sm:border sm:bg-black/38 sm:px-7 sm:pb-7 sm:pt-6 sm:shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
           <div className="mb-4 flex flex-col items-center text-center">
-            <div className="mb-1 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-transparent">
+            <div className="mb-1 flex h-16 w-16 items-center justify-center overflow-hidden rounded-[22px] bg-transparent">
               <img
                 src="/images/roundedlogo.png"
                 alt="Williamsville East High School Lost & Found favicon"
-                className="h-full w-full scale-[1.08] rounded-full object-cover"
-                style={{ clipPath: 'circle(49% at 50% 50%)' }}
+                className="h-full w-full scale-[1.08] rounded-[22px] object-cover"
               />
             </div>
             <h2 className="text-xl font-bold text-white sm:text-2xl">
@@ -366,7 +365,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           <div className="mt-5 border-t border-white/12 pt-4 sm:hidden">
             <SloganBlock compact />
           </div>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t border-white/12 pt-3 text-[10px] font-bold uppercase tracking-widest text-white/55">
+          <div className="mt-auto flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t border-white/12 pt-4 text-[10px] font-bold uppercase tracking-widest text-white/75 sm:mt-4 sm:pt-3">
             <a href="/privacypolicy.html" className="transition-colors hover:text-white">Privacy Policy</a>
             <span aria-hidden="true" className="text-white/25">•</span>
             <a href="/termsofservice.html" className="transition-colors hover:text-white">Terms of Use</a>

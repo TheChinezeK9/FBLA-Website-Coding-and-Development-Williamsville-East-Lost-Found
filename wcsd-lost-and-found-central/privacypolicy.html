@@ -548,5 +548,49 @@ body.policy-dark .panel-footer {
     padding: 26px 18px;
   }
 }
+
+/* Final app-setting alignment */
+h1,
+.ps-icon {
+  color: #111827 !important;
+}
+
+body.policy-dark h1,
+body.policy-dark .ps-icon {
+  color: #fff !important;
+}
+
+.nav-button {
+  background: #e7a39b !important;
+  border-color: rgba(0, 0, 0, 0.18) !important;
+  color: #000 !important;
+  font-weight: 800;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nav-button:hover,
+.nav-button:focus-visible {
+  background: #e7a39b !important;
+  color: #000 !important;
+  transform: scale(1.06);
+  box-shadow: 0 10px 22px rgba(47, 42, 38, 0.14);
+}
+
+body.policy-doodle .bg-icons {
+  display: block;
+}
+
+body.policy-doodle .icon-item {
+  color: #e7a39b;
+  opacity: 0.20;
+  filter: none;
+  transform: scale(0.72);
+  animation: float 10s ease-in-out infinite;
+}
+
+body.policy-dark.policy-doodle .icon-item {
+  color: #fff;
+  opacity: 0.12;
+}
 </style>
 </html>

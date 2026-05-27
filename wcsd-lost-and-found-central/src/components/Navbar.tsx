@@ -176,15 +176,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="relative" ref={settingsRef}>
             <button onClick={() => setShowSettingsMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black" title="Settings"><Settings size={20} /></button>
             {showSettingsMenu && (
-              <div className={`absolute top-full right-0 mt-2 w-64 rounded-2xl border p-4 shadow-2xl animate-fade-in z-[70] ${
-                isDarkMode
-                  ? 'bg-[#e5e7eb] border-slate-400'
-                  : 'bg-white border-slate-200'
-              }`}>
+              <div className="absolute top-full right-0 mt-2 w-64 rounded-2xl border border-black/20 dark:border-[#4b5563] bg-[#e7a39b] dark:bg-[#2b2b2b] p-4 shadow-2xl animate-fade-in z-[70]">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-black mb-3">Settings</p>
 
                 <div className="space-y-2 mb-4">
-                  <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
+                  <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f3df9b] dark:hover:bg-[#3a3a3a] transition-colors group">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-[#142e53]/20 text-[#142e53]' : 'bg-[#e7a39b]/25 text-[#c7776f]'}`}>{isDarkMode ? <Moon size={16} /> : <Sun size={16} />}</div>
                       <span className="flex-1 text-center text-sm font-bold text-black/80 group-hover:text-black">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
@@ -194,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </div>
                   </button>
 
-                  <button onClick={() => setShowDoodles(!showDoodles)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
+                  <button onClick={() => setShowDoodles(!showDoodles)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f3df9b] dark:hover:bg-[#3a3a3a] transition-colors group">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div className={`p-1.5 rounded-lg ${showDoodles ? 'bg-pink-500/20 text-pink-600' : 'bg-black/10 text-black/80'}`}><Palette size={16} /></div>
                       <span className="flex-1 text-center text-sm font-bold text-black/80 group-hover:text-black">Doodle Background</span>
@@ -205,7 +201,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </button>
 
                   {isDarkMode && (
-                    <button onClick={() => setNeonMode(!neonMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
+                    <button onClick={() => setNeonMode(!neonMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f3df9b] dark:hover:bg-[#3a3a3a] transition-colors group">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
                         <div className={`p-1.5 rounded-lg ${neonMode ? 'bg-emerald-500/20 text-emerald-600' : 'bg-black/10 text-black/80'}`}><Sparkles size={16} /></div>
                         <span className="flex-1 text-center text-sm font-bold text-black/80 group-hover:text-black">Neon Accents</span>
@@ -216,7 +212,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </button>
                   )}
 
-                  <button onClick={() => setGlassMode(!glassMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#e7a39b] transition-colors group">
+                  <button onClick={() => setGlassMode(!glassMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f3df9b] dark:hover:bg-[#3a3a3a] transition-colors group">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div className={`p-1.5 rounded-lg ${glassMode ? 'bg-sky-500/20 text-sky-600' : 'bg-black/10 text-black/80'}`}><div className="w-4 h-4 rounded-full border-2 border-current opacity-70" /></div>
                       <span className="flex-1 text-center text-sm font-bold text-black/80 group-hover:text-black">Glassmorphism</span>
