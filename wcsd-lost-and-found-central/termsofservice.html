@@ -601,9 +601,14 @@ body.policy-dark .main-header {
 }
 
 .nav-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
   background: #e7a39b !important;
   border-color: rgba(0, 0, 0, 0.18) !important;
   color: #000 !important;
+  transition: all 0.3s ease !important;
+  transform-origin: center;
 }
 
 body.policy-dark .nav-button {
@@ -616,7 +621,7 @@ body.policy-dark .nav-button {
 .nav-button:focus-visible {
   background: #e7a39b !important;
   color: #000 !important;
-  transform: scale(1.06);
+  transform: scale(1.12);
   box-shadow: 0 10px 22px rgba(47, 42, 38, 0.14);
 }
 
