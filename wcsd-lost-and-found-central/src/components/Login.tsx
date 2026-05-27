@@ -27,8 +27,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const SloganBlock = ({ compact = false }: { compact?: boolean }) => (
     <div className="text-center">
-      <div className={`mb-2 flex items-center justify-center gap-2 whitespace-nowrap text-white ${compact ? 'text-sm' : 'text-lg sm:text-xl'}`}>
-        <Flame size={compact ? 18 : 22} color="url(#login-red-orange-gradient)" />
+      <div className={`mb-2 flex items-center justify-center gap-2 whitespace-nowrap text-white ${compact ? 'text-base' : 'text-xl sm:text-2xl'}`}>
+        <Flame size={compact ? 20 : 24} color="url(#login-red-orange-gradient)" />
         <div className="flex items-center justify-center gap-x-2">
           <span>Find it.</span>
           <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text text-transparent">
@@ -36,11 +36,11 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </span>
         </div>
       </div>
-      <p className={`${compact ? 'mb-2 text-sm' : 'mb-3 text-sm'} text-white`}>
+      <p className={`${compact ? 'mb-2 text-[15px]' : 'mb-3 text-base'} text-white`}>
         Turning lost into found, because lost shouldn’t stay lost.
       </p>
-      <p className={`flex items-center justify-center gap-2 text-white ${compact ? 'text-xs' : 'text-xs'}`}>
-        <ShieldCheck size={compact ? 14 : 16} color="url(#login-red-orange-gradient)" />
+      <p className={`flex items-center justify-center gap-2 text-white ${compact ? 'text-sm' : 'text-sm'}`}>
+        <ShieldCheck size={compact ? 16 : 18} color="url(#login-red-orange-gradient)" />
         <span>Secure. Private. For Williamsville East High School students.</span>
       </p>
     </div>
