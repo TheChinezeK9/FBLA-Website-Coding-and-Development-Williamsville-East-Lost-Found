@@ -36,7 +36,7 @@ export const ContactsPage: React.FC = () => {
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="mb-12">
           {view !== 'ROOT' && (
-            <button onClick={() => { if (view === 'SCHOOL_DETAIL' || view === 'SPORTS' || view === 'BUS' || view === 'MAIN_OFFICE_SELECT') setView('FACILITIES_MENU'); else setView('ROOT'); }} className="flex items-center gap-2 text-black dark:text-white font-bold mb-6 transition-all duration-300 bg-white dark:bg-[#2b2b2b] hover:bg-[#e7a39b] dark:hover:bg-[#3a3a3a] hover:scale-105 px-4 py-2 rounded-full w-fit backdrop-blur-sm border border-slate-200 dark:border-[#4b5563] shadow-sm">
+            <button onClick={() => { if (view === 'SCHOOL_DETAIL' || view === 'SPORTS' || view === 'BUS' || view === 'MAIN_OFFICE_SELECT') setView('FACILITIES_MENU'); else setView('ROOT'); }} className="flex items-center gap-2 text-black dark:text-white font-bold mb-6 transition-all duration-300 bg-white dark:bg-[#2b2b2b] hover:bg-slate-100 dark:hover:bg-[#3a3a3a] hover:scale-105 px-4 py-2 rounded-full w-fit backdrop-blur-sm border border-slate-200 dark:border-[#4b5563] shadow-sm">
               <ArrowLeft size={20} /> <span>Back</span>
             </button>
           )}
