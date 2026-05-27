@@ -176,7 +176,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="relative" ref={settingsRef}>
             <button onClick={() => setShowSettingsMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black" title="Settings"><Settings size={20} /></button>
             {showSettingsMenu && (
-              <div className="absolute top-full right-0 mt-2 w-64 bg-[#f3df9b] border border-black/20 rounded-2xl p-4 shadow-2xl animate-fade-in z-[70]">
+              <div className={`absolute top-full right-0 mt-2 w-64 rounded-2xl border p-4 shadow-2xl animate-fade-in z-[70] ${
+                isDarkMode
+                  ? 'bg-[#e5e7eb] border-slate-400'
+                  : 'bg-white border-slate-200'
+              }`}>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-black mb-3">Settings</p>
 
                 <div className="space-y-2 mb-4">

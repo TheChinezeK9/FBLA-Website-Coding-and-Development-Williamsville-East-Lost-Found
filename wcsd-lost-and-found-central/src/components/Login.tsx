@@ -25,6 +25,27 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [wooshProgress, setWooshProgress] = useState(0);
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
+  const SloganBlock = ({ compact = false }: { compact?: boolean }) => (
+    <div className="text-center">
+      <div className={`mb-2 flex items-center justify-center gap-2 text-white ${compact ? 'text-base' : 'text-lg sm:text-xl'}`}>
+        <Flame size={compact ? 18 : 22} color="url(#login-red-orange-gradient)" />
+        <div className={compact ? 'flex flex-col leading-snug' : 'flex flex-wrap items-center justify-center gap-x-2'}>
+          <span>Find it.</span>
+          <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text text-transparent">
+            Claim it. Reobtain it.
+          </span>
+        </div>
+      </div>
+      <p className={`${compact ? 'mb-2 text-xs' : 'mb-3 text-sm'} text-white`}>
+        Turning lost into found, because lost shouldn’t stay lost.
+      </p>
+      <p className={`flex items-center justify-center gap-2 text-white ${compact ? 'text-[11px]' : 'text-xs'}`}>
+        <ShieldCheck size={compact ? 14 : 16} color="url(#login-red-orange-gradient)" />
+        <span>Secure. Private. For Williamsville East High School students.</span>
+      </p>
+    </div>
+  );
+
   useEffect(() => {
     if (phase === 'warping') {
       const timer = window.setTimeout(() => setPhase('woosh'), 420);
@@ -110,10 +131,10 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   return (
     <div
-      className="fixed inset-0 overflow-hidden"
+      className="fixed inset-0 overflow-hidden bg-black"
     >
       <div
-        className="absolute -inset-3 bg-cover bg-center blur-[3.8px] scale-105"
+        className="absolute -inset-x-3 -top-3 h-[46vh] bg-cover bg-center blur-[3.8px] scale-105 sm:-inset-3 sm:h-auto"
         style={{ backgroundImage: 'url(/images/Background.png)' }}
       />
       <div className="absolute inset-0 bg-black/10" />
@@ -126,8 +147,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </linearGradient>
         </defs>
       </svg>
-      <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-5 py-5 transition-opacity duration-300 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-center gap-4 py-3">
+      <div className={`absolute inset-0 z-10 overflow-y-auto overflow-x-hidden px-5 pb-4 pt-6 transition-opacity duration-300 sm:py-5 ${phase === 'idle' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className="mx-auto flex min-h-full w-full max-w-[760px] flex-col items-center justify-between gap-4 py-2 sm:justify-center sm:py-3">
           <div className="text-center">
             <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-[20px] border border-[#ff4f45]/50 bg-black/35 shadow-[0_0_34px_rgba(255,79,69,0.32)]">
               <img
@@ -138,20 +159,25 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               />
             </div>
             <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.52em] text-white/80">Williamsville East</p>
-            <h1 className="text-3xl font-semibold uppercase tracking-[0.14em] text-white sm:text-5xl">
-              Lost <span className="text-white">&amp;</span> <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text font-medium text-transparent">Found</span>
+            <h1 className="text-3xl font-normal uppercase tracking-[0.14em] text-white sm:text-5xl">
+              Lost <span className="text-white">&amp;</span> <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text font-normal text-transparent">Found</span>
             </h1>
-            <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white/70">
-              <span className="h-px w-20 bg-gradient-to-r from-transparent via-[#ff7a2f] to-[#e51635]" />
+            <div className="mt-3 flex items-center justify-center gap-2 text-xs text-white/70 sm:gap-3 sm:text-sm">
+              <span className="h-px w-8 bg-gradient-to-r from-transparent via-[#ff7a2f] to-[#e51635] sm:w-20" />
               <span className="text-white">Lost something? Start your search here.</span>
-              <span className="h-px w-20 bg-gradient-to-r from-[#e51635] via-[#ff7a2f] to-transparent" />
+              <span className="h-px w-8 bg-gradient-to-r from-[#e51635] via-[#ff7a2f] to-transparent sm:w-20" />
             </div>
           </div>
 
-          <div className={`relative z-20 w-full max-w-[460px] rounded-[22px] border border-[#ff4f45]/55 bg-black/38 px-6 pb-6 pt-5 shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 sm:px-7 sm:pb-7 sm:pt-6 ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
+          <div className={`relative z-20 w-full max-w-[460px] rounded-[22px] border border-[#ff4f45]/55 bg-black/82 px-6 pb-5 pt-5 shadow-[0_0_55px_rgba(255,79,69,0.18),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[22px] transition-all duration-500 sm:bg-black/38 sm:px-7 sm:pb-7 sm:pt-6 ${isSignup || showForgot ? 'scale-[1.02]' : 'scale-100'}`}>
           <div className="mb-4 flex flex-col items-center text-center">
-            <div className="mb-1 flex h-16 w-16 items-center justify-center bg-transparent">
-              <img src="/images/roundedlogo.png" alt="Williamsville East High School Lost & Found favicon" className="h-[62px] w-[62px] rounded-full object-cover" />
+            <div className="mb-1 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-transparent">
+              <img
+                src="/images/roundedlogo.png"
+                alt="Williamsville East High School Lost & Found favicon"
+                className="h-full w-full scale-[1.08] rounded-full object-cover"
+                style={{ clipPath: 'circle(49% at 50% 50%)' }}
+              />
             </div>
             <h2 className="text-xl font-bold text-white sm:text-2xl">
               {showForgot ? 'Recover password' : isSignup ? 'Create account' : 'Welcome back'}
@@ -336,21 +362,21 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </button>
             </form>
           )}
+
+          <div className="mt-5 border-t border-white/12 pt-4 sm:hidden">
+            <SloganBlock compact />
+          </div>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t border-white/12 pt-3 text-[10px] font-bold uppercase tracking-widest text-white/55">
+            <a href="/privacypolicy.html" className="transition-colors hover:text-white">Privacy Policy</a>
+            <span aria-hidden="true" className="text-white/25">•</span>
+            <a href="/termsofservice.html" className="transition-colors hover:text-white">Terms of Use</a>
+            <span aria-hidden="true" className="text-white/25">•</span>
+            <a href="/accessibility.html" className="transition-colors hover:text-white">Accessibility</a>
+          </div>
           </div>
 
-          <div className="text-center">
-            <div className="mb-2 flex items-center justify-center gap-2 text-lg text-white sm:text-xl">
-              <Flame size={22} color="url(#login-red-orange-gradient)" />
-              <span>Find it.</span>
-              <span className="bg-[linear-gradient(90deg,#e51635,#ff7a2f)] bg-clip-text text-transparent">
-                Claim it. Reobtain it.
-              </span>
-            </div>
-            <p className="mb-3 text-sm text-white">Turning lost into found, because lost shouldn’t stay lost.</p>
-            <p className="flex items-center justify-center gap-2 text-xs text-white">
-              <ShieldCheck size={16} color="url(#login-red-orange-gradient)" />
-              <span>Secure. Private. For Williamsville East High School students.</span>
-            </p>
+          <div className="hidden sm:block">
+            <SloganBlock />
           </div>
         </div>
       </div>
