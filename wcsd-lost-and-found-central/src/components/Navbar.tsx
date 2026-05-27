@@ -182,10 +182,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className="space-y-2 mb-4">
                   <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-[#3a3a3a] transition-colors group">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-blue-400/20 text-blue-400' : 'bg-[#e7a39b]/25 text-[#c7776f]'}`}>{isDarkMode ? <Moon size={16} /> : <Sun size={16} />}</div>
+                      <div className={`p-1.5 rounded-lg ${isDarkMode ? 'bg-blue-400/20 text-blue-400' : 'bg-[#f3df9b]/45 text-[#b88700]'}`}>{isDarkMode ? <Moon size={16} /> : <Sun size={16} />}</div>
                       <span className="flex-1 text-center text-sm font-bold text-black/80 dark:text-white group-hover:text-black dark:group-hover:text-white">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
                     </div>
-                    <div className={`w-8 h-4 rounded-full relative transition-colors ${isDarkMode ? 'bg-blue-400' : 'bg-[#c7776f]'}`}>
+                    <div className={`w-8 h-4 rounded-full relative transition-colors ${isDarkMode ? 'bg-blue-400' : 'bg-[#f3df9b]'}`}>
                       <div className={`absolute top-1 w-2 h-2 rounded-full bg-white transition-all ${isDarkMode ? 'left-5' : 'left-1'}`} />
                     </div>
                   </button>
