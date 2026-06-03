@@ -281,13 +281,13 @@ export const FawkesBot: React.FC = () => {
         </div>
       )}
 
-      <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-[50] pointer-events-none">
+      <div className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-[50] pointer-events-none">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`pointer-events-auto group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen ? 'bg-[#e7a39b]' : 'bg-[#f3df9b]'}`}
+          className={`pointer-events-auto group relative w-16 h-16 sm:w-16 sm:h-16 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen ? 'bg-[#e7a39b]' : 'bg-[#f3df9b]'}`}
         >
           <div className="flex items-center justify-center w-full h-full text-black">
-            {isOpen ? <X size={28} /> : <div className="text-3xl animate-bounce">🐦‍🔥</div>}
+            {isOpen ? <X size={30} /> : <div className="text-[2.1rem] animate-bounce">🐦‍🔥</div>}
           </div>
         </button>
       </div>
