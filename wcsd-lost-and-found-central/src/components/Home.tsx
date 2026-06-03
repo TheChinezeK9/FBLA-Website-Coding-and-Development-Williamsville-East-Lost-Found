@@ -28,7 +28,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
         <span className="block">Lost &amp; Found</span>
       </h1>
 
-      <p className="mx-auto my-3 max-w-xl rounded-[22px] border border-slate-200 bg-white/90 px-4 py-4 text-black shadow-sm dark:border-[#4b5563] dark:bg-[#2b2b2b] dark:text-white sm:my-3 sm:border-0 sm:bg-transparent sm:px-2 sm:py-0 sm:text-lg sm:shadow-none text-base italic font-serif leading-relaxed">
+      <p className="home-quote mx-auto my-3 max-w-xl rounded-[22px] border border-slate-200 bg-white/90 px-4 py-4 text-black shadow-sm dark:border-[#4b5563] dark:bg-[#2b2b2b] dark:text-white sm:my-3 sm:border-0 sm:bg-transparent sm:px-2 sm:py-0 sm:text-lg sm:shadow-none text-base italic font-serif leading-relaxed">
         "Nothing is ever really lost to us as long as we remember it" <span className="whitespace-nowrap">- L.M. Montgomery</span>
       </p>
 

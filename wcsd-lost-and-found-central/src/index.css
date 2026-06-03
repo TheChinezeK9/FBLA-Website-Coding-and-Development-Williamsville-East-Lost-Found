@@ -48,15 +48,28 @@ html.dark body {
   background-color: #3f3f3f;
 }
 
-@media (max-width: 380px) {
+@media (max-width: 640px) {
   .home-hero-title {
-    font-size: 1.35rem;
+    font-size: clamp(1.28rem, 6.4vw, 1.8rem);
     letter-spacing: -0.01em;
   }
 
   .home-hero-title span:first-child {
-    transform: scaleX(0.96);
+    display: block;
+    white-space: nowrap;
+    transform: scaleX(0.94);
     transform-origin: center;
+  }
+
+  .home-hero-title span:last-child {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .home-quote {
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 }
 
