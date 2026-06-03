@@ -29,7 +29,8 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
       </h1>
 
       <p className="home-quote mx-auto my-2 sm:my-3 max-w-xl text-black dark:text-white sm:text-lg text-base italic font-serif leading-relaxed">
-        "Nothing is ever really lost to us as long as we remember it" <span className="whitespace-nowrap">- L.M. Montgomery</span>
+        <span>"Nothing is ever really lost to us as long as we remember it"</span>{' '}
+        <span className="quote-author whitespace-nowrap">- L.M. Montgomery</span>
       </p>
 
       <button
