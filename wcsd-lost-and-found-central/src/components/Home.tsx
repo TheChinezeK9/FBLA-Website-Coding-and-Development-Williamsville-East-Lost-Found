@@ -11,7 +11,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
   <div className="neon-page-bg min-h-screen font-sans pb-20 transition-colors duration-300 relative overflow-hidden">
     <div className="text-center px-4 sm:px-6 max-w-4xl mx-auto relative z-10 pt-10 sm:pt-12">
 
-      <div className="mx-auto mt-1 sm:mt-2 mb-5 sm:mb-7 w-[78%] max-w-[230px] sm:w-2/3 sm:max-w-[360px] md:w-1/2 md:max-w-[460px] p-2 bg-transparent rounded-lg animate-fade-in-up">
+      <div className="mx-auto mt-1 sm:mt-2 mb-5 sm:mb-7 w-[88%] max-w-[285px] sm:w-2/3 sm:max-w-[380px] md:w-1/2 md:max-w-[480px] p-2 bg-transparent rounded-lg animate-fade-in-up">
         <img
           src="/images/east.png"
           alt="Williamsville East High School Logo"
@@ -28,8 +28,8 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
         <span className="block">Lost &amp; Found</span>
       </h1>
 
-      <p className="mx-auto my-3 max-w-xl rounded-[22px] border border-slate-200 bg-white/90 px-4 py-4 text-black shadow-sm dark:border-[#4b5563] dark:bg-[#2b2b2b] dark:text-white sm:my-3 sm:border-0 sm:bg-transparent sm:px-2 sm:py-0 sm:text-lg sm:shadow-none text-base italic font-serif">
-        "Nothing is ever really lost to us as long as we remember it" - L.M. Montgomery
+      <p className="mx-auto my-3 max-w-xl rounded-[22px] border border-slate-200 bg-white/90 px-4 py-4 text-black shadow-sm dark:border-[#4b5563] dark:bg-[#2b2b2b] dark:text-white sm:my-3 sm:border-0 sm:bg-transparent sm:px-2 sm:py-0 sm:text-lg sm:shadow-none text-base italic font-serif leading-relaxed">
+        "Nothing is ever really lost to us as long as we remember it" <span className="whitespace-nowrap">- L.M. Montgomery</span>
       </p>
 
       <button
