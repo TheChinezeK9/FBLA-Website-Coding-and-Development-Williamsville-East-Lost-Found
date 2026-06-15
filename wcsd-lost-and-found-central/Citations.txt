@@ -44,3 +44,4 @@ Research:
 
 5. Zhao, Yihang, Albert Meroño-Peñuela, and Elena Simperl. “User Experience in Dataset Search.” arXiv, 2024, https://arxiv.org/abs/2403.15861.
 
+6. Fogg, B.J. “Stanford Guidelines for Web Credibility.” Stanford Persuasive Technology Lab, May 2002, https://credibility.stanford.edu/guidelines/index.html.
