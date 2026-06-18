@@ -25,7 +25,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <ul className="space-y-2.5">
             {[['Home','HOME'],['Item Board','BULLETIN_BOARD'],['AI Scanner','LIVE_TRACKER'],['Contacts','CONTACTS'],['Meet the Team','MEET_MAKERS']].map(([label, view]) => (
               <li key={label}>
-                <button onClick={() => onNavigate(view as View)} className="text-black text-xs hover:text-black transition-colors text-left">{label}</button>
+                <button onClick={() => onNavigate(view as View)} className="footer-animated-link text-black text-xs hover:text-black transition-colors text-left">{label}</button>
               </li>
             ))}
           </ul>
@@ -36,7 +36,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <ul className="space-y-2.5">
             {[['About Project','ABOUT'],['Safety Rules','RULES'],['Help Guide','GUIDE'],['File a Claim','BULLETIN_BOARD']].map(([label, view]) => (
               <li key={label}>
-                <button onClick={() => onNavigate(view as View)} className="text-black text-xs hover:text-black transition-colors text-left">{label}</button>
+                <button onClick={() => onNavigate(view as View)} className="footer-animated-link text-black text-xs hover:text-black transition-colors text-left">{label}</button>
               </li>
             ))}
           </ul>
@@ -62,7 +62,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             { label: 'Terms of Use', href: '/termsofservice.html' },
             { label: 'Accessibility', href: '/accessibility.html' }
           ].map(link => (
-            <a key={link.label} href={link.href} className="text-black text-[11px] hover:text-black transition-colors">{link.label}</a>
+            <a key={link.label} href={link.href} className="footer-animated-link text-black text-[11px] hover:text-black transition-colors">{link.label}</a>
           ))}
         </div>
       </div>

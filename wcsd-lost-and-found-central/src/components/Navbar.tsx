@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Home as HomeIcon, Users, Info, Scale, BookOpen, Phone, Settings, LogOut, Lock, Wrench, User as UserIcon, Moon, Sun, Palette, Sparkles, Package, Menu, X } from 'lucide-react';
+import { Home as HomeIcon, Users, Info, Scale, BookOpen, Phone, Settings, LogOut, Lock, Wrench, User as UserIcon, Moon, Sun, Palette, Sparkles, Package, Menu, X, ChevronDown } from 'lucide-react';
 import { View, User } from '../types';
 
 interface NavbarProps {
@@ -54,7 +54,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navBtnClass = (view: View) =>
     `flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${
-      currentView === view ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'text-black bg-transparent border-transparent hover:text-black'
+      currentView === view
+        ? 'bg-[#f3df9b] text-black border-[#f3df9b] shadow-[0_0_16px_rgba(243,223,155,0.42)]'
+        : 'text-black bg-transparent border-transparent hover:text-black hover:shadow-[0_0_14px_rgba(243,223,155,0.34)]'
     }`;
 
   const navigateAndClose = (view: View) => {
@@ -98,10 +100,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-haspopup="menu"
               aria-expanded={showInfoMenu}
               aria-controls="resources-menu"
-              className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:text-black"
+              className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:text-black hover:shadow-[0_0_14px_rgba(243,223,155,0.34)]"
             >
               <Info size={16} />
               <span className="text-sm font-bold">Resources</span>
+              <ChevronDown size={15} className={`transition-transform duration-200 ${showInfoMenu ? 'rotate-180' : 'rotate-0'}`} />
             </button>
             {showInfoMenu && (
               <div id="resources-menu" role="menu" aria-label="Resources" className="absolute top-full right-0 pt-2 w-max min-w-[220px] z-[70]">
@@ -165,16 +168,18 @@ export const Navbar: React.FC<NavbarProps> = ({
           {user && (
             <button
               onClick={() => navigateAndClose('ACCOUNT')}
-              className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}
+              className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#f3df9b] text-black border-[#f3df9b] shadow-[0_0_16px_rgba(243,223,155,0.42)]' : 'bg-transparent text-black border-transparent hover:text-black hover:shadow-[0_0_14px_rgba(243,223,155,0.34)]'}`}
             >
               <UserIcon size={18} />
               <span className="hidden md:inline font-bold text-sm">{user.name.split(' ')[0]}</span>
             </button>
           )}
-          <button onClick={() => navigateAndClose('TOOLS')} className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b]' : 'bg-transparent text-black border-transparent hover:text-black'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
+          <button onClick={() => navigateAndClose('TOOLS')} className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b] shadow-[0_0_16px_rgba(243,223,155,0.42)]' : 'bg-transparent text-black border-transparent hover:text-black hover:shadow-[0_0_14px_rgba(243,223,155,0.34)]'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
 
           <div className="relative" ref={settingsRef}>
-            <button onClick={() => setShowSettingsMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black" title="Settings"><Settings size={20} /></button>
+            <button onClick={() => setShowSettingsMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b] text-black hover:shadow-[0_0_14px_rgba(243,223,155,0.34)]" title="Settings">
+              <Settings size={20} className={`transition-transform duration-300 ${showSettingsMenu ? 'rotate-45' : 'rotate-0'}`} />
+            </button>
             {showSettingsMenu && (
               <div className="absolute top-full right-0 mt-2 w-64 rounded-2xl border border-slate-200 dark:border-[#4b5563] bg-white dark:bg-[#2b2b2b] p-4 shadow-2xl animate-fade-in z-[70]">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-black dark:text-white mb-3">Settings</p>

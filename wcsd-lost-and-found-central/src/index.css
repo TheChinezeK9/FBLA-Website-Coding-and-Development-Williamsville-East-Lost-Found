@@ -48,6 +48,30 @@ html.dark body {
   background-color: #3f3f3f;
 }
 
+.footer-animated-link {
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+}
+
+.footer-animated-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1.5px;
+  width: 100%;
+  background: #000;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.24s ease;
+}
+
+.footer-animated-link:hover::after,
+.footer-animated-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
 @media (max-width: 640px) {
   .home-hero-title {
     font-size: clamp(1.28rem, 6.4vw, 1.8rem);
