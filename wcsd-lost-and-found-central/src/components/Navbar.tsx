@@ -53,10 +53,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const navBtnClass = (view: View) =>
-    `flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${
+    `flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ease-out border ${
       currentView === view
-        ? 'bg-[#f3df9b] text-black border-[#f3df9b] shadow-[0_0_24px_rgba(243,223,155,0.78)]'
-        : 'text-black bg-transparent border-transparent hover:bg-[#f3df9b]/20 hover:text-black hover:shadow-[0_0_30px_rgba(243,223,155,0.95),0_0_64px_rgba(243,223,155,0.45),inset_0_0_18px_rgba(243,223,155,0.22)]'
+        ? 'bg-[#f3df9b] text-black border-[#f3df9b] shadow-none'
+        : 'text-black bg-transparent border-transparent hover:text-black hover:shadow-[0_0_30px_rgba(243,223,155,0.95),0_0_64px_rgba(243,223,155,0.45),inset_0_0_18px_rgba(243,223,155,0.22)]'
     }`;
 
   const navigateAndClose = (view: View) => {
@@ -100,7 +100,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-haspopup="menu"
               aria-expanded={showInfoMenu}
               aria-controls="resources-menu"
-              className="flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black hover:bg-[#f3df9b]/20 hover:text-black hover:shadow-[0_0_30px_rgba(243,223,155,0.95),0_0_64px_rgba(243,223,155,0.45),inset_0_0_18px_rgba(243,223,155,0.22)]"
+              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ease-out text-black ${
+                showInfoMenu
+                  ? 'bg-[#f3df9b] shadow-none'
+                  : 'bg-transparent hover:text-black hover:shadow-[0_0_30px_rgba(243,223,155,0.95),0_0_64px_rgba(243,223,155,0.45),inset_0_0_18px_rgba(243,223,155,0.22)]'
+              }`}
             >
               <Info size={16} />
               <span className="text-sm font-bold">Resources</span>
@@ -114,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
                   { id: 'GUIDE' as View, label: 'Help Guide', icon: <BookOpen size={16} /> }
                 ].map(item => (
-                  <button key={item.id} role="menuitem" onClick={() => navigateAndClose(item.id)} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black hover:bg-[#f3df9b]/35 hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)] hover:text-black text-sm font-bold transition-all">
+                  <button key={item.id} role="menuitem" onClick={() => navigateAndClose(item.id)} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)] hover:text-black text-sm font-bold transition-all duration-300 ease-out">
                     {item.icon} {item.label}
                   </button>
                 ))}
@@ -127,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
         <div className="flex items-center justify-end gap-1 sm:gap-2 shrink-0 ml-2">
           <div className="relative xl:hidden" ref={mobileMenuRef}>
-            <button onClick={() => setShowMobileMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b]/35 hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)] text-black" title="Menu">
+            <button onClick={() => setShowMobileMenu(v => !v)} className={`p-2 rounded-full transition-all duration-300 ease-out border text-black ${showMobileMenu ? 'bg-[#f3df9b] border-[#f3df9b] shadow-none' : 'bg-transparent border-transparent hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)]'}`} title="Menu">
               {showMobileMenu ? <X size={20} /> : <Menu size={20} />}
             </button>
             {showMobileMenu && (
@@ -143,8 +147,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     key={item.id}
                     onClick={() => navigateAndClose(item.id)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-colors ${
-                      currentView === item.id ? 'bg-[#f3df9b] text-black' : 'text-black hover:bg-[#f3df9b]/35 hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)]'
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 ease-out ${
+                      currentView === item.id ? 'bg-[#f3df9b] text-black shadow-none' : 'text-black hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)]'
                     }`}
                   >
                     {item.icon}
@@ -157,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   { id: 'RULES' as View, label: 'Safety Rules', icon: <Scale size={16} /> },
                   { id: 'GUIDE' as View, label: 'Help Guide', icon: <BookOpen size={16} /> }
                 ].map(item => (
-                  <button key={item.id} onClick={() => navigateAndClose(item.id)} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black hover:bg-[#f3df9b]/35 hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)] text-sm font-bold transition-all">
+                  <button key={item.id} onClick={() => navigateAndClose(item.id)} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-black hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)] text-sm font-bold transition-all duration-300 ease-out">
                     {item.icon}
                     <span>{item.label}</span>
                   </button>
@@ -168,16 +172,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           {user && (
             <button
               onClick={() => navigateAndClose('ACCOUNT')}
-              className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'ACCOUNT' ? 'bg-[#f3df9b] text-black border-[#f3df9b] shadow-[0_0_24px_rgba(243,223,155,0.78)]' : 'bg-transparent text-black border-transparent hover:bg-[#f3df9b]/20 hover:text-black hover:shadow-[0_0_30px_rgba(243,223,155,0.95),0_0_64px_rgba(243,223,155,0.45),inset_0_0_18px_rgba(243,223,155,0.22)]'}`}
+              className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ease-out border ${currentView === 'ACCOUNT' ? 'bg-[#f3df9b] text-black border-[#f3df9b] shadow-none' : 'bg-transparent text-black border-transparent hover:text-black hover:shadow-[0_0_30px_rgba(243,223,155,0.95),0_0_64px_rgba(243,223,155,0.45),inset_0_0_18px_rgba(243,223,155,0.22)]'}`}
             >
               <UserIcon size={18} />
               <span className="hidden md:inline font-bold text-sm">{user.name.split(' ')[0]}</span>
             </button>
           )}
-          <button onClick={() => navigateAndClose('TOOLS')} className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b] shadow-[0_0_24px_rgba(243,223,155,0.78)]' : 'bg-transparent text-black border-transparent hover:bg-[#f3df9b]/20 hover:text-black hover:shadow-[0_0_30px_rgba(243,223,155,0.95),0_0_64px_rgba(243,223,155,0.45),inset_0_0_18px_rgba(243,223,155,0.22)]'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
+          <button onClick={() => navigateAndClose('TOOLS')} className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ease-out border ${currentView === 'TOOLS' ? 'bg-[#f3df9b] text-black border-[#f3df9b] shadow-none' : 'bg-transparent text-black border-transparent hover:text-black hover:shadow-[0_0_30px_rgba(243,223,155,0.95),0_0_64px_rgba(243,223,155,0.45),inset_0_0_18px_rgba(243,223,155,0.22)]'}`}><Wrench size={18} /><span className="hidden md:inline font-bold text-sm">Tools</span></button>
 
           <div className="relative" ref={settingsRef}>
-            <button onClick={() => setShowSettingsMenu(v => !v)} className="p-2 rounded-full transition-all border border-transparent hover:bg-[#f3df9b]/35 text-black hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)]" title="Settings">
+            <button onClick={() => setShowSettingsMenu(v => !v)} className={`p-2 rounded-full transition-all duration-300 ease-out border text-black ${showSettingsMenu ? 'bg-[#f3df9b] border-[#f3df9b] shadow-none' : 'bg-transparent border-transparent hover:shadow-[0_0_24px_rgba(243,223,155,0.82),0_0_42px_rgba(243,223,155,0.36)]'}`} title="Settings">
               <Settings size={20} className={`transition-transform duration-300 ${showSettingsMenu ? 'rotate-45' : 'rotate-0'}`} />
             </button>
             {showSettingsMenu && (
