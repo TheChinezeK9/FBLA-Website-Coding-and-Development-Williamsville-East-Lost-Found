@@ -12,7 +12,8 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onStartClaim }) => (
     <div className="text-center px-4 sm:px-6 max-w-4xl mx-auto relative z-10 pt-10 sm:pt-12">
 
       <div className="relative mx-auto mt-1 sm:mt-2 mb-5 sm:mb-7 w-[88%] max-w-[285px] sm:w-2/3 sm:max-w-[380px] md:w-1/2 md:max-w-[480px] p-2 bg-transparent rounded-lg animate-fade-in-up">
-        <div className="absolute inset-2 -z-10 rounded-full bg-[#e7a39b]/20 blur-3xl" />
+        <div className="absolute -inset-5 -z-10 rounded-full bg-[#e7a39b]/45 blur-3xl" />
+        <div className="absolute inset-7 -z-10 rounded-full bg-[#ed1e25]/20 blur-2xl" />
         <img
           src="/images/east.png"
           alt="Williamsville East High School Logo"
