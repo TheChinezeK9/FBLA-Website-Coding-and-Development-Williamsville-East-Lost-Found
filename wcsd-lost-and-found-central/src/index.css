@@ -205,3 +205,130 @@ html.dark.neon-mode .border-white\/30 {
 
 @keyframes loginCardIn {from{opacity:0;transform:translateY(24px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);}}
 @keyframes warpRing {0%{transform:scale(0.8);opacity:0;}50%{opacity:1;}100%{transform:scale(4);opacity:0;}}
+
+.fawkes-summon {
+  transform-origin: bottom right;
+  animation: fawkesSummonVanish 0.98s ease-out forwards;
+}
+
+.fawkes-summon-ring {
+  position: absolute;
+  inset: 28%;
+  border: 2px solid rgba(243, 223, 155, 0.85);
+  border-radius: 999px;
+  box-shadow: 0 0 20px rgba(243, 223, 155, 0.65), 0 0 42px rgba(237, 30, 37, 0.28);
+  animation: fawkesRingBloom 0.92s ease-out forwards;
+}
+
+.fawkes-phoenix {
+  position: absolute;
+  right: 30px;
+  bottom: 26px;
+  font-size: 3.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 14px rgba(237, 30, 37, 0.55)) drop-shadow(0 0 20px rgba(243, 223, 155, 0.45));
+  animation: fawkesRise 0.98s cubic-bezier(0.2, 0.8, 0.22, 1) forwards;
+}
+
+.fawkes-wing {
+  position: absolute;
+  bottom: 44px;
+  font-size: 2rem;
+  opacity: 0;
+  filter: drop-shadow(0 0 10px rgba(255, 132, 36, 0.75));
+}
+
+.fawkes-wing-left {
+  right: 88px;
+  transform-origin: right bottom;
+  animation: fawkesWingLeft 0.82s ease-out forwards;
+}
+
+.fawkes-wing-right {
+  right: 15px;
+  transform-origin: left bottom;
+  animation: fawkesWingRight 0.82s ease-out forwards;
+}
+
+.fawkes-flame {
+  position: absolute;
+  right: 58px;
+  bottom: 48px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: radial-gradient(circle, #fff1b8 0%, #f97316 45%, #ed1e25 72%, transparent 73%);
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.8);
+  opacity: 0;
+}
+
+.fawkes-flame-1 { animation: fawkesSpark1 0.78s ease-out 0.12s forwards; }
+.fawkes-flame-2 { animation: fawkesSpark2 0.78s ease-out 0.16s forwards; }
+.fawkes-flame-3 { animation: fawkesSpark3 0.78s ease-out 0.2s forwards; }
+.fawkes-flame-4 { animation: fawkesSpark4 0.78s ease-out 0.24s forwards; }
+
+@keyframes fawkesRise {
+  0% { opacity: 0; transform: translate(16px, 16px) scale(0.35) rotate(-8deg); }
+  38% { opacity: 1; transform: translate(-16px, -32px) scale(1.35) rotate(3deg); }
+  70% { opacity: 1; transform: translate(-38px, -58px) scale(1.62) rotate(-2deg); }
+  100% { opacity: 0; transform: translate(-54px, -78px) scale(1.85) rotate(0deg); }
+}
+
+@keyframes fawkesWingLeft {
+  0% { opacity: 0; transform: translate(30px, 18px) rotate(24deg) scale(0.45); }
+  35% { opacity: 1; }
+  76% { opacity: 1; transform: translate(-20px, -18px) rotate(-32deg) scale(1.22); }
+  100% { opacity: 0; transform: translate(-34px, -26px) rotate(-44deg) scale(1.36); }
+}
+
+@keyframes fawkesWingRight {
+  0% { opacity: 0; transform: translate(-18px, 18px) rotate(-24deg) scale(0.45); }
+  35% { opacity: 1; }
+  76% { opacity: 1; transform: translate(24px, -18px) rotate(32deg) scale(1.22); }
+  100% { opacity: 0; transform: translate(38px, -26px) rotate(44deg) scale(1.36); }
+}
+
+@keyframes fawkesRingBloom {
+  0% { opacity: 0; transform: scale(0.25); }
+  35% { opacity: 1; }
+  100% { opacity: 0; transform: scale(2.4); }
+}
+
+@keyframes fawkesSummonVanish {
+  0%, 78% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fawkesSpark1 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.2); }
+  28% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-56px, -48px) scale(1.35); }
+}
+
+@keyframes fawkesSpark2 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.2); }
+  28% { opacity: 1; }
+  100% { opacity: 0; transform: translate(48px, -54px) scale(1.2); }
+}
+
+@keyframes fawkesSpark3 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.2); }
+  28% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-36px, 10px) scale(1); }
+}
+
+@keyframes fawkesSpark4 {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.2); }
+  28% { opacity: 1; }
+  100% { opacity: 0; transform: translate(42px, 8px) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fawkes-summon,
+  .fawkes-summon-ring,
+  .fawkes-phoenix,
+  .fawkes-wing,
+  .fawkes-flame {
+    animation: none !important;
+  }
+}

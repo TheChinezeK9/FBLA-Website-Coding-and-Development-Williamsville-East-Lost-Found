@@ -18,6 +18,7 @@ export const FawkesBot: React.FC = () => {
   const [panelPos, setPanelPos] = useState({ x: 0, y: 0 });
   const [initialized, setInitialized] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isSummoning, setIsSummoning] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const dragStateRef = useRef<{ offsetX: number; offsetY: number } | null>(null);
@@ -201,6 +202,26 @@ export const FawkesBot: React.FC = () => {
     }
   };
 
+  const openWithSummon = () => {
+    if (isOpen) {
+      setIsOpen(false);
+      return;
+    }
+    if (isSummoning) return;
+
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setIsOpen(true);
+      return;
+    }
+
+    setIsSummoning(true);
+    window.setTimeout(() => {
+      setIsSummoning(false);
+      setIsOpen(true);
+    }, 980);
+  };
+
   return (
     <>
       {initialized && isOpen && (
@@ -282,9 +303,22 @@ export const FawkesBot: React.FC = () => {
       )}
 
       <div className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-[50] pointer-events-none">
+        {isSummoning && (
+          <div className="fawkes-summon pointer-events-none absolute bottom-0 right-0 w-36 h-36 sm:w-40 sm:h-40">
+            <div className="fawkes-summon-ring" />
+            <div className="fawkes-wing fawkes-wing-left">🔥</div>
+            <div className="fawkes-wing fawkes-wing-right">🔥</div>
+            <div className="fawkes-flame fawkes-flame-1" />
+            <div className="fawkes-flame fawkes-flame-2" />
+            <div className="fawkes-flame fawkes-flame-3" />
+            <div className="fawkes-flame fawkes-flame-4" />
+            <div className="fawkes-phoenix">🐦‍🔥</div>
+          </div>
+        )}
         <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={`pointer-events-auto group relative w-16 h-16 sm:w-16 sm:h-16 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen ? 'bg-[#e7a39b]' : 'bg-[#f3df9b]'}`}
+          onClick={openWithSummon}
+          disabled={isSummoning}
+          className={`pointer-events-auto group relative w-16 h-16 sm:w-16 sm:h-16 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 disabled:cursor-wait disabled:scale-100 ${isOpen ? 'bg-[#e7a39b]' : 'bg-[#f3df9b]'}`}
         >
           <div className="flex items-center justify-center w-full h-full text-black">
             {isOpen ? <X size={30} /> : <div className="text-[2.1rem] animate-bounce">🐦‍🔥</div>}
